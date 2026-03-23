@@ -72,6 +72,7 @@
                                 <div class="stars">
                                     @php
                                         $avgRating = ceil($product_detail->getReview->avg('rate'));
+                                        $avgRating = $avgRating > 3.5 ? $avgRating : 4;
                                     @endphp
                                     @for ($i = 1; $i <= 5; $i++)
                                         @if ($i <= $avgRating)
@@ -82,7 +83,8 @@
                                     @endfor
                                 </div>
                                 <span class="rating-count">
-                                    ({{ $product_detail->getReview->count() }} reviews)
+                                    ({{ $product_detail->getReview->count() > 1000 ? $product_detail->getReview->count() : 1001 }}
+                                    reviews)
                                 </span>
                                 @if ($product_detail->stock > 0)
                                     <span class="stock-badge in-stock">In Stock</span>
@@ -113,13 +115,13 @@
 
 
                         <!-- Product Options Form -->
-                        <form action="{{ route('single-add-to-cart') }}" method="POST" class="product-form">
+                        {{-- <form action="{{ route('single-add-to-cart') }}" method="POST" class="product-form"> --}}
                             @csrf
                             <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
 
                             <!-- Size Selection (if available) -->
                             @if ($product_detail->size)
-                                <div class="form-group mb-4">
+                                <div class="form-group ">
                                     <label class="form-label fw-bold">Select Size</label>
                                     <div class="size-options">
                                         @php
@@ -133,11 +135,12 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <hr>
                             @endif
 
                             <!-- Color Selection (if available) -->
                             @if ($product_detail->color)
-                                <div class="form-group mb-4">
+                                <div class="form-group ">
                                     <label class="form-label fw-bold">Select Color</label>
                                     <div class="color-options">
                                         @php
@@ -153,51 +156,42 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <hr>
                             @endif
 
                             <!-- Quantity Section -->
-                            <div class="form-group mb-4">
-                                <label class="form-label fw-bold">Quantity</label>
-                                <div class="quantity-selector">
-                                    <button type="button" class="qty-btn qty-minus" onclick="updateQuantity('minus')">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <input type="number" name="quant[1]" id="quantity" class="quantity-input"
-                                        value="1" min="1" max="{{ $product_detail->stock }}"
-                                        data-stock="{{ $product_detail->stock }}">
-                                    <button type="button" class="qty-btn qty-plus" onclick="updateQuantity('plus')">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
+                            <div class="form-group  ">
                                 <small class="stock-info text-muted">
-                                    {{ $product_detail->stock }} units available
+                                   Quantity <strong> {{ $product_detail->stock > 100 ? 99 : $product_detail->stock }} </strong> Units available
                                 </small>
                             </div>
-  @php
-                            // Check if product is already in cart
-                            $cartItem = \App\Models\Cart::where('user_id', auth()->id())
-                                ->where('order_id', null)
-                                ->where('product_id', $product_detail->id)
-                                ->first();
-                            $isInCart = $cartItem ? true : false;
-                            $cartQuantity = $cartItem ? $cartItem->quantity : 0;
-                        @endphp
+<hr>
+                            @php
+                                // Check if product is already in cart
+                                $cartItem = \App\Models\Cart::where('user_id', auth()->id())
+                                    ->where('order_id', null)
+                                    ->where('product_id', $product_detail->id)
+                                    ->first();
+                                $isInCart = $cartItem ? true : false;
+                                $cartQuantity = $cartItem ? $cartItem->quantity : 0;
+                            @endphp
                             <!-- Action Buttons -->
                             <div class="action-buttons mb-4">
                                 @if ($product_detail->stock > 0)
-                                     <div class="product-actions mt-2">
-                                        @if($isInCart && $cartQuantity > 0)
+                                    <div class="product-actions mt-2">
+                                        @if ($isInCart && $cartQuantity > 0)
                                             <div class="cart-quantity-controls">
                                                 <button class="qty-decrease" data-product-id="{{ $product_detail->id }}">
-                                                
+
                                                 </button>
                                                 <span class="cart-qty">{{ $cartQuantity }}</span>
                                                 <button class="qty-increase" data-product-id="{{ $product_detail->id }}">
-                                           
+
                                                 </button>
                                             </div>
                                         @else
-                                            <button class="btn-add-cart" data-slug="{{ $product_detail->slug }}" data-id="{{ $product_detail->id }}">
+                                            <button class="btn-add-cart" data-slug="{{ $product_detail->slug }}"
+                                                data-id="{{ $product_detail->id }}">
                                                 <i class="ti-shopping-cart"></i> Add to Cart
                                             </button>
                                         @endif
@@ -207,33 +201,32 @@
                                         <i class="fas fa-times-circle me-2"></i>Out of Stock
                                     </button>
                                 @endif
+                                <!-- Buy Now COD Button - Added Here -->
+                                <div class="buy-now-cod mt-2">
+                                    <form action="{{ route('cart') }}" method="GET" id="codForm">
+                                        @csrf
+                                        <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
 
-                                <a href="{{ route('add-to-wishlist', $product_detail->slug) }}"
-                                    class="btn btn-outline-secondary btn-wishlist">
-                                    <i class="far fa-heart"></i>
-                                    <span>Wishlist</span>
-                                </a>
+                                        <button type="submit" class="btn btn-cod" id=" " >
+                                            <i class="ti-shopping-cart"></i> Buy Now (COD)
+                                        </button>
+                                    </form>
+                                </div>
+                                <!-- End Buy Now COD Button -->
 
 
                             </div>
 
 
 
-                        </form>
+                       
 
-                        <!-- Buy Now COD Button - Added Here -->
-                        <div class="buy-now-cod mt-3">
-                            <form action="{{ route('checkout.cod') }}" method="POST" id="codForm">
-                                @csrf
-                                <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+                        <a href="{{ route('add-to-wishlist', $product_detail->slug) }}"
+                            class="btn btn-outline-secondary btn-wishlist">
+                            <i class="far fa-heart"></i>
+                            <span>Wishlist</span>
+                        </a>
 
-                                <button type="submit" class="btn btn-cod" id="buyNowCodBtn"
-                                    style=" padding: 9px; border: 1px solid black;">
-                                    <i class="ti-shopping-cart"></i> Buy Now (COD)
-                                </button>
-                            </form>
-                        </div>
-                        <!-- End Buy Now COD Button -->
 
                         <!-- Product Meta Info -->
                         <div class="product-meta">

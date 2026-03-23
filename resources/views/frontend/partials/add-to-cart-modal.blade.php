@@ -1,5 +1,5 @@
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
         // Load More Products
         $("#load-more").click(function() {
             var page = $(this).data("page");
@@ -31,7 +31,15 @@
 
         function initializeCartButtons() {
             // Add to Cart
+            var isLoggedIn = "{{ session('user') ? '1' : '0' }}";
+
             $(".btn-add-cart").off('click').on('click', function() {
+
+                if (isLoggedIn != "1") {
+                    window.location.href = "{{ route('login.form') }}";
+                    return;
+                }
+
                 var productSlug = $(this).data("slug");
                 var button = $(this);
                 var originalText = button.html();
@@ -63,7 +71,7 @@
                             // Replace button with quantity controls for this product
                             var productCard = button.closest('.single-product');
                             var productId = productCard.data('product-id');
-                            
+
                             button.replaceWith(`
                                 <div class="cart-quantity-controls">
                                     <button class="qty-decrease" data-product-id="${productId}">
@@ -75,7 +83,7 @@
                                     </button>
                                 </div>
                             `);
-                            
+
                             // Re-initialize quantity controls for new buttons
                             initializeQuantityControls();
 
@@ -164,14 +172,14 @@
                     if (response.status == 'success') {
                         // Update quantity display
                         quantitySpan.text(newQty);
-                        
+
                         // Update cart count badge
                         $(".total-count").text(response.cartCount);
                         $(".total-count").addClass('update');
                         setTimeout(function() {
                             $(".total-count").removeClass('update');
                         }, 500);
-                        
+
                         // Update cart dropdown
                         updateCartDropdown(response.cartItems, response.cartTotal);
                     } else {
@@ -205,20 +213,20 @@
                                 <i class="ti-shopping-cart"></i> Add to Cart
                             </button>
                         `);
-                        
+
                         // Re-initialize add to cart button
                         initializeCartButtons();
-                        
+
                         // Update cart count badge
                         $(".total-count").text(response.cartCount);
                         $(".total-count").addClass('update');
                         setTimeout(function() {
                             $(".total-count").removeClass('update');
                         }, 500);
-                        
+
                         // Update cart dropdown
                         updateCartDropdown(response.cartItems, response.cartTotal);
-                        
+
                         swal("Removed!", response.message, "success");
                     } else {
                         swal("Error!", response.message, "error");
@@ -351,7 +359,7 @@
                 `);
                 cartFooter.hide();
             }
-            
+
             // Re-initialize remove cart items
             initializeRemoveCartItems();
         }
@@ -395,16 +403,20 @@
                                     $(".total-count").text(response.cartCount);
                                     $(".total-count").addClass('update');
                                     setTimeout(function() {
-                                        $(".total-count").removeClass('update');
+                                        $(".total-count").removeClass(
+                                            'update');
                                     }, 500);
 
                                     // Update cart dropdown
-                                    updateCartDropdown(response.cartItems, response.cartTotal);
-                                    
+                                    updateCartDropdown(response.cartItems, response
+                                        .cartTotal);
+
                                     // Update product card button if exists
                                     if (productCard.length) {
-                                        var productSlug = productCard.data('product-slug');
-                                        productCard.find('.cart-quantity-controls').replaceWith(`
+                                        var productSlug = productCard.data(
+                                            'product-slug');
+                                        productCard.find('.cart-quantity-controls')
+                                            .replaceWith(`
                                             <button class="btn-add-cart" data-slug="${productSlug}" data-id="${productId}">
                                                 <i class="ti-shopping-cart"></i> Add to Cart
                                             </button>

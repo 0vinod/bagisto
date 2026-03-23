@@ -410,3 +410,15 @@
 .ti-plus:before {
     content: "\e61a";
 }
+
+.btn.btn-cod{
+        background: #f7941d;
+    color: #fff;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 25px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+}
