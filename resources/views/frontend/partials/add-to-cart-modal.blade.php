@@ -131,8 +131,8 @@
             $(".qty-increase").off('click').on('click', function() {
                 var productId = $(this).data("product-id");
                 var productCard = $(this).closest('.single-product');
-                var quantitySpan = $(this).siblings('.cart-qty');
-                var currentQty = parseInt(quantitySpan.text());
+                var quantitySpan = ($(this).siblings('.cart-qty'));
+                var currentQty = parseInt(quantitySpan.text()) || parseInt(quantitySpan.val());
                 var newQty = currentQty + 1;
 
                 updateCartQuantity(productId, newQty, productCard, quantitySpan);
@@ -143,7 +143,7 @@
                 var productId = $(this).data("product-id");
                 var productCard = $(this).closest('.single-product');
                 var quantitySpan = $(this).siblings('.cart-qty');
-                var currentQty = parseInt(quantitySpan.text());
+                var currentQty = parseInt(quantitySpan.text()) || parseInt(quantitySpan.val());
                 var newQty = currentQty - 1;
 
                 if (newQty < 1) {
@@ -171,7 +171,10 @@
                 success: function(response) {
                     if (response.status == 'success') {
                         // Update quantity display
+
+
                         quantitySpan.text(newQty);
+                        quantitySpan.val(newQty);
 
                         // Update cart count badge
                         $(".total-count").text(response.cartCount);
@@ -228,6 +231,11 @@
                         updateCartDropdown(response.cartItems, response.cartTotal);
 
                         swal("Removed!", response.message, "success");
+
+                        if(location.pathname == '/cart'){
+                            location.reload()
+                        }
+
                     } else {
                         swal("Error!", response.message, "error");
                     }

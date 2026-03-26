@@ -77,19 +77,19 @@
 
                                                 <div class="cart-col qty-col">
                                                     <div class="quantity-selector">
-                                                        <button type="button" class="qty-btn qty-minus" data-key="{{ $key }}">
-                                                            <i class="ti-minus"></i>
+                                                        <button type="button" class="qty-btn qty-decrease" data-product-id="{{ $cart->product_id }}">
+                                                         
                                                         </button>
                                                         <input type="text" name="quant[{{ $key }}]" 
-                                                               class="quantity-input" 
+                                                               class="quantity-input cart-qty" 
                                                                data-min="1" 
                                                                data-max="{{ $cart->product['stock'] }}" 
                                                                value="{{ $cart->quantity }}"
-                                                               data-key="{{ $key }}"
+                                                               data-product-id="{{ $key }}"
                                                                data-price="{{ $cart['price'] }}">
                                                         <input type="hidden" name="qty_id[]" value="{{ $cart->id }}">
-                                                        <button type="button" class="qty-btn qty-plus" data-key="{{ $key }}">
-                                                            <i class="ti-plus"></i>
+                                                        <button type="button" class="qty-btn qty-increase" data-product-id="{{ $cart->product_id }}">
+                                                            
                                                         </button>
                                                     </div>
                                                 </div>
@@ -1104,153 +1104,7 @@
     <script src="{{ asset('frontend/js/nice-select/js/jquery.nice-select.min.js') }}"></script>
     <script src="{{ asset('frontend/js/select2/js/select2.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $("select.select2").select2();
-            $('select.nice-select').niceSelect();
-
-            // Quantity update handlers
-            $('.qty-minus').click(function() {
-                let key = $(this).data('key');
-                let input = $(`input[name="quant[${key}"]`);
-                let currentVal = parseInt(input.val());
-                let minVal = parseInt(input.data('min'));
-                if (currentVal > minVal) {
-                    input.val(currentVal - 1);
-                    updateItemTotal(key, input);
-                    
-                    // Auto-submit form to update cart
-                    $('#cart-update-form').submit();
-                }
-            });
-
-            $('.qty-plus').click(function() {
-                let key = $(this).data('key');
-                let input = $(`input[name="quant[${key}"]`);
-                let currentVal = parseInt(input.val());
-                let maxVal = parseInt(input.data('max'));
-                if (currentVal < maxVal) {
-                    input.val(currentVal + 1);
-                    updateItemTotal(key, input);
-                    
-                    // Auto-submit form to update cart
-                    $('#cart-update-form').submit();
-                } else {
-                    swal('Info', `Only ${maxVal} units available`, 'info');
-                }
-            });
-
-            $('.quantity-input').on('change', function() {
-                let key = $(this).data('key');
-                updateItemTotal(key, $(this));
-                
-                // Auto-submit form to update cart
-                $('#cart-update-form').submit();
-            });
-
-            function updateItemTotal(key, input) {
-                let quantity = parseInt(input.val());
-                let price = parseFloat(input.data('price'));
-                let total = quantity * price;
-                $(`.item-total[data-key="${key}"]`).text('$' + total.toFixed(2));
-                updateCartTotals();
-            }
-
-            function updateCartTotals() {
-                let subtotal = 0;
-                $('.item-total').each(function() {
-                    let total = parseFloat($(this).text().replace('$', ''));
-                    subtotal += total;
-                });
-
-                $('.order_subtotal').data('price', subtotal);
-                $('.order_subtotal').text('$' + subtotal.toFixed(2));
-
-                let coupon = parseFloat($('.coupon_price').data('price')) || 0;
-                let totalAmount = subtotal - coupon;
-                $('#order_total_price').text('$' + totalAmount.toFixed(2));
-            }
-
-            // Form submission with loading state
-            $('#cart-update-form').on('submit', function() {
-                $('.btn-update-cart').addClass('loading');
-                return true;
-            });
-
-            // Delete item confirmation with AJAX
-            $(document).on('click', '.remove-item', function(e) {
-                e.preventDefault();
-                let url = $(this).attr('href');
-                let cartItem = $(this).closest('.cart-item');
-                
-                swal({
-                    title: 'Are you sure?',
-                    text: 'This item will be removed from your cart!',
-                    icon: 'warning',
-                    buttons: true,
-                    dangerMode: true,
-                }).then((willDelete) => {
-                    if (willDelete) {
-                        // Add fade out animation
-                        cartItem.css({
-                            'transition': 'all 0.3s ease',
-                            'opacity': '0',
-                            'transform': 'translateX(20px)'
-                        });
-                        
-                        $.ajax({
-                            url: url,
-                            type: "GET",
-                            success: function(response) {
-                                if (response.status == 'success') {
-                                    // Remove item from DOM
-                                    cartItem.remove();
-                                    
-                                    // Update cart totals
-                                    updateCartTotals();
-                                    
-                                    // Update cart count badge
-                                    $(".total-count").text(response.cartCount);
-                                    $(".total-count").addClass('update');
-                                    setTimeout(function() {
-                                        $(".total-count").removeClass('update');
-                                    }, 500);
-                                    
-                                    // Check if cart is empty
-                                    if ($('.cart-item').length === 0) {
-                                        location.reload();
-                                    }
-                                    
-                                    swal("Removed!", response.message, "success");
-                                } else {
-                                    swal("Error!", response.message, "error");
-                                    // Revert animation
-                                    cartItem.css({
-                                        'opacity': '1',
-                                        'transform': 'translateX(0)'
-                                    });
-                                }
-                            },
-                            error: function() {
-                                swal("Error!", "Failed to remove item", "error");
-                                cartItem.css({
-                                    'opacity': '1',
-                                    'transform': 'translateX(0)'
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-
-            // Coupon form submission
-            $('.coupon-form').on('submit', function(e) {
-                let code = $(this).find('input[name="code"]').val();
-                if (!code) {
-                    e.preventDefault();
-                    swal('Error', 'Please enter a coupon code', 'error');
-                }
-            });
-        });
+   
 
         $(document).ready(function() {
     // Set data-title attributes for responsive design
@@ -1273,33 +1127,7 @@
         setDataTitles();
     });
     
-    // Rest of your existing JavaScript code...
-    $('.qty-minus').click(function() {
-        let key = $(this).data('key');
-        let input = $(`input[name="quant[${key}"]`);
-        let currentVal = parseInt(input.val());
-        let minVal = parseInt(input.data('min'));
-        if (currentVal > minVal) {
-            input.val(currentVal - 1);
-            updateItemTotal(key, input);
-            $('#cart-update-form').submit();
-        }
-    });
-
-    $('.qty-plus').click(function() {
-        let key = $(this).data('key');
-        let input = $(`input[name="quant[${key}"]`);
-        let currentVal = parseInt(input.val());
-        let maxVal = parseInt(input.data('max'));
-        if (currentVal < maxVal) {
-            input.val(currentVal + 1);
-            updateItemTotal(key, input);
-            $('#cart-update-form').submit();
-        } else {
-            swal('Info', `Only ${maxVal} units available`, 'info');
-        }
-    });
-
+ 
     $('.quantity-input').on('change', function() {
         let key = $(this).data('key');
         updateItemTotal(key, $(this));
