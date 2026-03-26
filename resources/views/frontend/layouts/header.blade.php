@@ -238,7 +238,7 @@
                             @if (Auth::user()->role == 'admin')
                                 {{-- <a href="{{ route('admin') }}" class="user-btn">Dashboard</a> --}}
                             @else
-                                <a href="{{ route('user') }}" class="user-btn">My Account</a>
+                                {{-- <a href="{{ route('user') }}" class="user-btn">My Account</a> --}}
                             @endif
                             <a href="{{ route('user.logout') }}" class="user-btn logout"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -252,8 +252,6 @@
                             <a href="{{ route('login.form') }}" class="user-btn">Login</a>
                             <a href="{{ route('register.form') }}" class="user-btn register">Register</a>
                         @endauth
-
-
                     </div>
                 </div>
 
