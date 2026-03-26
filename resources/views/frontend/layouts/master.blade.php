@@ -1,33 +1,4 @@
-{{-- D:\wamp64\www\bagisto\resources\views\frontend\layouts\master.blade.php
-<!DOCTYPE html>
-<html lang="zxx">
-<head>
-	@include('frontend.layouts.head')	
-</head>
-<body class="js">
-	
-	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader-inner">
-			<div class="preloader-icon">
-				<span></span>
-				<span></span>
-			</div>
-		</div>
-	</div>
-	<!-- End Preloader -->
-	
-	@include('frontend.layouts.notification')
-	<!-- Header -->
-	@include('frontend.layouts.header')
-	<!--/ End Header -->
-	@yield('main-content')
-	
-	@include('frontend.layouts.footer')
-
-</body>
-</html> --}}
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,8 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/themify-icons/css/themify-icons.css">
     <!-- Bootstrap 4 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
 
     <!-- Themify Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/themify-icons@0.1.2/css/themify-icons.css">
