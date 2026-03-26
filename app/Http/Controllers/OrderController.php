@@ -47,7 +47,7 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'state_id' => 'required|string|max:255',
             'address1' => 'required|string|max:500',
             'address2' => 'nullable|string|max:500',
             'country' => 'required|string|max:100',
@@ -72,10 +72,11 @@ class OrderController extends Controller
             $order->order_number = 'ORD-' . strtoupper(Str::random(10));
             $order->user_id = auth()->user()->id;
             $order->first_name = $validated['first_name'];
-            $order->last_name = $validated['last_name'];
+            // $order->last_name = $validated['last_name']; 
             $order->email = $validated['email'];
             $order->phone = $validated['phone'];
             $order->country = $validated['country'];
+            $order->state_id = $validated['state_id'];
             $order->address1 = $validated['address1'];
             $order->address2 = $validated['address2'] ?? null;
             $order->post_code = $validated['post_code'] ?? null;

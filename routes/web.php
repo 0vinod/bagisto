@@ -82,6 +82,7 @@ Route::post('/cart/update-quantity', 'CartController@updateQuantity')->name('car
 // Add these routes
 Route::post('/cart/update-quantity', 'CartController@updateQuantity')->name('cart.update-quantity');
 Route::post('/cart/remove-product', 'CartController@removeProduct')->name('cart.remove-product');
+Route::get('/getCityByStateId/{state_id}', [CartController::class,'getCityByStateId'])->name('getCityByStateId');
 
 Route::get('/cart', function () {
     return view('frontend.pages.cart');

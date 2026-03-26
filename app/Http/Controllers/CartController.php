@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Wishlist;
 use App\Models\Cart;
+use App\Models\State;
 use Illuminate\Support\Str;
 use Helper;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -176,7 +178,6 @@ class CartController extends Controller
     {
         $user = auth()->user();
 
-
         // Get user's last order for address pre-filling
         $lastOrder = null;
         if ($user) {
@@ -191,7 +192,10 @@ class CartController extends Controller
         $firstName = $nameParts[0] ?? '';
         $lastName = $nameParts[1] ?? '';
 
-        return view('frontend.pages.checkout', compact('user', 'lastOrder', 'firstName', 'lastName'));
+
+        $states = State::where('status',1)->get();
+
+        return view('frontend.pages.checkout', compact('states','user', 'lastOrder', 'firstName', 'lastName'));
     }
 
 
@@ -336,5 +340,14 @@ class CartController extends Controller
             'cartItems' => Helper::getAllProductFromCart(),
             'cartTotal' => Helper::totalCartPrice()
         ]);
+    }
+
+    public function getCityByStateId($state_id)
+    {
+        $cities = DB::table('cities')
+        ->where('state_id', $state_id)
+        ->get();
+        
+        return response()->json($cities);
     }
 }

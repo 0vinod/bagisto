@@ -19,6 +19,15 @@
             </div>
         </div>
     </div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <!-- Main Checkout Section -->
     <section class="modern-checkout section">
@@ -45,21 +54,21 @@
                                 <div class="row g-3">
                                     <!-- First Name -->
                                     <div class="col-md-6">
-                                        <div class="form-floating">
+                                        <div class="form-group"> <label for="first_name">First Name <span class="required">*</span></label>
                                             <input type="text"
                                                 class="form-control @error('first_name') is-invalid @enderror"
                                                 id="first_name" name="first_name" placeholder="First Name"
                                                 value="{{ old('first_name', ($lastOrder ? $lastOrder->first_name : null) ?? ($firstName ?? '')) }}">
-                                            <label for="first_name">First Name <span class="required">*</span></label>
+                                            
                                             @error('first_name')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
-                                    <!-- Last Name -->
+                                    {{-- <!-- Last Name -->
                                     <div class="col-md-6">
-                                        <div class="form-floating">
+                                        <div class="form-group">
                                             <input type="text"
                                                 class="form-control @error('last_name') is-invalid @enderror" id="last_name"
                                                 name="last_name" placeholder="Last Name"
@@ -69,15 +78,15 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <!-- Email Address -->
                                     <div class="col-md-6">
-                                        <div class="form-floating">
+                                        <div class="form-group"><label for="email">Email Address <span class="required">*</span></label>
                                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                                 id="email" name="email" placeholder="Email Address"
                                                 value="{{ old('email', ($lastOrder ? $lastOrder->email : null) ?? ($user ? $user->email : '')) }}">
-                                            <label for="email">Email Address <span class="required">*</span></label>
+                                            
                                             @error('email')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -86,11 +95,11 @@
 
                                     <!-- Phone Number -->
                                     <div class="col-md-6">
-                                        <div class="form-floating">
+                                        <div class="form-group"> <label for="phone">Phone Number <span class="required">*</span></label>
                                             <input type="tel" class="form-control @error('phone') is-invalid @enderror"
                                                 id="phone" name="phone" placeholder="Phone Number"
                                                 value="{{ old('phone', $lastOrder ? $lastOrder->phone : '') }}">
-                                            <label for="phone">Phone Number <span class="required">*</span></label>
+                                           
                                             @error('phone')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -99,179 +108,199 @@
 
                                     <!-- Country -->
                                     <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <select class="form-select @error('country') is-invalid @enderror"
+                                        <div class="form-group">  <label for="country">Country <span class="required">*</span></label>
+                                            <select class="form-select form-control @error('country') is-invalid @enderror"
                                                 id="country" name="country">
-                                                <option value="IN" {{ $selectedCountry == 'IN' ? 'selected' : '' }}> India</option>
+                                                <option value="IN" {{ $selectedCountry == 'IN' ? 'selected' : '' }}>
+                                                    India</option>
                                             </select>
-                                            <label for="country">Country <span class="required">*</span></label>
+                                           
                                             @error('country')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
-                                    <!-- Address Line 1 -->
                                     <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text"
-                                                class="form-control @error('address1') is-invalid @enderror"
-                                                id="address1" name="address1" placeholder="Address Line 1"
-                                                value="{{ old('address1', $lastOrder ? $lastOrder->address1 : '') }}">
-                                            <label for="address1">Address Line 1 <span class="required">*</span></label>
-                                            @error('address1')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <div class="form-group">  <label>State <span class="required">*</span></label>
+                                            <select id="state-dropdown" name="state_id" class="form-control" required>
+                                                <option value="">Select State</option>
+                                                @foreach ($states as $state)
+                                                    <option value="{{ $state->id }}">{{ $state->state_name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <!-- Address Line 2 -->
                                     <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text"
-                                                class="form-control @error('address2') is-invalid @enderror"
-                                                id="address2" name="address2" placeholder="Address Line 2"
-                                                value="{{ old('address2', $lastOrder ? $lastOrder->address2 : '') }}">
+                                        <div class="form-group">
+                                              <label>City <span class="required">*</span></label>
+                                                <select id="city-dropdown" name="city" class="form-control" required> 
+                                                    <option value="">Select State First</option>
+                                                </select>          
+                                        </div>
+                                    </div>
+
+                                        <!-- Address Line 1 -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">   <label for="address1">Address Line 1 <span class="required">*</span></label>
+                                                <input type="text" class="form-control @error('address1') is-invalid @enderror"
+                                                    id="address1" name="address1" placeholder="Address Line 1"
+                                                    value="{{ old('address1', $lastOrder ? $lastOrder->address1 : '') }}"> 
+                                                @error('address1')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <!-- Address Line 2 -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">  
                                             <label for="address2">Address Line 2 (Optional)</label>
-                                            @error('address2')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                                <input type="text" class="form-control @error('address2') is-invalid @enderror"
+                                                    id="address2" name="address2" placeholder="Address Line 2"
+                                                    value="{{ old('address2', $lastOrder ? $lastOrder->address2 : '') }}">
+                                                @error('address2')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- City/Town -->
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control @error('city') is-invalid @enderror"
-                                                id="city" name="city" placeholder="City/Town"
-                                                value="{{ old('city', $lastOrder ? $lastOrder->city : '') }}">
-                                            <label for="city">City/Town <span class="required">*</span></label>
-                                            @error('city')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                                        <!-- City/Town -->
+                                        {{-- <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text"
+                                                    class="form-control @error('city') is-invalid @enderror"
+                                                    id="city" name="city" placeholder="City/Town"
+                                                    value="{{ old('city', $lastOrder ? $lastOrder->city : '') }}">
+                                                <label for="city">City/Town <span class="required">*</span></label>
+                                                @error('city')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div> --}}
+
+                                        <!-- Postal Code -->
+                                        <div class="col-md-6">
+                                            <div class="form-group"> <label for="post_code">Postal Code</label>
+                                                <input type="text"
+                                                    class="form-control @error('post_code') is-invalid @enderror"
+                                                    id="post_code" name="post_code" placeholder="Postal Code"
+                                                    value="{{ old('post_code', $lastOrder ? $lastOrder->post_code : '') }}">
+                                               
+                                                @error('post_code')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Postal Code -->
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text"
-                                                class="form-control @error('post_code') is-invalid @enderror"
-                                                id="post_code" name="post_code" placeholder="Postal Code"
-                                                value="{{ old('post_code', $lastOrder ? $lastOrder->post_code : '') }}">
-                                            <label for="post_code">Postal Code</label>
-                                            @error('post_code')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <!-- Additional Notes -->
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <textarea class="form-control" id="notes" name="notes" placeholder="Order Notes (Optional)"
-                                                style="height: 100px">{{ old('notes') }}</textarea>
-                                            <label for="notes">Order Notes (Optional)</label>
+                                        <!-- Additional Notes -->
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="notes" name="notes" placeholder="Order Notes (Optional)"
+                                                    style="height: 100px">{{ old('notes') }}</textarea>
+                                                <label for="notes">Order Notes (Optional)</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Order Summary Column -->
-                    <div class="col-lg-4 col-12">
-                        <div class="order-summary-card">
-                            <div class="card-header">
-                                <h3><i class="fas fa-shopping-cart me-2"></i> Your Order</h3>
-                            </div>
+                        <!-- Order Summary Column -->
+                        <div class="col-lg-4 col-12">
+                            <div class="order-summary-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-shopping-cart me-2"></i> Your Order</h3>
+                                </div>
 
-                            <div class="card-body">
-                                <!-- Cart Items Preview -->
-                                @if (Helper::cartCount() > 0)
-                                    <div class="cart-items-preview mb-3">
-                                        <h5>Order Items</h5>
-                                        @php $cart_items = Helper::getAllProductFromCart(); @endphp
-                                        @foreach ($cart_items as $item)
-                                            <div class="cart-item-preview">
-                                                <div class="item-info">
-                                                    <span class="item-name">{{ $item->product->title }}</span>
-                                                    <span class="item-quantity">x{{ $item->quantity }}</span>
+                                <div class="card-body">
+                                    <!-- Cart Items Preview -->
+                                    @if (Helper::cartCount() > 0)
+                                        <div class="cart-items-preview mb-3">
+                                            <h5>Order Items</h5>
+                                            @php $cart_items = Helper::getAllProductFromCart(); @endphp
+                                            @foreach ($cart_items as $item)
+                                                <div class="cart-item-preview">
+                                                    <div class="item-info">
+                                                        <span class="item-name">{{ $item->product->title }}</span>
+                                                        <span class="item-quantity">x{{ $item->quantity }}</span>
+                                                    </div>
+                                                    <span class="item-price">${{ number_format($item->amount, 2) }}</span>
                                                 </div>
-                                                <span class="item-price">${{ number_format($item->amount, 2) }}</span>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                <!-- Order Totals -->
-                                <div class="order-totals">
-                                    <div class="total-row">
-                                        <span>Subtotal</span>
-                                        <span class="order_subtotal" data-price="{{ Helper::totalCartPrice() }}">
-                                            ${{ number_format(Helper::totalCartPrice(), 2) }}
-                                        </span>
-                                    </div>
-
-                                    <div class="total-row shipping-row">
-                                        <span>Shipping</span>
-                                        <span class="shipping-cost">
-                                            @if (count(Helper::shipping()) > 0 && Helper::cartCount() > 0)
-                                                <select name="shipping" class="shipping-select" id="shipping_select">
-                                                    <option value="">Select shipping method</option>
-                                                    @foreach (Helper::shipping() as $shipping)
-                                                        <option value="{{ $shipping->id }}"
-                                                            data-price="{{ $shipping->price }}"
-                                                            {{ old('shipping') == $shipping->id ? 'selected' : '' }}>
-                                                            {{ $shipping->type }}:
-                                                            ${{ number_format($shipping->price, 2) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            @else
-                                                <span class="free-shipping">Free Shipping</span>
-                                            @endif
-                                        </span>
-                                    </div>
-
-                                    @if (session('coupon'))
-                                        <div class="total-row coupon-row">
-                                            <span>Discount (Coupon)</span>
-                                            <span class="coupon_price" data-price="{{ session('coupon')['value'] }}">
-                                                -${{ number_format(session('coupon')['value'], 2) }}
-                                            </span>
+                                            @endforeach
                                         </div>
                                     @endif
 
-                                    <div class="total-row grand-total">
-                                        <span>Total</span>
-                                        @php
-                                            $total_amount = Helper::totalCartPrice();
-                                            if (session('coupon')) {
-                                                $total_amount = $total_amount - session('coupon')['value'];
-                                            }
-                                        @endphp
-                                        <span class="order_total_price" id="order_total_price">
-                                            ${{ number_format($total_amount, 2) }}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <!-- Payment Methods -->
-                                <div class="payment-methods mt-4">
-                                    <h5>Payment Method</h5>
-                                    <div class="payment-options">
-                                        <div class="payment-option">
-                                            <input type="radio" name="payment_method" id="payment_cod" value="cod"
-                                                {{ session('payment_method') == 'cod' ? 'checked' : '' }}
-                                                {{ old('payment_method') == 'cod' ? 'checked' : '' }}>
-                                            <label for="payment_cod">
-                                                <i class="fas fa-money-bill-wave"></i>
-                                                Cash on Delivery
-                                            </label>
+                                    <!-- Order Totals -->
+                                    <div class="order-totals">
+                                        <div class="total-row">
+                                            <span>Subtotal</span>
+                                            <span class="order_subtotal" data-price="{{ Helper::totalCartPrice() }}">
+                                                ${{ number_format(Helper::totalCartPrice(), 2) }}
+                                            </span>
                                         </div>
 
-                                        <div class="payment-option">
+                                        <div class="total-row shipping-row">
+                                            <span>Shipping</span>
+                                            <span class="shipping-cost">
+                                                @if (count(Helper::shipping()) > 0 && Helper::cartCount() > 0)
+                                                    <select name="shipping" class="shipping-select" id="shipping_select">
+                                                        <option value="">Select shipping method</option>
+                                                        @foreach (Helper::shipping() as $shipping)
+                                                            <option value="{{ $shipping->id }}"
+                                                                data-price="{{ $shipping->price }}"
+                                                                {{ old('shipping') == $shipping->id ? 'selected' : '' }}>
+                                                                {{ $shipping->type }}:
+                                                                ${{ number_format($shipping->price, 2) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                @else
+                                                    <span class="free-shipping">Free Shipping</span>
+                                                @endif
+                                            </span>
+                                        </div>
+
+                                        @if (session('coupon'))
+                                            <div class="total-row coupon-row">
+                                                <span>Discount (Coupon)</span>
+                                                <span class="coupon_price" data-price="{{ session('coupon')['value'] }}">
+                                                    -${{ number_format(session('coupon')['value'], 2) }}
+                                                </span>
+                                            </div>
+                                        @endif
+
+                                        <div class="total-row grand-total">
+                                            <span>Total</span>
+                                            @php
+                                                $total_amount = Helper::totalCartPrice();
+                                                if (session('coupon')) {
+                                                    $total_amount = $total_amount - session('coupon')['value'];
+                                                }
+                                            @endphp
+                                            <span class="order_total_price" id="order_total_price">
+                                                ${{ number_format($total_amount, 2) }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Payment Methods -->
+                                    <div class="payment-methods mt-4">
+                                        <h5>Payment Method</h5>
+                                        <div class="payment-options">
+                                            <div class="payment-option">
+                                                <input type="radio" name="payment_method" id="payment_cod"
+                                                    value="cod"
+                                                    {{ session('payment_method') == 'cod' ? 'checked' : '' }}
+                                                    {{ old('payment_method') == 'cod' ? 'checked' : '' }} checked>
+                                                <label for="payment_cod">
+                                                    <i class="fas fa-money-bill-wave"></i>
+                                                    Cash on Delivery
+                                                </label>
+                                            </div>
+
+                                            {{-- <div class="payment-option">
                                             <input type="radio" name="payment_method" id="payment_paypal"
                                                 value="paypal"
                                                 {{ session('payment_method') == 'paypal' ? 'checked' : '' }}
@@ -280,26 +309,27 @@
                                                 <i class="fab fa-paypal"></i>
                                                 PayPal
                                             </label>
+                                        </div> --}}
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Payment Methods Image -->
-                                <div class="payment-methods-img mt-3">
-                                    <img src="{{ asset('backend/img/payment-method.png') }}" alt="Payment Methods"
-                                        class="img-fluid">
-                                </div>
+                                    <!-- Payment Methods Image -->
+                                    <div class="payment-methods-img mt-3">
+                                        <label for="">Coming Soon..</label>
+                                        <img src="{{ asset('backend/img/payment-method.png') }}" alt="Payment Methods"
+                                            class="img-fluid">
+                                    </div>
 
-                                <!-- Place Order Button -->
-                                <div class="place-order-btn mt-4">
-                                    <button type="submit" class="btn btn-primary btn-place-order">
-                                        <i class="fas fa-check-circle me-2"></i> Place Order
-                                    </button>
+                                    <!-- Place Order Button -->
+                                    <div class="place-order-btn mt-4">
+                                        <button type="submit" class="btn btn-primary btn-place-order">
+                                            <i class="fas fa-check-circle me-2"></i> Place Order
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </form>
         </div>
     </section>

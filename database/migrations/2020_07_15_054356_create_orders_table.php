@@ -28,10 +28,11 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
             $table->foreign('shipping_id')->references('id')->on('shippings')->onDelete('SET NULL');
             $table->string('first_name');
-            $table->string('last_name');
+            $table->string('last_name')->nullable();
             $table->string('email');
             $table->string('phone');
             $table->string('country');
+            $table->string('state_id');
             $table->string('post_code')->nullable();
             $table->text('address1');
             $table->text('address2')->nullable();

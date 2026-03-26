@@ -455,4 +455,28 @@
         initializeQuantityControls();
         initializeRemoveCartItems();
     });
+
+ 
+$(document).ready(function() {
+    $('#state-dropdown').on('change', function() {
+        var stateId = this.value;
+        $("#city-dropdown").html('<option value="">Loading...</option>');
+        
+        if(stateId) {
+            $.ajax({
+                url: "{{ route('getCityByStateId','') }}" +'/'+ stateId,
+                type: "GET",
+                success: function(res) {
+                    $('#city-dropdown').html('<option value="">Select City</option>');
+                    $.each(res, function(key, value) {
+                        $("#city-dropdown").append('<option value="' + value.id + '">' + value.city_name + '</option>');
+                    });
+                }
+            });
+        } else {
+            $("#city-dropdown").html('<option value="">Select State First</option>');
+        }
+    });
+});
+ 
 </script>
