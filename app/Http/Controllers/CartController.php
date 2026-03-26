@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Wishlist;
 use App\Models\Cart;
 use Illuminate\Support\Str;
 use Helper;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -170,10 +171,11 @@ class CartController extends Controller
         }
     }
 
-    
+
     public function checkout(Request $request)
     {
         $user = auth()->user();
+
 
         // Get user's last order for address pre-filling
         $lastOrder = null;
@@ -195,6 +197,9 @@ class CartController extends Controller
 
     public function codCheckout(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->guest(route('login.form'));
+        }
 
         if (empty($request->slug)) {
             request()->session()->flash('error', 'Invalid Products');
@@ -223,21 +228,7 @@ class CartController extends Controller
             $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('cart_id', null)->update(['cart_id' => $cart->id]);
         }
 
-        // Get user's last order for address pre-filling
-        $lastOrder = null;
-        if ($user) {
-            $lastOrder = \App\Models\Order::where('user_id', $user->id)
-                ->where('payment_status', 'paid')
-                ->orderBy('created_at', 'DESC')
-                ->first();
-        }
-
-        // Split user name into first and last name
-        $nameParts = $user ? explode(' ', $user->name, 2) : ['', ''];
-        $firstName = $nameParts[0] ?? '';
-        $lastName = $nameParts[1] ?? '';
-
-        return view('frontend.pages.checkout', compact('user', 'lastOrder', 'firstName', 'lastName'));
+        return view('frontend.pages.cart');
     }
 
     // // In your CartController
@@ -274,76 +265,76 @@ class CartController extends Controller
     // }
 
     // Update cart quantity
-public function updateQuantity(Request $request)
-{
-    $request->validate([
-        'product_id' => 'required',
-        'quantity' => 'required|integer|min:1'
-    ]);
-    
-    $cart = Cart::where('user_id', auth()->id())
-        ->where('order_id', null)
-        ->where('product_id', $request->product_id)
-        ->first();
-    
-    if (!$cart) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Cart item not found'
+    public function updateQuantity(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required',
+            'quantity' => 'required|integer|min:1'
         ]);
-    }
-    
-    $product = Product::find($request->product_id);
-    
-    // Check stock
-    if ($product->stock < $request->quantity) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Stock not sufficient! Only ' . $product->stock . ' available'
-        ]);
-    }
-    
-    $cart->quantity = $request->quantity;
-    $cart->amount = $cart->price * $request->quantity;
-    $cart->save();
-    
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Cart updated successfully',
-        'cartCount' => Helper::cartCount(),
-        'cartItems' => Helper::getAllProductFromCart(),
-        'cartTotal' => Helper::totalCartPrice(),
-        'cartItem' => $cart
-    ]);
-}
 
-// Remove product from cart
-public function removeProduct(Request $request)
-{
-    $request->validate([
-        'product_id' => 'required'
-    ]);
-    
-    $cart = Cart::where('user_id', auth()->id())
-        ->where('order_id', null)
-        ->where('product_id', $request->product_id)
-        ->first();
-    
-    if (!$cart) {
+        $cart = Cart::where('user_id', auth()->id())
+            ->where('order_id', null)
+            ->where('product_id', $request->product_id)
+            ->first();
+
+        if (!$cart) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cart item not found'
+            ]);
+        }
+
+        $product = Product::find($request->product_id);
+
+        // Check stock
+        if ($product->stock < $request->quantity) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Stock not sufficient! Only ' . $product->stock . ' available'
+            ]);
+        }
+
+        $cart->quantity = $request->quantity;
+        $cart->amount = $cart->price * $request->quantity;
+        $cart->save();
+
         return response()->json([
-            'status' => 'error',
-            'message' => 'Cart item not found'
+            'status' => 'success',
+            'message' => 'Cart updated successfully',
+            'cartCount' => Helper::cartCount(),
+            'cartItems' => Helper::getAllProductFromCart(),
+            'cartTotal' => Helper::totalCartPrice(),
+            'cartItem' => $cart
         ]);
     }
-    
-    $cart->delete();
-    
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Product removed from cart',
-        'cartCount' => Helper::cartCount(),
-        'cartItems' => Helper::getAllProductFromCart(),
-        'cartTotal' => Helper::totalCartPrice()
-    ]);
-}
+
+    // Remove product from cart
+    public function removeProduct(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required'
+        ]);
+
+        $cart = Cart::where('user_id', auth()->id())
+            ->where('order_id', null)
+            ->where('product_id', $request->product_id)
+            ->first();
+
+        if (!$cart) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cart item not found'
+            ]);
+        }
+
+        $cart->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product removed from cart',
+            'cartCount' => Helper::cartCount(),
+            'cartItems' => Helper::getAllProductFromCart(),
+            'cartTotal' => Helper::totalCartPrice()
+        ]);
+    }
 }

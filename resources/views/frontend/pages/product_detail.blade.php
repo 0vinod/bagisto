@@ -19,7 +19,15 @@
 @section('title', 'E-SHOP || PRODUCT DETAIL')
 
 @section('main-content')
+<style>.blink-text {
+    animation: blink 3s linear infinite;
+}
 
+@keyframes blink {
+    50% {
+        opacity: 5;
+    }
+}</style>
 
     <!-- Main Product Section -->
     <section class="product-detail-section py-3">
@@ -116,110 +124,111 @@
 
                         <!-- Product Options Form -->
                         {{-- <form action="{{ route('single-add-to-cart') }}" method="POST" class="product-form"> --}}
-                            @csrf
-                            <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+                        @csrf
+                        <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
 
-                            <!-- Size Selection (if available) -->
-                            @if ($product_detail->size)
-                                <div class="form-group ">
-                                    <label class="form-label fw-bold">Select Size</label>
-                                    <div class="size-options">
-                                        @php
-                                            $sizes = explode(',', $product_detail->size);
-                                        @endphp
-                                        @foreach ($sizes as $size)
-                                            <label class="size-option">
-                                                <input type="radio" name="size" value="{{ trim($size) }}" required>
-                                                <span class="size-label">{{ trim($size) }}</span>
-                                            </label>
-                                        @endforeach
-                                    </div>
+                        <!-- Size Selection (if available) -->
+                        @if ($product_detail->size)
+                            <div class="form-group ">
+                                <label class="form-label fw-bold">Select Size</label>
+                                <div class="size-options">
+                                    @php
+                                        $sizes = explode(',', $product_detail->size);
+                                    @endphp
+                                    @foreach ($sizes as $size)
+                                        <label class="size-option">
+                                            <input type="radio" name="size" value="{{ trim($size) }}" required>
+                                            <span class="size-label">{{ trim($size) }}</span>
+                                        </label>
+                                    @endforeach
                                 </div>
-                                <hr>
-                            @endif
-
-                            <!-- Color Selection (if available) -->
-                            @if ($product_detail->color)
-                                <div class="form-group ">
-                                    <label class="form-label fw-bold">Select Color</label>
-                                    <div class="color-options">
-                                        @php
-                                            $colors = explode(',', $product_detail->color);
-                                        @endphp
-                                        @foreach ($colors as $color)
-                                            <label class="color-option">
-                                                <input type="radio" name="color" value="{{ trim($color) }}" required>
-                                                <span class="color-label"
-                                                    style="background-color: {{ trim($color) }};"></span>
-                                                <span class="color-name">{{ ucfirst(trim($color)) }}</span>
-                                            </label>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <hr>
-                            @endif
-
-                            <!-- Quantity Section -->
-                            <div class="form-group  ">
-                                <small class="stock-info text-muted">
-                                   Quantity <strong> {{ $product_detail->stock > 100 ? 99 : $product_detail->stock }} </strong> Units available
-                                </small>
                             </div>
-<hr>
-                            @php
-                                // Check if product is already in cart
-                                $cartItem = \App\Models\Cart::where('user_id', auth()->id())
-                                    ->where('order_id', null)
-                                    ->where('product_id', $product_detail->id)
-                                    ->first();
-                                $isInCart = $cartItem ? true : false;
-                                $cartQuantity = $cartItem ? $cartItem->quantity : 0;
-                            @endphp
-                            <!-- Action Buttons -->
-                            <div class="action-buttons mb-4">
-                                @if ($product_detail->stock > 0)
-                                    <div class="product-actions mt-2">
-                                        @if ($isInCart && $cartQuantity > 0)
-                                            <div class="cart-quantity-controls">
-                                                <button class="qty-decrease" data-product-id="{{ $product_detail->id }}">
+                            <hr>
+                        @endif
 
-                                                </button>
-                                                <span class="cart-qty">{{ $cartQuantity }}</span>
-                                                <button class="qty-increase" data-product-id="{{ $product_detail->id }}">
+                        <!-- Color Selection (if available) -->
+                        @if ($product_detail->color)
+                            <div class="form-group ">
+                                <label class="form-label fw-bold">Select Color</label>
+                                <div class="color-options">
+                                    @php
+                                        $colors = explode(',', $product_detail->color);
+                                    @endphp
+                                    @foreach ($colors as $color)
+                                        <label class="color-option">
+                                            <input type="radio" name="color" value="{{ trim($color) }}" required>
+                                            <span class="color-label"
+                                                style="background-color: {{ trim($color) }};"></span>
+                                            <span class="color-name">{{ ucfirst(trim($color)) }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <hr>
+                        @endif
 
-                                                </button>
-                                            </div>
-                                        @else
-                                            <button class="btn-add-cart" data-slug="{{ $product_detail->slug }}"
-                                                data-id="{{ $product_detail->id }}">
-                                                <i class="ti-shopping-cart"></i> Add to Cart
+                       <!-- Quantity Section -->
+<div class="form-group">
+      Quantity  <small class="stock-info text-warning blink-text">
+     <strong>{{ $product_detail->stock > 12 ? 12 : $product_detail->stock }}</strong>
+        Units available
+    </small>
+</div>
+                        <hr>
+                        @php
+                            // Check if product is already in cart
+                            $cartItem = \App\Models\Cart::where('user_id', auth()->id())
+                                ->where('order_id', null)
+                                ->where('product_id', $product_detail->id)
+                                ->first();
+                            $isInCart = $cartItem ? true : false;
+                            $cartQuantity = $cartItem ? $cartItem->quantity : 0;
+                        @endphp
+                        <!-- Action Buttons -->
+                        <div class="action-buttons mb-4">
+                            @if ($product_detail->stock > 0)
+                                <div class="product-actions mt-2">
+                                    @if ($isInCart && $cartQuantity > 0)
+                                        <div class="cart-quantity-controls">
+                                            <button class="qty-decrease" data-product-id="{{ $product_detail->id }}">
+
                                             </button>
-                                        @endif
-                                    </div>
-                                @else
-                                    <button type="button" class="btn btn-secondary btn-out-of-stock" disabled>
-                                        <i class="fas fa-times-circle me-2"></i>Out of Stock
-                                    </button>
-                                @endif
-                                <!-- Buy Now COD Button - Added Here -->
-                                <div class="buy-now-cod mt-2">
-                                    <form action="{{ route('cart') }}" method="GET" id="codForm">
-                                        @csrf
-                                        <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+                                            <span class="cart-qty">{{ $cartQuantity }}</span>
+                                            <button class="qty-increase" data-product-id="{{ $product_detail->id }}">
 
-                                        <button type="submit" class="btn btn-cod" id=" " >
-                                            <i class="ti-shopping-cart"></i> Buy Now (COD)
+                                            </button>
+                                        </div>
+                                    @else
+                                        <button class="btn-add-cart" data-slug="{{ $product_detail->slug }}"
+                                            data-id="{{ $product_detail->id }}">
+                                            <i class="ti-shopping-cart"></i> Add to Cart
                                         </button>
-                                    </form>
+                                    @endif
                                 </div>
-                                <!-- End Buy Now COD Button -->
+                            @else
+                                <button type="button" class="btn btn-secondary btn-out-of-stock" disabled>
+                                    <i class="fas fa-times-circle me-2"></i>Out of Stock
+                                </button>
+                            @endif
+                            <!-- Buy Now COD Button - Added Here -->
+                            <div class="buy-now-cod mt-2">
+                                <form action="{{ route('checkout.cod') }}" method="POST" id="codForm">
+                                    @csrf
+                                    <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
 
-
+                                    <button type="submit" class="btn btn-cod" id=" ">
+                                        <i class="ti-shopping-cart"></i> Buy Now (COD)
+                                    </button>
+                                </form>
                             </div>
+                            <!-- End Buy Now COD Button -->
+
+
+                        </div>
 
 
 
-                       
+
 
                         <a href="{{ route('add-to-wishlist', $product_detail->slug) }}"
                             class="btn btn-outline-secondary btn-wishlist">

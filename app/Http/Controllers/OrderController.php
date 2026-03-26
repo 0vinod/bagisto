@@ -8,10 +8,11 @@ use App\Models\Order;
 use App\Models\Shipping;
 use App\Models\User;
 use PDF;
-use Notification;
+
 use Helper;
 use Illuminate\Support\Str;
 use App\Notifications\StatusNotification;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
@@ -22,8 +23,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders=Order::orderBy('id','DESC')->paginate(10);
-        return view('backend.order.index')->with('orders',$orders);
+        $orders = Order::orderBy('id', 'DESC')->paginate(10);
+        return view('backend.order.index')->with('orders', $orders);
     }
 
     /**
@@ -61,10 +62,11 @@ class OrderController extends Controller
         $cartItems = Cart::where('user_id', auth()->user()->id)
             ->where('order_id', null)
             ->get();
-            
+
         if ($cartItems->isEmpty()) {
             return back()->with('error', 'Cart is Empty!');
         }
+
         try {
             $order = new Order();
             $order->order_number = 'ORD-' . strtoupper(Str::random(10));
@@ -81,32 +83,33 @@ class OrderController extends Controller
             $order->quantity = Helper::cartCount();
             $order->status = 'new';
             $order->payment_method = $validated['payment_method'];
-            
-            // Calculate shipping
-            $shippingPrice = 0;
+
+            // Calculate delivery charge (shipping)
+            $deliveryCharge = 0;
             if ($request->filled('shipping')) {
                 $shipping = Shipping::find($request->input('shipping'));
                 if ($shipping) {
                     $order->shipping_id = $shipping->id;
-                    $shippingPrice = (float)$shipping->price;
+                    $deliveryCharge = (float)$shipping->price;
+                    $order->delivery_charge = $deliveryCharge;
                 }
             }
-            
+
             // Calculate coupon discount
             $couponDiscount = 0;
             if (session('coupon')) {
                 $couponDiscount = (float)session('coupon')['value'];
                 $order->coupon = $couponDiscount;
             }
-            
-            // Calculate total
-            $order->total_amount = $order->sub_total + $shippingPrice - $couponDiscount;
-            
+
+            // Calculate total amount (sub_total + delivery_charge - coupon)
+            $order->total_amount = $order->sub_total + $deliveryCharge - $couponDiscount;
+
             // Set payment status - PayPal orders remain unpaid until payment is confirmed
             $order->payment_status = 'unpaid';
-            
+
             $order->save();
-            
+
             // For COD: Link cart items and clear session immediately
             // For PayPal: Don't link cart items yet - wait for payment confirmation
             if ($validated['payment_method'] == 'cod') {
@@ -114,11 +117,11 @@ class OrderController extends Controller
                 Cart::where('user_id', auth()->user()->id)
                     ->where('order_id', null)
                     ->update(['order_id' => $order->id]);
-                
+
                 // Clear session data for COD
                 session()->forget('cart');
                 session()->forget('coupon');
-                
+
                 // Send notification to admin
                 $admin = User::where('role', 'admin')->first();
                 if ($admin) {
@@ -127,26 +130,38 @@ class OrderController extends Controller
                         'actionURL' => route('order.show', $order->id),
                         'fas' => 'fa-file-alt'
                     ];
-                    Notification::send($admin, new StatusNotification($details));
+                    // Notification::send($admin, new StatusNotification($details));
                 }
-                
-                return redirect()->route('home')
-                    ->with('success', 'Your product successfully placed in order');
+
+                // Redirect to thank you page with order data
+                return redirect()->route('order.thankyou', $order->id)
+                    ->with('success', 'Your order has been placed successfully!');
             }
-            
+
             // For PayPal: Store order ID in session, but don't link cart items yet
             // Cart items will be linked only after successful payment
             if ($validated['payment_method'] == 'paypal') {
                 // Don't send notification yet - wait for payment confirmation
                 return redirect()->route('payment')->with(['id' => $order->id]);
             }
-                
         } catch (\Exception $e) {
             \Log::error('Order creation failed: ' . $e->getMessage());
             return back()
                 ->with('error', 'Something went wrong. Please try again.')
                 ->withInput();
         }
+    }
+
+    public function thankyou($id)
+    {
+        $order = Order::with('cart')->findOrFail($id);
+
+        // Verify that the order belongs to the authenticated user
+        if ($order->user_id != auth()->user()->id) {
+            abort(403, 'Unauthorized access');
+        }
+
+        return view('frontend.pages.thankyou', compact('order'));
     }
 
     /**
@@ -169,8 +184,8 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order=Order::find($id);
-        return view('backend.order.edit')->with('order',$order);
+        $order = Order::find($id);
+        return view('backend.order.edit')->with('order', $order);
     }
 
     /**
@@ -185,10 +200,10 @@ class OrderController extends Controller
         $validated = $request->validate([
             'status' => 'required|in:new,process,delivered,cancel'
         ]);
-        
+
         try {
             $order = Order::with('cart.product')->findOrFail($id);
-            
+
             // Update stock when order is delivered
             if ($validated['status'] == 'delivered' && $order->status != 'delivered') {
                 foreach ($order->cart as $cart) {
@@ -202,13 +217,12 @@ class OrderController extends Controller
                     }
                 }
             }
-            
+
             $order->status = $validated['status'];
             $order->save();
-            
+
             return redirect()->route('order.index')
                 ->with('success', 'Successfully updated order');
-                
         } catch (\Exception $e) {
             \Log::error('Order update failed: ' . $e->getMessage());
             return redirect()->route('order.index')
@@ -227,10 +241,9 @@ class OrderController extends Controller
         try {
             $order = Order::findOrFail($id);
             $order->delete();
-            
+
             return redirect()->route('order.index')
                 ->with('success', 'Order successfully deleted');
-                
         } catch (\Exception $e) {
             \Log::error('Order deletion failed: ' . $e->getMessage());
             return redirect()->route('order.index')
@@ -238,7 +251,8 @@ class OrderController extends Controller
         }
     }
 
-    public function orderTrack(){
+    public function orderTrack()
+    {
         return view('frontend.pages.order-track');
     }
 
@@ -247,60 +261,62 @@ class OrderController extends Controller
         $validated = $request->validate([
             'order_number' => 'required|string|max:255'
         ]);
-        
+
         $order = Order::where('user_id', auth()->user()->id)
             ->where('order_number', $validated['order_number'])
             ->first();
-            
+
         if (!$order) {
             return back()->with('error', 'Invalid order number. Please try again.');
         }
-        
+
         $messages = [
             'new' => 'Your order has been placed. Please wait.',
             'process' => 'Your order is under processing. Please wait.',
             'delivered' => 'Your order is successfully delivered.',
             'cancel' => 'Your order has been canceled. Please try again.'
         ];
-        
+
         $message = $messages[$order->status] ?? 'Order status unknown.';
         $type = ($order->status == 'cancel') ? 'error' : 'success';
-        
+
         return redirect()->route('home')->with($type, $message);
     }
 
     // PDF generate
-    public function pdf(Request $request){
-        $order=Order::getAllOrder($request->id);
+    public function pdf(Request $request)
+    {
+        $order = Order::getAllOrder($request->id);
         // return $order;
-        $file_name=$order->order_number.'-'.$order->first_name.'.pdf';
+        $file_name = $order->order_number . '-' . $order->first_name . '.pdf';
         // return $file_name;
-        $pdf=PDF::loadview('backend.order.pdf',compact('order'));
+        $pdf = PDF::loadview('backend.order.pdf', compact('order'));
         return $pdf->download($file_name);
     }
     // Income chart
-    public function incomeChart(Request $request){
-        $year=\Carbon\Carbon::now()->year;
+    public function incomeChart(Request $request)
+    {
+        $year = \Carbon\Carbon::now()->year;
         // dd($year);
-        $items=Order::with(['cart_info'])->whereYear('created_at',$year)->where('status','delivered')->get()
-            ->groupBy(function($d){
+        $items = Order::with(['cart_info'])->whereYear('created_at', $year)->where('status', 'delivered')->get()
+            ->groupBy(function ($d) {
                 return \Carbon\Carbon::parse($d->created_at)->format('m');
             });
-            // dd($items);
-        $result=[];
-        foreach($items as $month=>$item_collections){
-            foreach($item_collections as $item){
-                $amount=$item->cart_info->sum('amount');
+        // dd($items);
+        $result = [];
+        foreach ($items as $month => $item_collections) {
+            foreach ($item_collections as $item) {
+                $amount = $item->cart_info->sum('amount');
                 // dd($amount);
-                $m=intval($month);
+                $m = intval($month);
                 // return $m;
-                isset($result[$m]) ? $result[$m] += $amount :$result[$m]=$amount;
+                isset($result[$m]) ? $result[$m] += $amount : $result[$m] = $amount;
             }
         }
-        $data=[];
-        for($i=1; $i <=12; $i++){
-            $monthName=date('F', mktime(0,0,0,$i,1));
-            $data[$monthName] = (!empty($result[$i]))? number_format((float)($result[$i]), 2, '.', '') : 0.0;
+        $data = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $monthName = date('F', mktime(0, 0, 0, $i, 1));
+            $data[$monthName] = (!empty($result[$i])) ? number_format((float)($result[$i]), 2, '.', '') : 0.0;
         }
         return $data;
     }
