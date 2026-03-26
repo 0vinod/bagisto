@@ -236,9 +236,9 @@
                     <div class="header-user">
                         @auth
                             @if (Auth::user()->role == 'admin')
-                                {{-- <a href="{{ route('admin') }}" class="user-btn">Dashboard</a> --}}
+                                <a href="{{ route('admin') }}" class="user-btn">Dashboard</a>
                             @else
-                                {{-- <a href="{{ route('user') }}" class="user-btn">My Account</a> --}}
+                                <a href="{{ route('user') }}" class="user-btn">My Account</a>
                             @endif
                             <a href="{{ route('user.logout') }}" class="user-btn logout"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

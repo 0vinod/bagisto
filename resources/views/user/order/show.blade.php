@@ -4,8 +4,8 @@
 
 @section('main-content')
 <div class="card">
-<h5 class="card-header">Order       <a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>
-  </h5>
+{{-- <h5 class="card-header">Order       <a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>
+  </h5> --}}
   <div class="card-body">
     @if($order)
     <table class="table table-striped table-hover">
@@ -19,7 +19,7 @@
             <th>Charge</th>
             <th>Total Amount</th>
             <th>Status</th>
-            <th>Action</th>
+            {{-- <th>Action</th> --}}
         </tr>
       </thead>
       <tbody>
@@ -29,8 +29,8 @@
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>${{$order->shipping->price}}</td>
-            <td>${{number_format($order->total_amount,2)}}</td>
+            <td>Rs.{{$order?->shipping?->price}}</td>
+            <td>Rs.{{number_format($order->total_amount,2)}}</td>
             <td>
                 @if($order->status=='new')
                   <span class="badge badge-primary">{{$order->status}}</span>
@@ -42,13 +42,13 @@
                   <span class="badge badge-danger">{{$order->status}}</span>
                 @endif
             </td>
-            <td>
+            {{-- <td>
                 <form method="POST" action="{{route('order.destroy',[$order->id])}}">
                   @csrf
                   @method('delete')
                       <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                 </form>
-            </td>
+            </td> --}}
 
         </tr>
       </tbody>
@@ -82,11 +82,11 @@
                           $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
                       @endphp
                         <td>Shipping Charge</td>
-                        <td> :${{$order->shipping->price}}</td>
+                        <td> :rs.{{$order->shipping->price ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Total Amount</td>
-                        <td> : $ {{number_format($order->total_amount,2)}}</td>
+                        <td> : Rs.{{number_format($order->total_amount,2)}}</td>
                     </tr>
                     <tr>
                       <td>Payment Method</td>
