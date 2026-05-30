@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c59a5c4b871023ab68aa9bc657b37c27",
+    "content-hash": "f2e72fb157cc939a58ff4db8625dbbb6",
     "packages": [
+        {
+            "name": "0vinod/visitor-tracking",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/0vinod/VisitorTracking.git",
+                "reference": "a0925d84f4f2012da5d20ab25ca41b56c255268b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/0vinod/VisitorTracking/zipball/a0925d84f4f2012da5d20ab25ca41b56c255268b",
+                "reference": "a0925d84f4f2012da5d20ab25ca41b56c255268b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^9.0|^10.0|^11.0",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Vinod\\VisitorTracking\\VisitorTrackingServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vinod\\VisitorTracking\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vinod",
+                    "email": "vinod190596@gmail.com"
+                }
+            ],
+            "description": "Visitor tracking package for Laravel applications",
+            "keywords": [
+                "analytics",
+                "laravel",
+                "tracking",
+                "visitor"
+            ],
+            "support": {
+                "issues": "https://github.com/0vinod/VisitorTracking/issues",
+                "source": "https://github.com/0vinod/VisitorTracking/tree/v1.0.0"
+            },
+            "time": "2026-05-24T06:12:37+00:00"
+        },
         {
             "name": "barryvdh/laravel-dompdf",
             "version": "v2.2.0",

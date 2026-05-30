@@ -110,13 +110,13 @@
                             @endphp
                             @if ($product_detail->discount > 0)
                                 <div class="price-wrapper">
-                                    <span class="current-price">${{ number_format($afterDiscount, 2) }}</span>
-                                    <span class="original-price">${{ number_format($product_detail->price, 2) }}</span>
+                                    <span class="current-price">Rs. {{ number_format($afterDiscount, 2) }}</span>
+                                    <span class="original-price">Rs. {{ number_format($product_detail->price, 2) }}</span>
                                     <span class="saved-amount">Save
-                                        ${{ number_format($product_detail->price - $afterDiscount, 2) }}</span>
+                                        Rs. {{ number_format($product_detail->price - $afterDiscount, 2) }}</span>
                                 </div>
                             @else
-                                <span class="current-price">${{ number_format($product_detail->price, 2) }}</span>
+                                <span class="current-price">Rs. {{ number_format($product_detail->price, 2) }}</span>
                             @endif
                         </div>
 
