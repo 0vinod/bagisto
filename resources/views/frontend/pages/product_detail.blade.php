@@ -199,7 +199,7 @@
                                             </button>
                                         </div>
                                     @else
-                                        <button class="btn-add-cart" data-slug="{{ $product_detail->slug }}"
+                                        <button class="btn-add-cart d-none" data-slug="{{ $product_detail->slug }}"
                                             data-id="{{ $product_detail->id }}">
                                             <i class="ti-shopping-cart"></i> Add to Cart
                                         </button>

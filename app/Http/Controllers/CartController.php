@@ -198,9 +198,15 @@ class CartController extends Controller
         return view('frontend.pages.checkout', compact('states','user', 'lastOrder', 'firstName', 'lastName'));
     }
 
+    public function checkoutSuccess()
+    {
+        return view('frontend.pages.checkout-success');
+    }
+
 
     public function codCheckout(Request $request)
     {
+        return view('frontend.pages.cart');
         if (!Auth::check()) {
             return redirect()->guest(route('login.form'));
         }

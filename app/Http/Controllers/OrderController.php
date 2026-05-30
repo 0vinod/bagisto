@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Shipping;
 use App\Models\User;
 use PDF;
@@ -45,6 +46,8 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $cartItems =  collect([]);
+
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'state_id' => 'required|string|max:255',
@@ -58,21 +61,25 @@ class OrderController extends Controller
             'shipping' => 'nullable|exists:shippings,id',
             'payment_method' => 'required|in:cod,paypal'
         ]);
+ 
+         $product = Product::where('slug', $request->slug)->first();
 
-        $cartItems = Cart::where('user_id', auth()->user()->id)
-            ->where('order_id', null)
-            ->get();
-
-        if ($cartItems->isEmpty()) {
-            return back()->with('error', 'Cart is Empty!');
+        if (auth()->user()?->id) {
+            $cartItems = Cart::where('user_id', auth()->user()->id)
+                ->where('order_id', null)
+                ->get();
         }
+
+        // if ($cartItems->isEmpty()) {
+        //     return back()->with('error', 'Cart is Empty!');
+        // }
 
         try {
             $order = new Order();
             $order->order_number = 'ORD-' . strtoupper(Str::random(10));
-            $order->user_id = auth()->user()->id;
+            $order->user_id = auth()->user()?->id;
             $order->first_name = $validated['first_name'];
-            // $order->last_name = $validated['last_name']; 
+           $order->product_id = $product->id ?? null; 
             $order->email = $validated['email'];
             $order->phone = $validated['phone'];
             $order->country = $validated['country'];
@@ -93,8 +100,8 @@ class OrderController extends Controller
                     $order->shipping_id = $shipping->id;
                     $deliveryCharge = (float)$shipping->price;
                     $order->delivery_charge = $deliveryCharge;
-                }
-            }
+                }   
+            }           
 
             // Calculate coupon discount
             $couponDiscount = 0;
@@ -115,24 +122,26 @@ class OrderController extends Controller
             // For PayPal: Don't link cart items yet - wait for payment confirmation
             if ($validated['payment_method'] == 'cod') {
                 // Update cart items with order_id for COD
-                Cart::where('user_id', auth()->user()->id)
-                    ->where('order_id', null)
-                    ->update(['order_id' => $order->id]);
-
+                if (auth()->user()?->id) {
+                    Cart::where('user_id', auth()->user()->id)
+                        ->where('order_id', null)
+                        ->update(['order_id' => $order->id]);
+                }
                 // Clear session data for COD
                 session()->forget('cart');
                 session()->forget('coupon');
 
                 // Send notification to admin
-                $admin = User::where('role', 'admin')->first();
-                if ($admin) {
-                    $details = [
-                        'title' => 'New order created',
-                        'actionURL' => route('order.show', $order->id),
-                        'fas' => 'fa-file-alt'
-                    ];
-                    // Notification::send($admin, new StatusNotification($details));
-                }
+                // $admin = User::where('role', 'admin')->first();
+
+                // if ($admin) {
+                //     $details = [
+                //         'title' => 'New order created',
+                //         'actionURL' => route('order.show', $order->id),
+                //         'fas' => 'fa-file-alt'
+                //     ];
+                //     // Notification::send($admin, new StatusNotification($details));
+                // }
 
                 // Redirect to thank you page with order data
                 return redirect()->route('order.thankyou', $order->id)
@@ -141,12 +150,17 @@ class OrderController extends Controller
 
             // For PayPal: Store order ID in session, but don't link cart items yet
             // Cart items will be linked only after successful payment
-            if ($validated['payment_method'] == 'paypal') {
-                // Don't send notification yet - wait for payment confirmation
-                return redirect()->route('payment')->with(['id' => $order->id]);
-            }
+            // if ($validated['payment_method'] == 'paypal') {
+            //     // Don't send notification yet - wait for payment confirmation
+            //     return redirect()->route('payment')->with(['id' => $order->id]);
+            // }
         } catch (\Exception $e) {
-            \Log::error('Order creation failed: ' . $e->getMessage());
+            \Log::error('Order creation failed', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return back()
                 ->with('error', 'Something went wrong. Please try again.')
                 ->withInput();
@@ -158,10 +172,10 @@ class OrderController extends Controller
         $order = Order::with('cart')->findOrFail($id);
 
         // Verify that the order belongs to the authenticated user
-        if ($order->user_id != auth()->user()->id) {
+        if ($order->user_id != auth()->user()?->id) {
             abort(403, 'Unauthorized access');
         }
-
+dd($order);
         return view('frontend.pages.thankyou', compact('order'));
     }
 

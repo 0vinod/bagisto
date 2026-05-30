@@ -30,7 +30,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
     */
 
 // CACHE CLEAR ROUTE
-Route::get('cache-clear', function () {
+Route::get('clear', function () {
     Artisan::call('optimize:clear');
     request()->session()->flash('success', 'Successfully cache cleared.');
     return redirect()->back();
@@ -88,12 +88,15 @@ Route::get('/cart', function () {
     return view('frontend.pages.cart');
 })->name('cart');
 
-Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('user');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+
 Route::post('/checkout/cod', [CartController::class, 'codCheckout'])->name('checkout.cod');
+
 // Wishlist
 Route::get('/wishlist', function () {
     return view('frontend.pages.wishlist');
 })->name('wishlist');
+
 Route::get('/wishlist/{slug}', [WishlistController::class, 'wishlist'])->name('add-to-wishlist')->middleware('user');
 Route::get('wishlist-delete/{id}', [WishlistController::class, 'wishlistDelete'])->name('wishlist-delete');
 Route::post('cart/order', [OrderController::class, 'store'])->name('cart.order');

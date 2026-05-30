@@ -56,7 +56,8 @@
                             $cartQuantity = $cartItem ? $cartItem->quantity : 0;
                         @endphp
                         <div class="col-lg-3 col-md-4 col-6 mb-4">
-                            <div class="single-product" data-product-id="{{ $product->id }}" data-product-slug="{{ $product->slug }}">
+                            <div class="single-product" data-product-id="{{ $product->id }}"
+                                data-product-slug="{{ $product->slug }}">
                                 <div class="product-img">
                                     <a href="{{ route('product-detail', $product->slug) }}">
                                         @php
@@ -75,7 +76,8 @@
                                         </a>
                                     </h3>
                                     @php
-                                        $after_discount = $product->price - ($product->price * $product->discount) / 100;
+                                        $after_discount =
+                                            $product->price - ($product->price * $product->discount) / 100;
                                     @endphp
                                     <div class="product-price">
                                         <span>Rs. {{ number_format($after_discount, 2) }}</span>
@@ -84,20 +86,32 @@
                                         @endif
                                     </div>
                                     <div class="product-actions mt-2">
-                                        @if($isInCart && $cartQuantity > 0)
+                                        @if ($isInCart && $cartQuantity > 0)
                                             <div class="cart-quantity-controls">
                                                 <button class="qty-decrease" data-product-id="{{ $product->id }}">
-                                                
+
                                                 </button>
                                                 <span class="cart-qty">{{ $cartQuantity }}</span>
                                                 <button class="qty-increase" data-product-id="{{ $product->id }}">
-                                           
+
                                                 </button>
                                             </div>
                                         @else
-                                            <button class="btn-add-cart" data-slug="{{ $product->slug }}" data-id="{{ $product->id }}">
+                                            <button class="btn-add-cart d-none" data-slug="{{ $product->slug }}"
+                                                data-id="{{ $product->id }}">
                                                 <i class="ti-shopping-cart"></i> Add to Cart
                                             </button>
+                                            <div class="buy-now-cod mt-2">
+                                                <form action="{{ route('checkout') }}" method="post" id="codForm">
+                                                    @csrf
+                                                    <input type="hidden" name="slug"
+                                                        value="{{ $product->slug }}">
+
+                                                    <button type="submit" class="btn btn-cod" id=" ">
+                                                        <i class="ti-shopping-cart"></i> Buy Now (COD)
+                                                    </button>
+                                                </form>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -157,6 +171,3 @@
         </div>
     </section>
 @endsection
-
- 
- 
