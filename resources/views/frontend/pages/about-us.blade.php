@@ -30,7 +30,7 @@
 							@php
 								$settings=DB::table('settings')->first();
 							@endphp
-							<h3>Welcome To <span>Eshop</span></h3>
+							<h3>Welcome To <span>Moonzio</span></h3>
 							<p>{{$settings->description}}</p>
 							<div class="button">
 								<a href="{{route('blog')}}" class="btn">Our Blog</a>

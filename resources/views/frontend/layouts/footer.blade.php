@@ -57,7 +57,7 @@
                         <div class="contact">
                             <ul>
                                 <li>{{ isset($settings) ? $settings->address : '123 Market St, San Francisco, CA' }}</li>
-                                <li>{{ isset($settings) ? $settings->email : 'support@eshop.com' }}</li>
+                                <li>{{ isset($settings) ? $settings->email : 'support@Moonzio.com' }}</li>
                                 <li>{{ isset($settings) ? $settings->phone : '+1 800 123 4567' }}</li>
                             </ul>
                         </div>
