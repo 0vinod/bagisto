@@ -19,15 +19,17 @@
 @section('title', 'E-SHOP || PRODUCT DETAIL')
 
 @section('main-content')
-<style>.blink-text {
-    animation: blink 3s linear infinite;
-}
+    <style>
+        .blink-text {
+            animation: blink 3s linear infinite;
+        }
 
-@keyframes blink {
-    50% {
-        opacity: 5;
-    }
-}</style>
+        @keyframes blink {
+            50% {
+                opacity: 5;
+            }
+        }
+    </style>
 
     <!-- Main Product Section -->
     <section class="product-detail-section py-3">
@@ -167,13 +169,13 @@
                             <hr>
                         @endif
 
-                       <!-- Quantity Section -->
-<div class="form-group">
-      Quantity  <small class="stock-info text-warning blink-text">
-     <strong>{{ $product_detail->stock > 12 ? 12 : $product_detail->stock }}</strong>
-        Units available
-    </small>
-</div>
+                        <!-- Quantity Section -->
+                        <div class="form-group">
+                            Quantity <small class="stock-info text-warning blink-text">
+                                <strong>{{ $product_detail->stock > 12 ? 12 : $product_detail->stock }}</strong>
+                                Units available
+                            </small>
+                        </div>
                         <hr>
                         @php
                             // Check if product is already in cart
@@ -203,6 +205,14 @@
                                             data-id="{{ $product_detail->id }}">
                                             <i class="ti-shopping-cart"></i> Add to Cart
                                         </button>
+                                        <form action="{{ route('checkout') }}" method="post" id="codForm">
+                                            @csrf
+                                            <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+
+                                            <button type="submit" class="btn btn-cod" id=" ">
+                                                <i class="ti-shopping-cart"></i> Buy Now (COD)
+                                            </button>
+                                       </form>
                                     @endif
                                 </div>
                             @else
@@ -211,16 +221,16 @@
                                 </button>
                             @endif
                             <!-- Buy Now COD Button - Added Here -->
-                            <div class="buy-now-cod mt-2">
-                                <form action="{{ route('checkout.cod') }}" method="POST" id="codForm">
-                                    @csrf
-                                    <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+                            <!--<div class="buy-now-cod mt-2">-->
+                            <!--    <form action="{{ route('checkout.cod') }}" method="POST" id="codForm">-->
+                            <!--        @csrf-->
+                            <!--        <input type="hidden" name="slug" value="{{ $product_detail->slug }}">-->
 
-                                    <button type="submit" class="btn btn-cod" id=" ">
-                                        <i class="ti-shopping-cart"></i> Buy Now (COD)
-                                    </button>
-                                </form>
-                            </div>
+                            <!--        <button type="submit" class="btn btn-cod" id=" ">-->
+                            <!--            <i class="ti-shopping-cart"></i> Buy Now (COD)-->
+                            <!--        </button>-->
+                            <!--    </form>-->
+                            <!--</div>-->
                             <!-- End Buy Now COD Button -->
 
 

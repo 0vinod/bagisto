@@ -47,7 +47,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $cartItems =  collect([]);
-
+ 
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'state_id' => 'required|string|max:255',
@@ -63,7 +63,7 @@ class OrderController extends Controller
         ]);
  
          $product = Product::where('slug', $request->slug)->first();
-
+ 
         if (auth()->user()?->id) {
             $cartItems = Cart::where('user_id', auth()->user()->id)
                 ->where('order_id', null)
@@ -73,6 +73,9 @@ class OrderController extends Controller
         // if ($cartItems->isEmpty()) {
         //     return back()->with('error', 'Cart is Empty!');
         // }
+        
+          $offerPrice = $product->price - ($product->price * $product->discount / 100);
+ 
 
         try {
             $order = new Order();
@@ -87,8 +90,8 @@ class OrderController extends Controller
             $order->address1 = $validated['address1'];
             $order->address2 = $validated['address2'] ?? null;
             $order->post_code = $validated['post_code'] ?? null;
-            $order->sub_total = Helper::totalCartPrice();
-            $order->quantity = Helper::cartCount();
+            $order->sub_total =  $offerPrice;
+            $order->quantity = 1;
             $order->status = 'new';
             $order->payment_method = $validated['payment_method'];
 
@@ -175,7 +178,7 @@ class OrderController extends Controller
         if ($order->user_id != auth()->user()?->id) {
             abort(403, 'Unauthorized access');
         }
-dd($order);
+ 
         return view('frontend.pages.thankyou', compact('order'));
     }
 

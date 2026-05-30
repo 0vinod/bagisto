@@ -88,7 +88,7 @@ Route::get('/cart', function () {
     return view('frontend.pages.cart');
 })->name('cart');
 
-Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::any('/checkout', [CartController::class, 'checkout'])->name('checkout');
 
 Route::post('/checkout/cod', [CartController::class, 'codCheckout'])->name('checkout.cod');
 

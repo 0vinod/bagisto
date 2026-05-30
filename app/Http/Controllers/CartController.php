@@ -175,7 +175,7 @@ class CartController extends Controller
 
 
     public function checkout(Request $request)
-    {
+    { 
         $user = auth()->user();
 
         // Get user's last order for address pre-filling
@@ -186,6 +186,8 @@ class CartController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->first();
         }
+        
+         $product = Product::where('slug', $request->slug)->first();
 
         // Split user name into first and last name
         $nameParts = $user ? explode(' ', $user->name, 2) : ['', ''];
@@ -195,7 +197,7 @@ class CartController extends Controller
 
         $states = State::where('status',1)->get();
 
-        return view('frontend.pages.checkout', compact('states','user', 'lastOrder', 'firstName', 'lastName'));
+        return view('frontend.pages.checkout', compact('states','user', 'lastOrder', 'firstName', 'lastName','product'));
     }
 
     public function checkoutSuccess()
@@ -206,6 +208,7 @@ class CartController extends Controller
 
     public function codCheckout(Request $request)
     {
+        
         return view('frontend.pages.cart');
         if (!Auth::check()) {
             return redirect()->guest(route('login.form'));

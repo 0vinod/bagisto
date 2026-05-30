@@ -49,6 +49,7 @@
                                 <h3><i class="fas fa-file-invoice me-2"></i> Billing Details</h3>
                                 <p>Please fill in your information to complete your order</p>
                             </div>
+                      <input type="hidden" name="slug" value="{{ old('slug', $product?->slug) }}">
 
                             <div class="card-body">
                                 <div class="row g-3">
