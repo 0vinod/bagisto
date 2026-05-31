@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title','E-SHOP || Banner Create')
+@section('title','Moonzio || Banner Create')
 
 @section('main-content')
 

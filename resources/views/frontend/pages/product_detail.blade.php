@@ -16,7 +16,7 @@
     <meta property="og:description" content="{{ $product_detail->description }}">
 @endsection
 
-@section('title', 'E-SHOP || PRODUCT DETAIL')
+@section('title', 'Moonzio || PRODUCT DETAIL')
 
 @section('main-content')
     <style>

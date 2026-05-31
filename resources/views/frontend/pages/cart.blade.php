@@ -122,7 +122,7 @@
                             </div>
                             <h3>Your Cart is Empty</h3>
                             <p>Looks like you haven't added any items to your cart yet.</p>
-                            <a href="{{ route('product-grids') }}" class="btn btn-continue-shopping">
+                            <a href="{{ route('product-grids') }}" class="btn btn-continuMoonzioping">
                                 <i class="ti-arrow-left"></i> Continue Shopping
                             </a>
                         </div>
@@ -477,7 +477,7 @@
             margin-bottom: 25px;
         }
 
-        .btn-continue-shopping {
+        .btn-continuMoonzioping {
             background: #F7941D;
             color: white;
             border: none;
@@ -490,7 +490,7 @@
             gap: 8px;
         }
 
-        .btn-continue-shopping:hover {
+        .btn-continuMoonzioping:hover {
             background: #F76E1C;
             transform: translateY(-2px);
             color: white;
@@ -983,7 +983,7 @@
                 font-size: 20px;
             }
 
-            .btn-continue-shopping {
+            .btn-continuMoonzioping {
                 padding: 10px 20px;
                 font-size: 14px;
             }

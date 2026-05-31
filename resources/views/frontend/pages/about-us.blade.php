@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','E-SHOP || About Us')
+@section('title','Moonzio || About Us')
 
 @section('main-content')
 
@@ -31,7 +31,7 @@
 								$settings=DB::table('settings')->first();
 							@endphp
 							<h3>Welcome To <span>Moonzio</span></h3>
-							<p>{{$settings->description}}</p>
+							<p>{!! $settings->description !!}</p>
 							<div class="button">
 								<a href="{{route('blog')}}" class="btn">Our Blog</a>
 								<a href="{{route('contact')}}" class="btn primary">Contact Us</a>

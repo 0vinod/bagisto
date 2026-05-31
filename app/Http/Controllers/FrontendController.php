@@ -88,7 +88,7 @@ class FrontendController extends Controller
     public function productDetail($slug)
     {
         $product_detail = Product::getProductBySlug($slug);
-        
+
         return view('frontend.pages.product_detail')->with('product_detail', $product_detail);
     }
 
@@ -132,8 +132,8 @@ class FrontendController extends Controller
         $products = $products->where('status', 'active')->paginate($perPage);
 
         return view('frontend.pages.product-grids')
-        ->with('products', $products)
-        ->with('recent_products', $recent_products);
+            ->with('products', $products)
+            ->with('recent_products', $recent_products);
     }
 
     public function productLists(Request $request)
@@ -433,7 +433,7 @@ class FrontendController extends Controller
             'status' => 'active'
         ]);
     }
-   
+
     public function showResetForm()
     {
         return view('auth.passwords.old-reset');
@@ -465,7 +465,12 @@ class FrontendController extends Controller
         return view('frontend.product-load', compact('products'))->render();
     }
 
-    public function returnExchangePolicy(Request $request){
-return view('frontend.pages.return_exchange_policy');
+    public function returnExchangePolicy(Request $request)
+    {
+        return view('frontend.pages.return_exchange_policy');
+    }
+
+    public function  shippingPolicy() {
+        return view('frontend.pages.shipping_policy');
     }
 }
