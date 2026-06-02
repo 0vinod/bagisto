@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-
+@section('title','Moonzio || Contact Us')
   <style>
         /* Reset & base */
         * {
@@ -322,7 +322,7 @@
             <div class="col-12">
                 <div class="bread-inner">
                     <ul class="bread-list">
-                        <li><a href="#">Home<i class="ti-arrow-right"></i></a></li>
+                        <li><a href="{{ url('/') }}">Home<i class="ti-arrow-right"></i></a></li>
                         <li class="active"><a href="javascript:void(0);">Contact</a></li>
                     </ul>
                 </div>
@@ -392,23 +392,22 @@
                             <i class="fa fa-phone"></i>
                             <h4 class="title">Call us Now:</h4>
                             <ul>
-                                <li>+1 (800) 456-7890</li>
-                                <li>+44 20 7946 0138</li>
+                               
+                                <li>+918604133275</li>
                             </ul>
                         </div>
                         <div class="single-info">
                             <i class="fa fa-envelope-open"></i>
                             <h4 class="title">Email:</h4>
                             <ul>
-                                <li><a href="mailto:hello@ecomstore.com">hello@ecomstore.com</a></li>
-                                <li><a href="mailto:support@ecomstore.com">support@ecomstore.com</a></li>
+                                <li><a href="mailto:support@ecomstore.com">support@moonzio.com</a></li>
                             </ul>
                         </div>
                         <div class="single-info">
                             <i class="fa fa-location-arrow"></i>
                             <h4 class="title">Our Address:</h4>
                             <ul>
-                                <li>4517 Washington Ave, Manchester, Kentucky 39495, USA</li>
+                                <li>Dau Kuti, Burlington, Lucknow 2260001</li>
                             </ul>
                         </div>
                     </div>
@@ -421,7 +420,8 @@
 <!-- Map Section (exact iframe from original) -->
 <div class="map-section">
     <div id="myMap">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14130.857353934944!2d85.36529494999999!3d27.6952226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sne!2snp!4v1595323330171!5m2!1sne!2snp" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        
+        <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d10069.921631606192!2d80.93685573800101!3d26.831842627992014!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1780420902391!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </div>
 
