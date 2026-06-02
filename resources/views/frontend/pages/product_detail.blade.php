@@ -301,30 +301,37 @@
 
             <!-- Product Tabs Section -->
             <div class="product-tabs-section mt-5">
-                <ul class="nav nav-tabs modern-tabs" id="productTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                            data-bs-target="#description" type="button" role="tab">
-                            <i class="fas fa-align-left me-2"></i>Description
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
-                            type="button" role="tab">
-                            <i class="fas fa-star me-2"></i>Reviews ({{ $product_detail->getReview->count() }})
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping"
-                            type="button" role="tab">
-                            <i class="fas fa-truck me-2"></i>Shipping Info
-                        </button>
-                    </li>
-                </ul>
+               <ul class="nav nav-tabs" id="productTab">
+    <li class="nav-item">
+        <a class="nav-link active"
+           id="description-tab"
+           data-toggle="tab"
+           href="#description">
+            Description
+        </a>
+    </li>
 
-                <div class="tab-content modern-tab-content" id="productTabContent">
-                    <!-- Description Tab -->
-                    <div class="tab-pane fade show active" id="description" role="tabpanel">
+    <li class="nav-item">
+        <a class="nav-link"
+           id="reviews-tab"
+           data-toggle="tab"
+           href="#reviews">
+            Reviews
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link"
+           id="shipping-tab"
+           data-toggle="tab"
+           href="#shipping">
+            Shipping Info
+        </a>
+    </li>
+</ul>
+
+            <div class="tab-content">
+    <div class="tab-pane fade show active" id="description">
                         <div class="tab-content-wrapper">
                             <div class="product-description">
                                 {!! $product_detail->description !!}
@@ -346,7 +353,7 @@
                     </div>
 
                     <!-- Reviews Tab -->
-                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                  <div class="tab-pane fade" id="reviews">
                         <div class="tab-content-wrapper">
                             <!-- Review Form -->
                             <div class="review-form-section mb-5">
@@ -380,7 +387,9 @@
                                             @enderror
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary">
+                            <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+
+           <button type="submit" class="btn btn-primary">
                                             <i class="fas fa-paper-plane me-2"></i>Submit Review
                                         </button>
                                     </form>
@@ -445,42 +454,46 @@
                     </div>
 
                     <!-- Shipping Tab -->
-                    <div class="tab-pane fade" id="shipping" role="tabpanel">
+           <div class="tab-pane fade" id="shipping">
                         <div class="tab-content-wrapper">
                             <div class="shipping-info">
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <div class="info-card">
-                                            <i class="fas fa-truck-fast fa-2x text-primary mb-3"></i>
-                                            <h5>Shipping Information</h5>
-                                            <p>Free shipping on orders over $50. Standard delivery takes 3-5 business days.
-                                                Express delivery available at checkout.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="info-card">
-                                            <i class="fas fa-undo-alt fa-2x text-primary mb-3"></i>
-                                            <h5>Returns Policy</h5>
-                                            <p>30-day money-back guarantee. Items must be returned in original condition
-                                                with packaging.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="info-card">
-                                            <i class="fas fa-shield-alt fa-2x text-primary mb-3"></i>
-                                            <h5>Secure Shopping</h5>
-                                            <p>Your payment information is encrypted and secure. We never store your credit
-                                                card details.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="info-card">
-                                            <i class="fas fa-headset fa-2x text-primary mb-3"></i>
-                                            <h5>Customer Support</h5>
-                                            <p>24/7 customer support available via email, chat, or phone.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="row g-4">
+    <div class="col-md-6">
+        <div class="info-card">
+            <i class="fas fa-truck-fast fa-2x text-primary mb-3"></i>
+            <h5>Fast Shipping Across India</h5>
+            <p>We carefully pack and dispatch your order within 24-48 hours. Delivery typically takes 3-7 business days depending on your location.</p>
+        </div>
+    </div>
+
+ 
+<div class="col-md-6">
+    <div class="info-card">
+        <i class="fas fa-undo-alt fa-2x text-primary mb-3"></i>
+        <h5>Easy Replacement</h5>
+        <p>If you receive a damaged or defective product, contact us within 7 days of delivery for a hassle-free replacement.</p>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="info-card">
+        <i class="fas fa-shield-alt fa-2x text-primary mb-3"></i>
+        <h5>Secure Payments</h5>
+        <p>Shop with confidence using our secure payment system. We support trusted payment methods and Cash on Delivery (COD).</p>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="info-card">
+        <i class="fas fa-headset fa-2x text-primary mb-3"></i>
+        <h5>Dedicated Support</h5>
+        <p>Need help? Our support team is available to assist you with product inquiries, order tracking, and after-sales support.</p>
+    </div>
+</div>
+ 
+
+</div>
+
                             </div>
                         </div>
                     </div>
