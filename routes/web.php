@@ -123,7 +123,7 @@ Route::post('/subscribe', [FrontendController::class, 'subscribe'])->name('subsc
 
 // Product Review
 Route::resource('/review', ProductReviewController::class);
-Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store');
+Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store.test');
 
 // Post Comment
 Route::post('post/{slug}/comment', [PostCommentController::class, 'store'])->name('post-comment.store');
@@ -136,7 +136,6 @@ Route::get('cancel', [PayPalController::class, 'cancel'])->name('payment.cancel'
 Route::get('payment/success', [PayPalController::class, 'success'])->name('payment.success');
 
 Route::get('return_exchange_policy', [FrontendController::class, 'returnExchangePolicy'])->name('return.exchange.policy');
-Route::get('shipping_policy', [FrontendController::class, 'shippingPolicy'])->name('shipping.policy');
 
 
 // Backend section start
