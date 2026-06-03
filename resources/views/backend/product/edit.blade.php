@@ -173,21 +173,6 @@
                     @error('video_url')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-
-                    @php
-                        $platform = getVideoPlatform($product->video_url);
-                    @endphp
-
-                    @if ($platform == 'video')
-                        <video width="100%" controls>
-                            <source src="{{ $product->video_url }}">
-                        </video>
-                    @else
-                        <iframe width="100%" height="400"
-                            src="{{ getEmbedVideoUrl($product->video_url) }}" frameborder="0"
-                            allowfullscreen>
-                        </iframe>
-                    @endif
                 </div>
 
                 <div class="form-group">
@@ -200,6 +185,7 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <div class="form-group mb-3">
                     <button class="btn btn-success" type="submit">Update</button>
                 </div>

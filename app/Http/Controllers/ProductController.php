@@ -70,6 +70,7 @@ class ProductController extends Controller
         } else {
             $validatedData['size'] = '';
         }
+ 
 
         $product = Product::create($validatedData);
 
@@ -147,7 +148,7 @@ class ProductController extends Controller
         } else {
             $validatedData['size'] = '';
         }
-
+ 
         $status = $product->update($validatedData);
 
         $message = $status
