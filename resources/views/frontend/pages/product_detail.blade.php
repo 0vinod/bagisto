@@ -399,6 +399,16 @@
                                                 <div class="text-danger small mt-1">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Photos / Video</label>
+
+                                            <input type="file" name="media" class="form-control"
+                                                accept="image/*,video/*">
+
+                                            <small class="text-muted">
+                                                Upload images or one short video with your review.
+                                            </small>
+                                        </div>
 
                                         <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
 
@@ -454,6 +464,90 @@
                                             <div class="review-content">
                                                 <p>{{ $review->review }}</p>
                                             </div>
+
+                                            @if($review->media->count())
+
+<div class="modal fade"
+     id="reviewMediaModal{{ $review->id }}"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Customer Media</h5>
+
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div id="carousel{{ $review->id }}"
+                     class="carousel slide"
+                     data-ride="carousel">
+
+                    <div class="carousel-inner">
+
+                        @foreach($review->media as $key => $media)
+
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+
+                                @if($media->type == 'image')
+
+                                    <img src="{{ asset('storage/'.$media->file_path) }}"
+                                         class="d-block w-100">
+
+                                @else
+
+                                    <video controls
+                                           class="w-100">
+                                        <source src="{{ asset('storage/'.$media->file_path) }}">
+                                    </video>
+
+                                @endif
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                    @if($review->media->count() > 1)
+
+                        <a class="carousel-control-prev"
+                           href="#carousel{{ $review->id }}"
+                           role="button"
+                           data-slide="prev">
+
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+
+                        <a class="carousel-control-next"
+                           href="#carousel{{ $review->id }}"
+                           role="button"
+                           data-slide="next">
+
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@endif
                                         </div>
                                     @endforeach
                                 @else

@@ -168,12 +168,12 @@
 
                     <small class="text-muted">
                         Supported: YouTube, YouTube Shorts, Instagram Reels, Facebook Reels
-                    </small>
+                    </small>    
 
                     @error('video_url')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                </div>      
 
                 <div class="form-group">
                     <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>
