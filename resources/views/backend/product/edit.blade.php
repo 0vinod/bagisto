@@ -175,7 +175,7 @@
                     @enderror
 
                     @php
-                        $platform = Helper::getVideoPlatform($product->video_url);
+                        $platform = getVideoPlatform($product->video_url);
                     @endphp
 
                     @if ($platform == 'video')
@@ -184,7 +184,7 @@
                         </video>
                     @else
                         <iframe width="100%" height="400"
-                            src="{{ Helper::getEmbedVideoUrl($product->video_url) }}" frameborder="0"
+                            src="{{ getEmbedVideoUrl($product->video_url) }}" frameborder="0"
                             allowfullscreen>
                         </iframe>
                     @endif

@@ -300,8 +300,8 @@
             </div>
             <!-- Video Section -->
             @php
-                $embedUrl = \App\Http\Helper::getEmbedVideoUrl($product_detail->video_url ?? '');
-                $platform = \App\Http\Helper::getVideoPlatform($product_detail->video_url ?? '');
+                $embedUrl = getEmbedVideoUrl($product_detail->video_url ?? '');
+                $platform = getVideoPlatform($product_detail->video_url ?? '');
             @endphp
 
             @if (!empty($product_detail->video_url))
