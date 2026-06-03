@@ -465,89 +465,77 @@
                                                 <p>{{ $review->review }}</p>
                                             </div>
 
-                                            @if($review->media->count())
+                                            @if ($review->media->count())
+                                                <div class="modal fade" id="reviewMediaModal{{ $review->id }}"
+                                                    tabindex="-1">
 
-<div class="modal fade"
-     id="reviewMediaModal{{ $review->id }}"
-     tabindex="-1">
+                                                    <div class="modal-dialog modal-lg modal-dialog-centered">
 
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                        <div class="modal-content">
 
-        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Customer Media</h5>
 
-            <div class="modal-header">
-                <h5 class="modal-title">Customer Media</h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal">
+                                                                    <span>&times;</span>
+                                                                </button>
+                                                            </div>
 
-                <button type="button"
-                        class="close"
-                        data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
+                                                            <div class="modal-body">
 
-            <div class="modal-body">
+                                                                <div id="carousel{{ $review->id }}"
+                                                                    class="carousel slide" data-ride="carousel">
 
-                <div id="carousel{{ $review->id }}"
-                     class="carousel slide"
-                     data-ride="carousel">
+                                                                    <div class="carousel-inner">
 
-                    <div class="carousel-inner">
+                                                                        @foreach ($review->media as $key => $media)
+                                                                            <div
+                                                                                class="carousel-item {{ $key == 0 ? 'active' : '' }}">
 
-                        @foreach($review->media as $key => $media)
+                                                                                @if ($media->type == 'image')
+                                                                                    <img src="{{ asset('storage/' . $media->file_path) }}"
+                                                                                        class="d-block w-100">
+                                                                                @else
+                                                                                    <video controls class="w-100">
+                                                                                        <source
+                                                                                            src="{{ asset('storage/' . $media->file_path) }}">
+                                                                                    </video>
+                                                                                @endif
 
-                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                                            </div>
+                                                                        @endforeach
 
-                                @if($media->type == 'image')
+                                                                    </div>
 
-                                    <img src="{{ asset('storage/'.$media->file_path) }}"
-                                         class="d-block w-100">
+                                                                    @if ($review->media->count() > 1)
+                                                                        <a class="carousel-control-prev"
+                                                                            href="#carousel{{ $review->id }}"
+                                                                            role="button" data-slide="prev">
 
-                                @else
+                                                                            <span
+                                                                                class="carousel-control-prev-icon"></span>
+                                                                        </a>
 
-                                    <video controls
-                                           class="w-100">
-                                        <source src="{{ asset('storage/'.$media->file_path) }}">
-                                    </video>
+                                                                        <a class="carousel-control-next"
+                                                                            href="#carousel{{ $review->id }}"
+                                                                            role="button" data-slide="next">
 
-                                @endif
+                                                                            <span
+                                                                                class="carousel-control-next-icon"></span>
+                                                                        </a>
+                                                                    @endif
 
-                            </div>
+                                                                </div>
 
-                        @endforeach
+                                                            </div>
 
-                    </div>
+                                                        </div>
 
-                    @if($review->media->count() > 1)
+                                                    </div>
 
-                        <a class="carousel-control-prev"
-                           href="#carousel{{ $review->id }}"
-                           role="button"
-                           data-slide="prev">
-
-                            <span class="carousel-control-prev-icon"></span>
-                        </a>
-
-                        <a class="carousel-control-next"
-                           href="#carousel{{ $review->id }}"
-                           role="button"
-                           data-slide="next">
-
-                            <span class="carousel-control-next-icon"></span>
-                        </a>
-
-                    @endif
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-@endif
+                                                </div>
+                                            @endif
                                         </div>
                                     @endforeach
                                 @else
