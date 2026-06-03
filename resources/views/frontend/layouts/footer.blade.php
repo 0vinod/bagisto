@@ -44,7 +44,7 @@
                         <h4>Customer Service</h4>
                         <ul>
                             {{-- <li><a href="">Payment Methods</a></li> --}}
-                            <li><a href="{{ route('return_exchange_policy') }}">Returns & Exchanges</a></li>
+                            <li><a href="{{ route('return.exchange.policy') }}">Returns & Exchanges</a></li>
                             {{-- <li><a href=" ">Shipping</a></li>
                             <li><a href=" ">Privacy Policy</a></li> --}}
                         </ul>
