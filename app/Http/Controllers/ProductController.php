@@ -57,6 +57,8 @@ class ProductController extends Controller
             'condition' => 'required|in:default,new,hot',
             'price' => 'required|numeric',
             'discount' => 'nullable|numeric',
+            'video_url' => 'nullable|url|max:500',
+            'fake_sold_qty' => 'nullable|numeric',
         ]);
 
         $slug = generateUniqueSlug($request->title, Product::class);
@@ -134,6 +136,8 @@ class ProductController extends Controller
             'condition' => 'required|in:default,new,hot',
             'price' => 'required|numeric',
             'discount' => 'nullable|numeric',
+            'video_url' => 'nullable|url|max:500',
+            'fake_sold_qty' => 'nullable|numeric',
         ]);
 
         $validatedData['is_featured'] = $request->input('is_featured', 0);

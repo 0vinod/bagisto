@@ -17,6 +17,7 @@ class Helper
     {
         return Message::whereNull('read_at')->orderBy('created_at', 'desc')->get();
     }
+
     public static function getAllCategory()
     {
         $category = new Category();
@@ -210,4 +211,56 @@ if (!function_exists('generateUniqueSlug')) {
     }
 }
 
-?>
+if (!function_exists('getEmbedVideoUrl')) {
+
+    function getEmbedVideoUrl($url)
+    {
+        if (empty($url)) {
+            return null;
+        }
+
+        // YouTube Watch URL
+        if (preg_match('/youtube\.com\/watch\?v=([^&]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        // YouTube Shorts
+        if (preg_match('/youtube\.com\/shorts\/([^?&]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        // youtu.be
+        if (preg_match('/youtu\.be\/([^?&]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        // Instagram Reel
+        if (preg_match('/instagram\.com\/reel\/([^\/\?]+)/', $url, $matches)) {
+            return 'https://www.instagram.com/reel/' . $matches[1] . '/embed';
+        }
+
+        // Facebook Reel
+        if (preg_match('/facebook\.com\/reel\/(\d+)/', $url, $matches)) {
+            return 'https://www.facebook.com/plugins/video.php?href=' . urlencode($url);
+        }
+
+        return $url;
+    }
+
+    function getVideoPlatform($url)
+    {
+        if (str_contains($url, 'youtube.com') || str_contains($url, 'youtu.be')) {
+            return 'youtube';
+        }
+
+        if (str_contains($url, 'instagram.com')) {
+            return 'instagram';
+        }
+
+        if (preg_match('/\.(mp4|webm|ogg)$/i', $url)) {
+            return 'video';
+        }
+
+        return 'unknown';
+    }
+}
