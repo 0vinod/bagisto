@@ -44,9 +44,9 @@
                         <h4>Customer Service</h4>
                         <ul>
                             {{-- <li><a href="">Payment Methods</a></li> --}}
-                            <li><a href=" ">Returns</a></li>
-                            <li><a href=" ">Shipping</a></li>
-                            <li><a href=" ">Privacy Policy</a></li>
+                            <li><a href="{{ route('return-exchange-policy') }}">Returns</a></li>
+                            {{-- <li><a href=" ">Shipping</a></li>
+                            <li><a href=" ">Privacy Policy</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -56,16 +56,16 @@
                         <h4>Get In Touch</h4>
                         <div class="contact">
                             <ul>
-                                <li>{{ isset($settings) ? $settings->address : '123 Market St, San Francisco, CA' }}</li>
+                                <li>{{ isset($settings) ? $settings->address : 'Dau kuti, Lucknow 226001' }}</li>
                                 <li>{{ isset($settings) ? $settings->email : 'support@Moonzio.com' }}</li>
-                                <li>{{ isset($settings) ? $settings->phone : '+1 800 123 4567' }}</li>
+                                <li>{{ isset($settings) ? $settings->phone : '+91 8604133275' }}</li>
                             </ul>
                         </div>
                         <div class="social-icons mt-3">
-                            <a href="#" class="mr-2"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="mr-2"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="mr-2"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="mr-2"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.facebook.com/share/18xUss5han/" class="mr-2"><i class="fab fa-facebook-f"></i></a>
+                            {{-- <a href="#" class="mr-2"><i class="fab fa-twitter"></i></a> --}}
+                            <a href="https://www.instagram.com/reel/DY5L0Wty7kk/?igsh=N3Y1cG93aWJxc290" class="mr-2"><i class="fab fa-instagram"></i></a>
+                            {{-- <a href="#" class="mr-2"><i class="fab fa-youtube"></i></a> --}}
                         </div>
                     </div>
                 </div>
