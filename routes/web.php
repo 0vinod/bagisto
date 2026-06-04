@@ -193,7 +193,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
     Route::get('change-password', [AdminController::class, 'changePassword'])->name('change.password.form');
     Route::post('change-password', [AdminController::class, 'changPasswordStore'])->name('change.password.admin');
 
-    Route::get('/shipping/policies', [ShippingController::class, 'shippingPolicies'])->name('backend.shipping.policies');
+    Route::any('/shipping_policies', [ShippingController::class, 'shippingPolicies'])->name('backend.shipping.policies');
 });
 
 
