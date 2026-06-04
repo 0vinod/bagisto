@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Shipping;
 use App\Models\Coupon;
+use App\Models\ShippingPolicy;
 
 class ShippingController extends Controller
 {
@@ -128,5 +129,24 @@ class ShippingController extends Controller
             return redirect()->route('shipping.index')
                 ->with('error', 'Shipping could not be deleted');
         }
+    }
+
+    public function shippingPolicies(Request $request, ShippingPolicy $shippingPolicy)
+    {
+        $validated = $request->validate([ 
+            'description' => 'required|string'
+        ]); 
+        
+        if($request->isMethod('post')) {
+        if (!$shippingPolicy->exists) {
+            ShippingPolicy::create($validated);
+            } else {
+            $shippingPolicy->update($validated); 
+            }
+            return redirect()->route('backend.shipping.policies')->with('success', 'Shipping policy successfully saved');
+            }
+            
+        return view('backend.shipping_policy.create_or_update', compact('shippingPolicy'));
+            
     }
 }

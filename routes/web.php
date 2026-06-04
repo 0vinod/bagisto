@@ -18,6 +18,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\HomeController;
 use \UniSharp\LaravelFilemanager\Lfm;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\ShippingController;
+
 /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -136,6 +138,7 @@ Route::get('cancel', [PayPalController::class, 'cancel'])->name('payment.cancel'
 Route::get('payment/success', [PayPalController::class, 'success'])->name('payment.success');
 
 Route::get('return_exchange_policy', [FrontendController::class, 'returnExchangePolicy'])->name('return.exchange.policy');
+Route::get('shippingPolicy', [FrontendController::class, 'shippingPolicy'])->name('shipping.policy');
 
 
 // Backend section start
@@ -184,9 +187,12 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
     Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
     Route::get('/notifications', [NotificationController::class, 'index'])->name('all.notification');
     Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
+
     // Password Change
     Route::get('change-password', [AdminController::class, 'changePassword'])->name('change.password.form');
     Route::post('change-password', [AdminController::class, 'changPasswordStore'])->name('change.password.admin');
+
+    Route::get('/shipping/policies/{shippingPolicy?}', [ShippingController::class, 'shippingPolicies'])->name('backend.shipping.policies');
 });
 
 
