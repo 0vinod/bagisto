@@ -139,32 +139,25 @@
     <section class="shop-services section home">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
+                <div class="col-lg-6 col-md-6 col-12">
                     <div class="single-service">
                         <i class="ti-rocket"></i>
                         <h4>Free Shipping</h4>
-                        <p>Orders over $100</p>
+                        <p>Cash On Delivery</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-12">
+                {{-- <div class="col-lg-3 col-md-6 col-12">
                     <div class="single-service">
                         <i class="ti-reload"></i>
                         <h4>Free Return</h4>
                         <p>Within 30 days returns</p>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="single-service">
-                        <i class="ti-lock"></i>
-                        <h4>Secure Payment</h4>
-                        <p>100% secure payment</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
+                </div> --}}
+                <div class="col-lg-6 col-md-6 col-12">
                     <div class="single-service">
                         <i class="ti-tag"></i>
-                        <h4>Best Price</h4>
-                        <p>Guaranteed price</p>
+                        <h4>Best Guaranteed Premium Quality </h4>
+                        <p>Original Moonzio Product</p>
                     </div>
                 </div>
             </div>
