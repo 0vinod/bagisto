@@ -8,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="Moonzio, Shipping Policy.">
-    <meta name="description" content="{{ $shipping_policy->description }}">
+    <meta name="description" content="{{ $shippingPolicy->description }}">
     <meta property="og:url" content="{{ route('shipping.policy') }}">
     
-    <meta property="og:description" content="{{ $shipping_policy->description }}">
+    <meta property="og:description" content="{{ $shippingPolicy->description }}">
 @endsection
 
 @section('title', 'Moonzio || SHIPPING POLICY')
@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-12">
                     <h2 class="title">{{ __('Shipping Policy') }}</h2>
-                    <p>{!! $shipping_policy->description !!}</p>
+                    <p>{!! $shippingPolicy->description !!}</p>
                 </div>
             </div>
         </div>

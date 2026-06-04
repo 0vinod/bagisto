@@ -23,7 +23,7 @@
                             <li>Payment and transaction details required to process orders.</li>
                             <li>Account information such as login credentials and preferences.</li>
                             <li>Device and browsing information, including IP address and website usage data.</li>
-                        </ul>
+                        </ul>   
 
                         <h2>How We Use Your Information</h2>
                         <ul>
@@ -40,8 +40,7 @@
                             law.</p>
 
                         <h2>Data Security</h2>
-                        <p>We implement appropriate security measures to protect your personal information from unauthorized
-                            access, misuse, or disclosure.</p>
+                        <p>We implement appropriate security measures to protect your personal information from unauthorized access, misuse, or disclosure.</p>
 
                         <h2>Cookies</h2>
                         <p>Our website may use cookies and similar technologies to enhance your browsing experience,
