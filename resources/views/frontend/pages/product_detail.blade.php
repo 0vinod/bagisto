@@ -370,52 +370,157 @@
                         <div class="tab-content-wrapper">
                             <!-- Review Form -->
                             <div class="review-form-section mb-5">
-                                <h4 class="mb-4">Write a Review</h4>
                                 @auth
-                                    <form id="reviewForm" method="post"
-                                        action="{{ route('review.store', $product_detail->slug) }}" class="review-form">
-                                        @csrf
-                                        <div class="mb-4">
-                                            <label class="form-label fw-bold">Your Rating *</label>
-                                            <div class="rating-input">
-                                                @for ($i = 5; $i >= 1; $i--)
-                                                    <input type="radio" name="rate" value="{{ $i }}"
-                                                        id="star{{ $i }}" required>
-                                                    <label for="star{{ $i }}" class="star-label">
-                                                        <i class="far fa-star"></i>
-                                                    </label>
-                                                @endfor
+                                    @if (!$product_detail->userReview)
+                                        <h4 class="mb-4">Write a Review</h4>
+                                        <form id="reviewForm" method="post"
+                                            action="{{ route('review.store', $product_detail->slug) }}" class="review-form"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="mb-4">
+                                                <label class="form-label fw-bold">Your Rating *</label>
+                                                <div class="rating-input">
+                                                    @for ($i = 5; $i >= 1; $i--)
+                                                        <input type="radio" name="rate" value="{{ $i }}"
+                                                            id="star{{ $i }}" required>
+                                                        <label for="star{{ $i }}" class="star-label">
+                                                            <i class="far fa-star"></i>
+                                                        </label>
+                                                    @endfor
+                                                </div>
+                                                @error('rate')
+                                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                                @enderror
                                             </div>
-                                            @error('rate')
-                                                <div class="text-danger small mt-1">{{ $message }}</div>
-                                            @enderror
-                                        </div>
 
-                                        <div class="mb-4">
-                                            <label for="review" class="form-label fw-bold">Your Review *</label>
-                                            <textarea name="review" id="review" rows="5" class="form-control"
-                                                placeholder="Share your experience with this product..." required></textarea>
-                                            @error('review')
-                                                <div class="text-danger small mt-1">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="form-label fw-bold">Photos / Video</label>
+                                            <div class="mb-4">
+                                                <label for="review" class="form-label fw-bold">Your Review *</label>
+                                                <textarea name="review" id="review" rows="5" class="form-control"
+                                                    placeholder="Share your experience with this product..." required></textarea>
+                                                @error('review')
+                                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="form-label fw-bold">Photos / Video</label>
 
-                                            <input type="file" name="media" class="form-control"
-                                                accept="image/*,video/*">
+                                                <input type="file" name="media" class="form-control"
+                                                    accept="image/*,video/*">
 
-                                            <small class="text-muted">
-                                                Upload images or one short video with your review.
-                                            </small>
-                                        </div>
+                                                <small class="text-muted">
+                                                    Upload images or one short video with your review.
+                                                </small>
+                                            </div>
 
-                                        <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
+                                            <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
 
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-paper-plane me-2"></i>Submit Review
-                                        </button>
-                                    </form>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-paper-plane me-2"></i>Submit Review
+                                            </button>
+                                        </form>
+                                    @endif
+                                    <!-- Reviews List -->
+                                    <div class="reviews-list">
+                                        @if ($product_detail->getReview->count() > 0)
+                                            <h4 class="mb-4">Customer Reviews</h4>
+                                            @foreach ($product_detail->getReview as $review)
+                                                <div class="review-item">
+                                                    <div class="review-header">
+                                                        <div class="reviewer-info">
+                                                            @if ($review->user_info['photo'])
+                                                                <img src="{{ $review->user_info['photo'] }}"
+                                                                    alt="{{ $review->user_info['name'] }}"
+                                                                    class="reviewer-avatar">
+                                                            @else
+                                                                <div class="reviewer-avatar-placeholder">
+                                                                    {{ substr($review->user_info['name'], 0, 1) }}
+                                                                </div>
+                                                            @endif
+                                                            <div>
+                                                                <h5 class="reviewer-name">{{ $review->user_info['name'] }}
+                                                                </h5>
+                                                                <div class="review-stars">
+                                                                    @for ($i = 1; $i <= 5; $i++)
+                                                                        @if ($i <= $review->rate)
+                                                                            <i class="fas fa-star text-warning"></i>
+                                                                        @else
+                                                                            <i class="far fa-star text-muted"></i>
+                                                                        @endif
+                                                                    @endfor
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="review-date">
+                                                            <small>{{ $review->created_at->format('M d, Y') }}</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-content">
+                                                        <p>{{ $review->review }}</p>
+                                                    </div>
+ 
+                                                    @if ($review->media->count())
+                                                           <div id="carousel{{ $review->id }}"
+                                                                            class="carousel slide" data-ride="carousel">
+
+                                                                            <div class="carousel-inner">
+
+                                                                                @foreach ($review->media as $key => $media)
+                                                                                    <div  class="carousel-item {{ $key == 0 ? 'active' : '' }}" style="width: 70px">
+
+                                                                                        @if ($media->type == 'image')
+                                                                                        <a href="{{ asset('storage/' . $media->file_path) }}" target="_blank">
+                                                                                            <img src="{{ asset('storage/' . $media->file_path) }}"
+                                                                                                class="d-block w-100" alt="Review Media">
+                                                                                        </a>
+                                                                                        @else
+                                                                                            <video controls class="w-100">
+                                                                                                <source
+                                                                                                    src="{{ asset('storage/' . $media->file_path) }}">
+                                                                                            </video>
+                                                                                        @endif
+
+                                                                                    </div>
+                                                                                @endforeach
+
+                                                                            </div>
+
+                                                                            @if ($review->media->count() > 1)
+                                                                                <a class="carousel-control-prev"
+                                                                                    href="#carousel{{ $review->id }}"
+                                                                                    role="button" data-slide="prev">
+
+                                                                                    <span
+                                                                                        class="carousel-control-prev-icon"></span>
+                                                                                </a>
+
+                                                                                <a class="carousel-control-next"
+                                                                                    href="#carousel{{ $review->id }}"
+                                                                                    role="button" data-slide="next">
+
+                                                                                    <span
+                                                                                        class="carousel-control-next-icon"></span>
+                                                                                </a>
+                                                                            @endif
+
+                                                                        </div>
+                                                    @endif
+
+                                                    {{-- @if (auth()->user()->id == $review->user_id)
+                                                        <a href="{{ route('user.productreview.edit', $review->id) }}"
+                                                            class="btn btn-warning">
+                                                            Edit Review
+                                                        </a>
+                                                    @endif --}}
+
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="text-center py-5">
+                                                <i class="fas fa-comment-dots fa-3x text-muted mb-3"></i>
+                                                <p class="text-muted">No reviews yet. Be the first to review this product!</p>
+                                            </div>
+                                        @endif
+                                    </div>
                                 @else
                                     <div class="alert alert-info">
                                         <i class="fas fa-info-circle me-2"></i>
@@ -426,125 +531,7 @@
                                 @endauth
                             </div>
 
-                            <!-- Reviews List -->
-                            <div class="reviews-list">
-                                <h4 class="mb-4">Customer Reviews</h4>
 
-                                @if ($product_detail->getReview->count() > 0)
-                                    @foreach ($product_detail->getReview as $review)
-                                        <div class="review-item">
-                                            <div class="review-header">
-                                                <div class="reviewer-info">
-                                                    @if ($review->user_info['photo'])
-                                                        <img src="{{ $review->user_info['photo'] }}"
-                                                            alt="{{ $review->user_info['name'] }}"
-                                                            class="reviewer-avatar">
-                                                    @else
-                                                        <div class="reviewer-avatar-placeholder">
-                                                            {{ substr($review->user_info['name'], 0, 1) }}
-                                                        </div>
-                                                    @endif
-                                                    <div>
-                                                        <h5 class="reviewer-name">{{ $review->user_info['name'] }}</h5>
-                                                        <div class="review-stars">
-                                                            @for ($i = 1; $i <= 5; $i++)
-                                                                @if ($i <= $review->rate)
-                                                                    <i class="fas fa-star text-warning"></i>
-                                                                @else
-                                                                    <i class="far fa-star text-muted"></i>
-                                                                @endif
-                                                            @endfor
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="review-date">
-                                                    <small>{{ $review->created_at->format('M d, Y') }}</small>
-                                                </div>
-                                            </div>
-                                            <div class="review-content">
-                                                <p>{{ $review->review }}</p>
-                                            </div>
-
-                                            @if ($review->media->count())
-                                                <div class="modal fade" id="reviewMediaModal{{ $review->id }}"
-                                                    tabindex="-1">
-
-                                                    <div class="modal-dialog modal-lg modal-dialog-centered">
-
-                                                        <div class="modal-content">
-
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">Customer Media</h5>
-
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal">
-                                                                    <span>&times;</span>
-                                                                </button>
-                                                            </div>
-
-                                                            <div class="modal-body">
-
-                                                                <div id="carousel{{ $review->id }}"
-                                                                    class="carousel slide" data-ride="carousel">
-
-                                                                    <div class="carousel-inner">
-
-                                                                        @foreach ($review->media as $key => $media)
-                                                                            <div
-                                                                                class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-
-                                                                                @if ($media->type == 'image')
-                                                                                    <img src="{{ asset('storage/' . $media->file_path) }}"
-                                                                                        class="d-block w-100">
-                                                                                @else
-                                                                                    <video controls class="w-100">
-                                                                                        <source
-                                                                                            src="{{ asset('storage/' . $media->file_path) }}">
-                                                                                    </video>
-                                                                                @endif
-
-                                                                            </div>
-                                                                        @endforeach
-
-                                                                    </div>
-
-                                                                    @if ($review->media->count() > 1)
-                                                                        <a class="carousel-control-prev"
-                                                                            href="#carousel{{ $review->id }}"
-                                                                            role="button" data-slide="prev">
-
-                                                                            <span
-                                                                                class="carousel-control-prev-icon"></span>
-                                                                        </a>
-
-                                                                        <a class="carousel-control-next"
-                                                                            href="#carousel{{ $review->id }}"
-                                                                            role="button" data-slide="next">
-
-                                                                            <span
-                                                                                class="carousel-control-next-icon"></span>
-                                                                        </a>
-                                                                    @endif
-
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="text-center py-5">
-                                        <i class="fas fa-comment-dots fa-3x text-muted mb-3"></i>
-                                        <p class="text-muted">No reviews yet. Be the first to review this product!</p>
-                                    </div>
-                                @endif
-                            </div>
                         </div>
                     </div>
 

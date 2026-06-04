@@ -76,9 +76,9 @@ class ProductReviewController extends Controller
         $this->validate($request, [
             'rate' => 'required|numeric|min:1|max:5',
             'review' => 'required',
-            'media' => 'nullable|file|mimes:jpg,jpeg,png,webp,mp4,mov,webm|max:20480',
+           
         ]);
-
+ 
         $product_info = Product::getProductBySlug($request->slug);
 
         if (!$product_info) {
