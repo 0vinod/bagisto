@@ -113,6 +113,7 @@
             <h6 class="collapse-header">Shipping Options:</h6>
             <a class="collapse-item" href="{{route('shipping.index')}}">Shipping</a>
             <a class="collapse-item" href="{{route('shipping.create')}}">Add Shipping</a>
+            <a class="collapse-item" href="{{route('backend.shipping.policies')}}">Shipping Policies</a>
           </div>
         </div>
     </li>

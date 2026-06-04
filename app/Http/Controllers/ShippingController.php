@@ -131,11 +131,13 @@ class ShippingController extends Controller
         }
     }
 
-    public function shippingPolicies(Request $request, ShippingPolicy $shippingPolicy)
+    public function shippingPolicies(Request $request)
     {
         $validated = $request->validate([ 
             'description' => 'required|string'
         ]); 
+
+        $shippingPolicy = ShippingPolicy::first() ?? new ShippingPolicy();
         
         if($request->isMethod('post')) {
         if (!$shippingPolicy->exists) {
