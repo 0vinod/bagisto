@@ -139,6 +139,7 @@ Route::get('payment/success', [PayPalController::class, 'success'])->name('payme
 
 Route::get('return_exchange_policy', [FrontendController::class, 'returnExchangePolicy'])->name('return.exchange.policy');
 Route::get('shippingPolicy', [FrontendController::class, 'shippingPolicy'])->name('shipping.policy');
+Route::get('privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('privacy.policy');
 
 
 // Backend section start

@@ -474,7 +474,12 @@ class FrontendController extends Controller
     public function  shippingPolicy()
     {
         $shippingPolicy = ShippingPolicy::first();
-        
+
         return view('frontend.pages.shipping_policy', compact('shippingPolicy'));
+    }
+
+    public function privacyPolicy(Request $request)
+    {
+        return view('frontend.pages.privacy_policy');
     }
 }

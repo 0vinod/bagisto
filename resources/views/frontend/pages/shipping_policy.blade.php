@@ -29,11 +29,7 @@
         </div>
  </section>
 
-    <!-- Related Products Section -->
-    @include('frontend.partials.related-products', [
-        'products' => $product_detail->rel_prods,
-        'currentProduct' => $product_detail,
-    ])
+ 
 
     <!-- Recently Viewed Products Modal -->
     @include('frontend.partials.product-modal')

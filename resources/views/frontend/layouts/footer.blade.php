@@ -48,7 +48,7 @@
                             {{-- <li><a href="">Payment Methods</a></li> --}}
                             <li><a href="{{ route('return.exchange.policy') }}">Returns & Exchanges</a></li>
                             <li><a href="{{ route('shipping.policy') }}">Shipping</a></li>
-                            {{-- <li><a href=" ">Privacy Policy</a></li>   --}}
+                            <li><a href="{{ route('privacy.policy') }}">Privacy Policy</a></li>  
                         </ul>
                     </div>
                 </div>
