@@ -279,13 +279,12 @@ class OrderController extends Controller
         $validated = $request->validate([
             'order_number' => 'required|string|max:255'
         ]);
-
-        $order = Order::where('user_id', auth()->user()->id)
-            ->where('order_number', $validated['order_number'])
+ 
+        $order = Order::where('order_number', $validated['order_number'])
             ->first();
 
         if (!$order) {
-            return back()->with('error', 'Invalid order number. Please try again.');
+            return back()->withInput()->with('error', 'Invalid order number. Please try again.');
         }
 
         $messages = [
