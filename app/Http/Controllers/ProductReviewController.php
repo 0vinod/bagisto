@@ -76,7 +76,6 @@ class ProductReviewController extends Controller
         $this->validate($request, [
             'rate' => 'required|numeric|min:1|max:5',
             'review' => 'required',
-           
         ]);
  
         $product_info = Product::getProductBySlug($request->slug);
