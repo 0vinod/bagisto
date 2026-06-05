@@ -21,41 +21,11 @@
                 <!-- Logo -->
                 <div class="logo">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('frontend/img/logo.png') }}" alt="{{ config('app.name') }}">
+                        <img src="{{ asset('frontend/img/logo.png') }}" alt="Moonzio">
                     </a>
                 </div>
 
-                <!-- Menu -->
-                {{-- <nav class="navbar navbar-expand-lg">
-                    <div class="navbar-collapse" id="mainNav">
-                        <ul class="nav main-menu menu navbar-nav">
-                            <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                                <a href="{{ route('home') }}">Home</a>
-                            </li>
-                            <li class="{{ request()->routeIs('about-us') ? 'active' : '' }}">
-                                <a href="{{ route('about-us') }}">About Us</a>
-                            </li>
-                            <li class="{{ request()->routeIs('products.*') ? 'active' : '' }}">
-                                <a href="{{ route('product-grids') }}">Products</a>
-                            </li>
-                            @if (isset($categories) && count($categories) > 0)
-                                @foreach ($categories->take(5) as $category)
-                                    <li>
-                                        <a href="{{ route('products.category', $category->slug) }}">
-                                            {{ $category->title }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            @endif
-                            <li class="{{ request()->routeIs('blog.*') ? 'active' : '' }}">
-                                <a href="{{ route('blog') }}">Blog</a>
-                            </li>
-                            <li class="{{ request()->routeIs('contact') ? 'active' : '' }}">
-                                <a href="{{ route('contact') }}">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav> --}}
+              
                 <nav class="navbar navbar-expand-lg">
 
                     <!-- Mobile Toggle -->
@@ -92,6 +62,8 @@
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>
+
+                    
 
                 </nav>
                 <!-- Right Icons -->

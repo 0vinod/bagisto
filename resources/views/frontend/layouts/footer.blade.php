@@ -57,7 +57,7 @@
                      <div class="single-footer about">
                          <div class="logo">
                              <a href="{{ route('home') }}">
-                                 <img src="{{ asset('backend/img/logo2.png') }}" alt="{{ config('app.name') }}">
+                                 <img src="{{ asset('backend/img/logo2.png') }}" alt="Moonzio">
                              </a>
                          </div>
                          <p class="text">{!! isset($settings)
@@ -155,7 +155,7 @@
 
 
  <!-- Floating WhatsApp Button -->
- <a href="https://wa.me/918604133275?text=Hello%20Vedika%20Home%20Decor,%20I%20want%20to%20know%20more%20about%20your%20products."
+ <a href="https://wa.me/918604133275?text=Hello%20Moonzio%20Team,%20I%20want%20to%20know%20more%20about%20your%20products."
      class="whatsapp-float" target="_blank">
 
      <!-- YOUR DP IMAGE -->
