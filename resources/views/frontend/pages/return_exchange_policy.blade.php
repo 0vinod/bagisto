@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title', 'Moonzio || Return & Exchange Policy')
+@section('title', 'Moonzio || Return, Refund & Exchange Policy')
 
 @section('main-content')
     <link
@@ -242,106 +242,135 @@
         <section class="return-us section">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 policy-content">
-                        <h4>Return and Exchange Policy</h4>
+                    <h4>Return, Refund & Exchange Policy</h4>
 
-                        <p>At Moonzio, we are committed to providing you with the highest quality products. We understand
-                            that sometimes issues may arise, and we want to ensure your satisfaction. Please review our
-                            return and exchange policy below.</p>
+                    <p>At Moonzio, customer satisfaction is our priority. We strive to provide high-quality products and a
+                        smooth shopping experience. Please read our Return, Refund, Exchange, and Cancellation Policy
+                        carefully before placing an order.</p>
 
-                        <!-- Returns Section -->
-                        <div class="policy-section-title">
-                            <i class="fas fa-undo-alt"></i>
-                            <span>Returns</span>
-                        </div>
-                        <ul class="policy-list">
-                            <li>At Moonzio, customer satisfaction is our priority. If you're not completely satisfied with your  purchase, you may return the product within the applicable return period.</li>
-                            <li>Upon successful return and quality verification, 100% of the product value will be credited to
-                                your Moonzio Wallet, which can be used for future purchases on our store.</li>
-                            <li>To ensure a smooth return process, an unboxing/opening video is mandatory for reporting damaged, defective, missing, or incorrect items. Unfortunately, we may not be able to process such claims without a clear opening video recorded from the moment the package is opened. </li>
-
-                           <li> Thank you for shopping with us!</li>
-
-                        </ul>
-
-                        <!-- Exchanges Section -->
-                        <div class="policy-section-title">
-                            <i class="fas fa-exchange-alt"></i>
-                            <span>Exchanges</span>
-                        </div>
-                        <ul class="policy-list">
-                            <li>If you receive a defective or damaged product, you may request an exchange within <strong>3
-                                    days</strong> of receiving the item.</li>
-                            <li>To initiate an exchange, please contact our customer service team at <strong>Whatsapp: +91
-                                    8604133275</strong> or email us at <strong> vinod190596@gmail.com Or support@moonzio.com</strong> with your
-                                order number and details about the defect.</li>
-                        </ul>
-
-                        <!-- Conditions for Exchanges -->
-                        <div class="policy-section-title">
-                            <i class="fas fa-clipboard-list"></i>
-                            <span>Conditions for Exchanges</span>
-                        </div>
-                        <ul class="policy-list">
-                            <li>The item must be unused, unworn, and in its original packaging.</li>
-                            <li>The defect or damage must be clearly visible and reported to Moonzio within 3 days of
-                                receiving the product.</li>
-                            <li>Proof of purchase, such as the order number or receipt, must be provided.</li>
-                        </ul>
-
-                        <!-- Exchange Process -->
-                        <div class="policy-section-title">
-                            <i class="fas fa-truck"></i>
-                            <span>Exchange Process</span>
-                        </div>
-                        <ul class="policy-list">
-                            <li>Contact our customer service team to report the defect and request an exchange (Whatsapp or
-                                Email).</li>
-                            <li>Our team will guide you through the necessary steps and provide you with a return shipping
-                                address if applicable.</li>
-                            <li>Once we receive the defective item and inspect it, we will process the exchange.</li>
-                            <li>If the item is no longer in stock, we will offer a similar item or issue a store credit.
-                            </li>
-                            <li><strong>Opening Video is compulsory for exchange – we won't accept without opening
-                                    video.</strong></li>
-                        </ul>
-
-                      
-
-                        <!-- Non-Defective Items -->
-                        <div class="policy-section-title">
-                            <i class="fas fa-box-open"></i>
-                            <span>Non-Defective Items</span>
-                        </div>
-                        <ul class="policy-list">
-                            <li>We do not accept exchanges for reasons other than product defects.</li>
-                            <li>Please carefully review your order before completing your purchase.</li>
-                        </ul>
-
-                        <!-- Cancellations -->
-                        <div class="policy-section-title">
-                            <i class="fas fa-ban"></i>
-                            <span>Cancellations</span>
-                        </div>
-                        <ul class="policy-list">
-                            <li>Orders cannot be canceled once they have been shipped. If you wish to cancel an order,
-                                please contact us as soon as possible, and we will do our best to assist you.</li>
-                        </ul>
-
-                        <!-- Contact Information - Highlighted -->
-                        <div class="contact-highlight">
-                            <i class="fas fa-headset" style="margin-right: 8px; color:#b87333;"></i>
-                            <strong>Contact Information:</strong><br>
-                            If you have any questions or concerns about our return and exchange policy, please contact our
-                            customer service team at <strong>Whatsapp : +91 8604133275</strong> or Mail us :
-                            <strong>vinod190596@gmail.com,</strong>
-                            <strong>support@moonzio.com</strong>
-                        </div>
-
-                        <p style="margin-top: 1.5rem; font-style: italic; color: #4b5563;">Thank you for choosing Moonzio.
-                            We appreciate your understanding and cooperation in ensuring the quality and satisfaction of
-                            your shopping experience.</p>
+                    <!-- Returns Section -->
+                    <div class="policy-section-title">
+                        <i class="fas fa-undo-alt"></i>
+                        <span>Returns</span>
                     </div>
+                    <ul class="policy-list">
+                        <li>If you are not completely satisfied with your purchase, you may request a return within 3 days
+                            of receiving the product.</li>
+                        <li>Once the returned product is received and successfully passes our quality inspection, 100% of
+                            the product value will be credited to your Moonzio Wallet.</li>
+                        <li>Moonzio Wallet credits can be used for future purchases on our website.</li>
+                        <li>For damaged, defective, missing, or incorrect products, an unboxing/opening video recorded from
+                            the moment the package is opened is required for verification.</li>
+                        <li>Claims submitted without a valid opening video may not be eligible for return or exchange
+                            approval.</li>
+                    </ul>
+
+                    <!-- Refund Policy -->
+                    <div class="policy-section-title">
+                        <i class="fas fa-wallet"></i>
+                        <span>Refund Policy</span>
+                    </div>
+                    <ul class="policy-list">
+                        <li>Refunds are provided in the form of Moonzio Wallet Credit only.</li>
+                        <li>After successful quality verification, the eligible refund amount will be credited to your
+                            Moonzio Wallet.</li>
+                        <li>Wallet credits can be used for future purchases on Moonzio.</li>
+                        <li>Wallet credits are non-transferable and cannot be converted into cash or transferred to a bank
+                            account unless required by applicable law.</li>
+                    </ul>
+
+                    <!-- Exchanges Section -->
+                    <div class="policy-section-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Exchanges</span>
+                    </div>
+                    <ul class="policy-list">
+                        <li>If you receive a damaged, defective, or incorrect product, you may request an exchange within
+                            <strong>3 days</strong> of receiving the item.</li>
+                        <li>To initiate an exchange, please contact our customer support team via <strong>WhatsApp: +91
+                                8604133275</strong> or email us at <strong>support@moonzio.com</strong>.</li>
+                    </ul>
+
+                    <!-- Conditions for Exchanges -->
+                    <div class="policy-section-title">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Conditions for Exchanges</span>
+                    </div>
+                    <ul class="policy-list">
+                        <li>The item must be unused and in its original packaging.</li>
+                        <li>The issue must be reported within 3 days of delivery.</li>
+                        <li>Proof of purchase, such as the order number or receipt, must be provided.</li>
+                        <li>Clear photos or videos may be requested for verification.</li>
+                        <li>An unboxing/opening video is required for damaged, defective, missing, or incorrect item claims.
+                        </li>
+                    </ul>
+
+                    <!-- Exchange Process -->
+                    <div class="policy-section-title">
+                        <i class="fas fa-truck"></i>
+                        <span>Exchange Process</span>
+                    </div>
+                    <ul class="policy-list">
+                        <li>Contact our customer support team via WhatsApp or email.</li>
+                        <li>Provide your order number and details of the issue.</li>
+                        <li>Our team will review your request and provide further instructions.</li>
+                        <li>If required, return the product to the address provided by our support team.</li>
+                        <li>After inspection and approval, a replacement product will be shipped.</li>
+                        <li>If the same product is unavailable, Moonzio may offer a similar replacement product or store
+                            credit.</li>
+                    </ul>
+
+                    <!-- Non-Defective Items -->
+                    <div class="policy-section-title">
+                        <i class="fas fa-box-open"></i>
+                        <span>Non-Returnable & Non-Exchangeable Items</span>
+                    </div>
+                    <ul class="policy-list">
+                        <li>Products damaged due to misuse, negligence, or improper handling.</li>
+                        <li>Products returned without original packaging.</li>
+                        <li>Requests submitted after the allowed return or exchange period.</li>
+                        <li>Products showing signs of use or alteration by the customer.</li>
+                        <li>Change-of-mind requests for products that are delivered correctly and without defects.</li>
+                    </ul>
+
+                    <!-- Shipping Information -->
+                    <div class="policy-section-title">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Shipping Information</span>
+                    </div>
+                    <ul class="policy-list">
+                        <li>Orders are generally processed within 24–48 hours after confirmation.</li>
+                        <li>Delivery typically takes 3–7 business days depending on your location and courier availability.
+                        </li>
+                        <li>Tracking details will be shared via email or WhatsApp after dispatch.</li>
+                        <li>Delivery delays caused by weather conditions, public holidays, courier issues, or unforeseen
+                            circumstances may occur.</li>
+                    </ul>
+
+                    <!-- Cancellations -->
+                    <div class="policy-section-title">
+                        <i class="fas fa-ban"></i>
+                        <span>Order Cancellation</span>
+                    </div>
+                    <ul class="policy-list">
+                        <li>Orders may be cancelled before they are shipped.</li>
+                        <li>Once an order has been shipped, cancellation requests cannot be guaranteed.</li>
+                        <li>If you wish to cancel an order, please contact our customer support team as soon as possible.
+                        </li>
+                    </ul>
+
+                    <!-- Contact Information -->
+                    <div class="contact-highlight">
+                        <i class="fas fa-headset" style="margin-right: 8px; color:#b87333;"></i>
+                        <strong>Contact Information:</strong><br>
+                        Business Name: Moonzio<br>
+                        WhatsApp: <strong>+91 8604133275</strong><br>
+                        Email: <strong>support@moonzio.com</strong>
+                    </div>
+
+                    <p style="margin-top: 1.5rem; font-style: italic; color: #4b5563;">
+                        Thank you for choosing Moonzio. We appreciate your trust and look forward to serving you.
+                    </p>
                 </div>
             </div>
         </section>
