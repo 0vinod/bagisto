@@ -110,7 +110,7 @@ Route::get('/product-grids', [FrontendController::class, 'productGrids'])->name(
 Route::get('/product-lists', [FrontendController::class, 'productLists'])->name('product-lists');
 Route::match(['get', 'post'], '/filter', [FrontendController::class, 'productFilter'])->name('shop.filter');
 // Order Track
-Route::get('/product_track', [OrderController::class, 'orderTrack'])->name('order.track');
+Route::any('/product_track', [OrderController::class, 'orderTrack'])->name('order.track');
 Route::post('product_track/order', [OrderController::class, 'productTrackOrder'])->name('product.track.order');
 // Blog
 Route::get('/blog', [FrontendController::class, 'blog'])->name('blog');

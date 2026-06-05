@@ -47,7 +47,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $cartItems =  collect([]);
- 
+
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'state_id' => 'required|string|max:255',
@@ -61,9 +61,9 @@ class OrderController extends Controller
             'shipping' => 'nullable|exists:shippings,id',
             'payment_method' => 'required|in:cod,paypal'
         ]);
- 
-         $product = Product::where('slug', $request->slug)->first();
- 
+
+        $product = Product::where('slug', $request->slug)->first();
+
         if (auth()->user()?->id) {
             $cartItems = Cart::where('user_id', auth()->user()->id)
                 ->where('order_id', null)
@@ -73,16 +73,16 @@ class OrderController extends Controller
         // if ($cartItems->isEmpty()) {
         //     return back()->with('error', 'Cart is Empty!');
         // }
-        
-          $offerPrice = $product->price - ($product->price * $product->discount / 100);
- 
+
+        $offerPrice = $product->price - ($product->price * $product->discount / 100);
+
 
         try {
             $order = new Order();
             $order->order_number = 'ORD-' . strtoupper(Str::random(10));
             $order->user_id = auth()->user()?->id;
             $order->first_name = $validated['first_name'];
-           $order->product_id = $product->id ?? null; 
+            $order->product_id = $product->id ?? null;
             $order->email = $validated['email'];
             $order->phone = $validated['phone'];
             $order->country = $validated['country'];
@@ -103,8 +103,8 @@ class OrderController extends Controller
                     $order->shipping_id = $shipping->id;
                     $deliveryCharge = (float)$shipping->price;
                     $order->delivery_charge = $deliveryCharge;
-                }   
-            }           
+                }
+            }
 
             // Calculate coupon discount
             $couponDiscount = 0;
@@ -178,7 +178,7 @@ class OrderController extends Controller
         if ($order->user_id != auth()->user()?->id) {
             abort(403, 'Unauthorized access');
         }
- 
+
         return view('frontend.pages.thankyou', compact('order'));
     }
 
@@ -269,17 +269,35 @@ class OrderController extends Controller
         }
     }
 
-    public function orderTrack()
-    {
-        return view('frontend.pages.order-track');
+public function orderTrack(Request $request)
+{
+    $order = null;
+
+    if ($request->isMethod('post')) {
+
+        $request->validate([
+            'order_number' => 'required|string|max:255'
+        ]);
+
+        $order = Order::where('order_number', $request->order_number)
+            ->first();
+
+        if (!$order) {
+            return back()
+                ->withInput()
+                ->with('error', 'Invalid order number. Please try again.');
+        }
     }
+
+    return view('frontend.pages.order-track', compact('order'));
+}
 
     public function productTrackOrder(Request $request)
     {
         $validated = $request->validate([
             'order_number' => 'required|string|max:255'
         ]);
- 
+
         $order = Order::where('order_number', $validated['order_number'])
             ->first();
 
@@ -297,7 +315,7 @@ class OrderController extends Controller
         $message = $messages[$order->status] ?? 'Order status unknown.';
         $type = ($order->status == 'cancel') ? 'error' : 'success';
 
-        return redirect()->route('home')->with($type, $message);
+        return back()->with($type, $message);
     }
 
     // PDF generate
