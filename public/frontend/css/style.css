@@ -184,7 +184,14 @@
         text-align: center;
         padding: 20px;
     }
+@media (max-width: 768px) {
+      .single-service {
+        text-align: center;
+        padding: 0px;
+    }
 
+}
+    
     .single-service i {
         font-size: 42px;
         color: #F7941D;
