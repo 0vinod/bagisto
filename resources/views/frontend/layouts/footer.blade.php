@@ -135,7 +135,7 @@
                      <div class="col-lg-6 col-12">
                          <div class="left"> 
                              <p>Copyright © 2026
-                                 <a href="{{ route('home') }}" target="_blank">{{ config('app.name') }}</a>
+                                 <a href="{{ route('home') }}" target="_blank">Moonzio</a>
                                - All Rights Reserved.
                              </p>
                          </div>
