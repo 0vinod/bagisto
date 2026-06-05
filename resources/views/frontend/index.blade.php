@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title', 'Moonzio || HOME PAGE')
+@section('title', 'Moonzio - Innovative Home, Kitchen & Utility Products')
 
 @section('main-content')
     <!-- Slider Area -->
