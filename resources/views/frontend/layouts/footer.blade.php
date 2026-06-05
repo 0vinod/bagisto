@@ -6,7 +6,7 @@
                  <!-- Start Single Service -->
                  <div class="single-service">
                      <i class="ti-rocket"></i>
-                     <h4>Free shiping</h4>
+                     <h4>Free Shipping</h4>
                      <p>Cash on delivery</p>
                  </div>
                  <!-- End Single Service -->
@@ -24,7 +24,7 @@
                  <!-- Start Single Service -->
                  <div class="single-service">
                      <i class="ti-lock"></i>
-                     <h4>Sucure Payment</h4>
+                     <h4>Secure Payment</h4>
                      <p>100% secure payment</p>
                  </div>
                  <!-- End Single Service -->
@@ -33,7 +33,7 @@
                  <!-- Start Single Service -->
                  <div class="single-service">
                      <i class="ti-tag"></i>
-                     <h4>Best Peice</h4>
+                     <h4>Best Price</h4>
                      <p>Guaranteed price</p>
                  </div>
                  <!-- End Single Service -->
@@ -133,10 +133,10 @@
              <div class="inner">
                  <div class="row">
                      <div class="col-lg-6 col-12">
-                         <div class="left">
-                             <p>Copyright © {{ date('Y') }}
+                         <div class="left"> 
+                             <p>Copyright © 2026
                                  <a href="{{ route('home') }}" target="_blank">{{ config('app.name') }}</a>
-                                 - All Rights Reserved.
+                               - All Rights Reserved.
                              </p>
                          </div>
                      </div>

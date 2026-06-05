@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title', 'Moonzio - Innovative Home, Kitchen & Utility Products')
-
+<meta name="description" content="Shop innovative home, kitchen and lifestyle products at Moonzio. Cash on Delivery, Free Shipping and premium quality products across India.">
 @section('main-content')
     <!-- Slider Area -->
     @if (isset($banners) && count($banners) > 0)
