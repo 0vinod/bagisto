@@ -535,7 +535,7 @@
                         </div>
                     </div>
 
-                    <!-- Shipping Tab -->
+                    {{-- <!-- Shipping Tab -->
                     <div class="tab-pane fade" id="shipping">
                         <div class="tab-content-wrapper">
                             <div class="shipping-info">
@@ -582,7 +582,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

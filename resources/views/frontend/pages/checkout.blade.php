@@ -335,43 +335,8 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="modern-services section">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="service-card">
-                        <i class="fas fa-truck-fast"></i>
-                        <h4>Free Shipping</h4>
-                        <p>Orders over $100</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="service-card">
-                        <i class="fas fa-undo-alt"></i>
-                        <h4>Free Return</h4>
-                        <p>Within 30 days returns</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="service-card">
-                        <i class="fas fa-lock"></i>
-                        <h4>Secure Payment</h4>
-                        <p>100% secure payment</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="service-card">
-                        <i class="fas fa-tag"></i>
-                        <h4>Best Price</h4>
-                        <p>Guaranteed price</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
+   
+    {{-- <!-- Newsletter Section -->
     <section class="modern-newsletter section">
         <div class="container">
             <div class="newsletter-wrapper">
@@ -394,7 +359,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection
 
 @push('styles')
