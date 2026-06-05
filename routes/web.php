@@ -69,7 +69,7 @@ Route::get('/home', [FrontendController::class, 'index']);
 Route::get('/about-us', [FrontendController::class, 'aboutUs'])->name('about-us');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::post('/contact/message', [MessageController::class, 'store'])->name('contact.store');
-Route::get('product-detail/{slug}', [FrontendController::class, 'productDetail'])->name('product-detail');
+Route::get('product/{slug}', [FrontendController::class, 'productDetail'])->name('product-detail');
 Route::post('/product/search', [FrontendController::class, 'productSearch'])->name('product.search');
 Route::get('/product-cat/{slug}', [FrontendController::class, 'productCat'])->name('product-cat');
 Route::get('/product-sub-cat/{slug}/{sub_slug}', [FrontendController::class, 'productSubCat'])->name('product-sub-cat');
