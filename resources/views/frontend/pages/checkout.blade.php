@@ -214,33 +214,37 @@
                                 <div class="card-header">
                                     <h3><i class="fas fa-shopping-cart me-2"></i> Your Order</h3>
                                 </div>
-
+ @php
+                                $afterDiscount =
+                                    $product->price - ($product->price * $product->discount) / 100;
+                            @endphp
                                 <div class="card-body">
                                     <!-- Cart Items Preview -->
-                                    @if (Helper::cartCount() > 0)
+                                    {{-- @if (Helper::cartCount() > 0) --}}
+                                  
                                         <div class="cart-items-preview mb-3">
                                             <h5>Order Items</h5>
-                                            @php $cart_items = Helper::getAllProductFromCart(); @endphp
-                                            @foreach ($cart_items as $item)
+                                            {{-- @php $cart_items = Helper::getAllProductFromCart(); @endphp --}}
+                                            {{-- @foreach ($cart_items as $item) --}}
                                                 <div class="cart-item-preview">
                                                     <div class="item-info">
-                                                        <span class="item-name">{{ $item->product->title }}</span>
-                                                        <span class="item-quantity">x{{ $item->quantity }}</span>
+                                                        <span class="item-name">{{ $product->title }}</span>
+                                                        {{-- <span class="item-quantity">x{{ $product->quantity }}</span> --}}
                                                     </div>
-                                                    <span class="item-price">Rs. {{ number_format($item->amount, 2) }}</span>
+                                                    <span class="product-price">Rs. {{ number_format($afterDiscount) }}</span>
                                                 </div>
-                                            @endforeach
+                                            {{-- @endforeach --}}
                                         </div>
-                                    @endif
+                                    {{-- @endif --}}
 
                                     <!-- Order Totals -->
                                     <div class="order-totals">
-                                        <div class="total-row">
+                                        {{-- <div class="total-row">
                                             <span>Subtotal</span>
-                                            <span class="order_subtotal" data-price="{{ Helper::totalCartPrice() }}">
-                                                Rs. {{ number_format(Helper::totalCartPrice(), 2) }}
+                                            <span class="order_subtotal" data-price="{{ number_format($afterDiscount) }}">
+                                                Rs. {{ number_format($afterDiscount) }}
                                             </span>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="total-row shipping-row">
                                             <span>Shipping</span>
@@ -253,7 +257,7 @@
                                                                 data-price="{{ $shipping->price }}"
                                                                 {{ old('shipping') == $shipping->id ? 'selected' : '' }}>
                                                                 {{ $shipping->type }}:
-                                                                Rs. {{ number_format($shipping->price, 2) }}
+                                                                Rs. {{ number_format($shipping->price) }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -274,14 +278,14 @@
 
                                         <div class="total-row grand-total">
                                             <span>Total</span>
-                                            @php
+                                            {{-- @php
                                                 $total_amount = Helper::totalCartPrice();
                                                 if (session('coupon')) {
                                                     $total_amount = $total_amount - session('coupon')['value'];
                                                 }
-                                            @endphp
+                                            @endphp --}}
                                             <span class="order_total_price" id="order_total_price">
-                                                Rs. {{ number_format($total_amount, 2) }}
+                                                Rs. {{ number_format($afterDiscount) }}
                                             </span>
                                         </div>
                                     </div>
