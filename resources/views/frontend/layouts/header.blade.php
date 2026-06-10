@@ -25,45 +25,68 @@
                     </a>
                 </div>
 
-              
                 <nav class="navbar navbar-expand-lg">
-
-                    <!-- Mobile Toggle -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav">
-                        <i class="ti-menu"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="mainNav">
-                        <ul class="nav main-menu menu navbar-nav">
-                            <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                                <a href="{{ route('home') }}">Home</a>
+  
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fa-solid fa-bars-staggered"></i>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('home') }}">Home</a>
                             </li>
 
-                            <li class="{{ request()->routeIs('about-us') ? 'active' : '' }}">
-                                <a href="{{ route('about-us') }}">About Us</a>
+                            <li class="nav-item {{ request()->routeIs('about-us') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('about-us') }}">About Us</a>
                             </li>
 
-                            <li class="{{ request()->routeIs('products.*') ? 'active' : '' }}">
-                                <a href="{{ route('product-grids') }}">Products</a>
+                            <li class="nav-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('product-grids') }}">Products</a>
                             </li>
 
                             @if (isset($categories) && count($categories) > 0)
                                 @foreach ($categories->take(5) as $category)
-                                    <li>
-                                        <a href="{{ route('products.category', $category->slug) }}">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('products.category', $category->slug) }}">
                                             {{ $category->title }}
                                         </a>
                                     </li>
                                 @endforeach
                             @endif
 
-                            {{-- <li><a href="{{ route('blog') }}">Blog</a></li> --}}
-                            <li><a href="{{ route('order.track') }}">Track Order</a></li>
-                            <li><a href="{{ route('contact') }}">Contact</a></li>
-                        </ul>
+                            {{-- <li class="nav-item"><a class="nav-link" href="{{ route('blog') }}">Blog</a></li> --}}
+                            <li class="nav-item"><a class="nav-link" href="{{ route('order.track') }}">Track Order</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
+                            <li>
+                                     <div class="header-user">
+                        @auth
+                            @if (Auth::user()->role == 'admin')
+                                <a href="{{ route('admin') }}" class="user-btn">Dashboard</a>
+                            @else
+                                <a href="{{ route('user') }}" class="user-btn">My Account</a>
+                            @endif
+                            <a href="{{ route('user.logout') }}" class="user-btn logout"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
+                        @else
+                            <a href="{{ route('login.form') }}" class="user-btn">Login</a>
+                            <a href="{{ route('register.form') }}" class="user-btn register">Register</a>
+                        @endauth
                     </div>
+                            </li>
+      
+      </ul>
+      
+    </div>
+</nav>
 
-                </nav>
+            
                 <!-- Right Icons -->
                 <div class="header-right">
                     <!-- Search -->
@@ -204,26 +227,7 @@
                     </div>
 
                     <!-- User Menu -->
-                    <div class="header-user">
-                        @auth
-                            @if (Auth::user()->role == 'admin')
-                                <a href="{{ route('admin') }}" class="user-btn">Dashboard</a>
-                            @else
-                                <a href="{{ route('user') }}" class="user-btn">My Account</a>
-                            @endif
-                            <a href="{{ route('user.logout') }}" class="user-btn logout"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                            </form>
-                        @else
-                            <a href="{{ route('login.form') }}" class="user-btn">Login</a>
-                            <a href="{{ route('register.form') }}" class="user-btn register">Register</a>
-                        @endauth
-                    </div>
+               
                 </div>
 
             </div>
@@ -231,70 +235,3 @@
     </div>
 </header>
  
-
-<script>
-    $(document).ready(function() {
-        // Mobile menu toggle
-
-
-        // Search toggle
-        $("#searchToggle").click(function(e) {
-            e.preventDefault();
-            $("#searchForm").toggle();
-        });
-
-        // Close dropdowns when clicking outside
-        $(document).on("click", function(e) {
-            if (!$(e.target).closest('.nav-search').length) {
-                $("#searchForm").hide();
-            }
-        });
-
-        // Sticky header
-        $(window).on("scroll", function() {
-            if ($(this).scrollTop() > 150) {
-                $(".header").addClass("sticky");
-            } else {
-                $(".header").removeClass("sticky");
-            }
-        });
-    });
-</script>
-
- 
-<script>
-    // Optional: Add AJAX cart removal with animation
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add remove item functionality with animation
-        const removeButtons = document.querySelectorAll('.remove-item');
-
-        removeButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const url = this.getAttribute('href');
-                const cartItem = this.closest('.cart-item');
-
-                // Add fade out animation
-                cartItem.style.transition = 'all 0.3s ease';
-                cartItem.style.opacity = '0';
-                cartItem.style.transform = 'translateX(20px)';
-
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 300);
-            });
-        });
-
-        // Update cart count animation
-        const cartCount = document.querySelector('.total-count');
-        if (cartCount) {
-            const currentCount = parseInt(cartCount.textContent);
-            if (currentCount > 0) {
-                cartCount.style.animation = 'none';
-                setTimeout(() => {
-                    cartCount.style.animation = 'pulse 0.5s ease-in-out';
-                }, 10);
-            }
-        }
-    });
-</script>

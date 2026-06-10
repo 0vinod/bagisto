@@ -33,15 +33,11 @@
     @endif
 
     <!-- Product Area -->
-    <div class="product-area section">
+    <section class="product-area section">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
+           <div class="section-title">
                         <h2>🔥 Trending Items</h2>
                     </div>
-                </div>
-            </div>
 
             <div class="row" id="product-data">
                 @if (isset($products) && count($products) > 0)
@@ -133,6 +129,6 @@
                 </div>
             @endif
         </div>
-    </div>
+    </section>
  
 @endsection

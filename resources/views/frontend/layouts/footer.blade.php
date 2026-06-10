@@ -2,41 +2,35 @@
  <section class="shop-services section">
      <div class="container">
          <div class="row">
-             <div class="col-lg-3 col-md-6 col-12">
-                 <!-- Start Single Service -->
+             <div class="col-lg-3 col-md-6 col-6">
                  <div class="single-service">
                      <i class="ti-rocket"></i>
                      <h4>Free Shipping</h4>
                      <p>Cash on delivery</p>
                  </div>
-                 <!-- End Single Service -->
              </div>
-             <div class="col-lg-3 col-md-6 col-12">
+             <div class="col-lg-3 col-md-6 col-6">
                  <!-- Start Single Service -->
                  <div class="single-service">
                      <i class="ti-reload"></i>
                      <h4>Free Return</h4>
                      <p>Within 3 days of purchase</p>
                  </div>
-                 <!-- End Single Service -->
              </div>
-             <div class="col-lg-3 col-md-6 col-12">
-                 <!-- Start Single Service -->
+             <div class="col-lg-3 col-md-6 col-6">
                  <div class="single-service">
                      <i class="ti-lock"></i>
                      <h4>Secure Payment</h4>
                      <p>100% secure payment</p>
                  </div>
-                 <!-- End Single Service -->
              </div>
-             <div class="col-lg-3 col-md-6 col-12">
+             <div class="col-lg-3 col-md-6 col-6">
                  <!-- Start Single Service -->
                  <div class="single-service">
                      <i class="ti-tag"></i>
                      <h4>Best Price</h4>
                      <p>Guaranteed price</p>
                  </div>
-                 <!-- End Single Service -->
              </div>
          </div>
      </div>
@@ -52,7 +46,7 @@
      <div class="footer-top section">
          <div class="container">
              <div class="row">
-                 <div class="col-lg-5 col-md-6 col-12">
+                 <div class="col-lg-4 col-12 ">
                      <!-- About Widget -->
                      <div class="single-footer about">
                          <div class="logo">
@@ -74,7 +68,7 @@
                      </div>
                  </div>
 
-                 <div class="col-lg-2 col-md-6 col-12">
+                 <div class="col-lg-2 col-6 ">
                      <div class="single-footer links">
                          <h4>Information</h4>
                          <ul>
@@ -90,7 +84,7 @@
                      </div>
                  </div>
 
-                 <div class="col-lg-2 col-md-6 col-12">
+                 <div class="col-lg-2 col-6 ">
                      <div class="single-footer links">
                          <h4>Customer Service</h4>
                          <ul>
@@ -103,7 +97,7 @@
                      </div>
                  </div>
 
-                 <div class="col-lg-3 col-md-6 col-12">
+                 <div class="col-lg-4 col-12">
                      <div class="single-footer social">
                          <h4>Get In Touch</h4>
                          <div class="contact">
@@ -157,8 +151,7 @@
  <a href="https://wa.me/918604133275?text=Hello%20Moonzio%20Team,%20I%20want%20to%20know%20more%20about%20your%20products."
      class="whatsapp-float" target="_blank">
 
-     <!-- YOUR DP IMAGE -->
-     <img src="{{ asset('images/whatsapp-icon.png') }}" alt="WhatsApp">
+<i class="fa-brands fa-rocketchat"></i>
 
      <span class="tooltip-text">Chat on WhatsApp</span>
  </a>
