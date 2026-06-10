@@ -205,7 +205,7 @@
                                             data-id="{{ $product_detail->id }}">
                                             <i class="ti-shopping-cart"></i> Add to Cart
                                         </button>
-                                        <form action="{{ route('checkout') }}" method="post" id="codForm">
+                                        <form action="{{ route('checkout',[$product_detail->slug]) }}" method="post" id="codForm">
                                             @csrf
                                             <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
 

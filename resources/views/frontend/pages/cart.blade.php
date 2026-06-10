@@ -198,7 +198,7 @@
                                         </div>
 
                                         <div class="cart-buttons">
-                                            <a href="{{ route('checkout') }}" class="btn btn-checkout">
+                                            <a href="{{ route('checkout',$cart->product['slug']) }}" class="btn btn-checkout">
                                                 <i class="ti-shopping-cart"></i> Proceed to Checkout
                                             </a>
                                             <a href="{{ route('product-grids') }}" class="btn btn-continue">

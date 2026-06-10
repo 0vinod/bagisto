@@ -344,9 +344,7 @@
 
                 footerHtml += `
                     <div class="cart-actions">
-                        <a href="{{ route('checkout') }}" class="btn-checkout">
-                            <i class="fas fa-credit-card"></i> Proceed to Checkout
-                        </a>
+                   
                         <a href="{{ route('cart') }}" class="btn-view-cart">
                             <i class="fas fa-shopping-cart"></i> View Cart
                         </a>

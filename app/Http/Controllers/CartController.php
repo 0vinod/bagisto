@@ -177,7 +177,7 @@ class CartController extends Controller
     public function checkout(Request $request)
     { 
         $user = auth()->user();
-
+// dd()
         // Get user's last order for address pre-filling
         $lastOrder = null;
         if ($user) {
@@ -187,7 +187,7 @@ class CartController extends Controller
                 ->first();
         }
         
-         $product = Product::where('slug', $request->slug)->first();
+        $product = Product::where('slug', $request->slug)->first();
 
         // Split user name into first and last name
         $nameParts = $user ? explode(' ', $user->name, 2) : ['', ''];

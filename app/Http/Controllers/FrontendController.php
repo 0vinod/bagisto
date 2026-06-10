@@ -487,6 +487,7 @@ class FrontendController extends Controller
 
     public function applyCoupon(Request $request)
     {
+       
         $coupon = Coupon::where('code', $request->coupon_code)
             ->where('status', 'active')
             ->first();
@@ -502,8 +503,8 @@ class FrontendController extends Controller
         $productAmount = $request->amount;
 
         $couponDiscount = $coupon->type == 'percent'
-            ? ($productAmount * $coupon->value / 100)
-            : $coupon->value;
+            ? ((int)$productAmount * (int)$coupon->value / 100)
+            : (int)$coupon->value;
 
         $finalAmount = max(0, $productAmount - $couponDiscount);
 

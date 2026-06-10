@@ -19,16 +19,16 @@
             </div>
         </div>
     </div>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
+ @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+ 
     <!-- Main Checkout Section -->
     <section class="modern-checkout section">
         <div class="container">
@@ -49,7 +49,7 @@
                                 <h3><i class="fas fa-file-invoice me-2"></i> Billing Details</h3>
                                 <p>Please fill in your information to complete your order</p>
                             </div>
-                            <input type="hidden" name="slug" value="{{ old('slug', $product?->slug) }}">
+                          <input type="hidden" name="slug" value="{{ old('slug', $product?->slug) }}">
 
                             <div class="card-body">
                                 <div class="row g-3">
@@ -276,7 +276,7 @@
 
 
                                     <div class="total-row coupon-row">
-                                        <input type="text" name="coupon_code" id="coupon_code" placeholder="coupon">
+                                    <input type="text" class="form-control"  name="coupon_code" id="coupon_code" placeholder="coupon">
 
                                         <span class="coupon_price" data-price="0">
                                             - Rs. 0
@@ -296,8 +296,8 @@
                                                     $total_amount = $total_amount - session('coupon')['value'];
                                                 }
                                             @endphp --}}
-                                        <span class="order_total_price" id="order_total_price">
-                                            Rs. {{ number_format($afterDiscount) }}
+                                        Rs.<span class="order_total_price" id="order_total_price">
+                                             {{ number_format($afterDiscount) }}
                                         </span>
                                     </div>
                                 </div>
@@ -435,7 +435,7 @@
                 data: {
                     _token: "{{ csrf_token() }}",
                     coupon_code: couponCode,
-                    amount: amount
+                    amount: "{{ $afterDiscount }}"
                 },
                 success: function(response) {
 

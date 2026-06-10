@@ -98,7 +98,7 @@
                                                 <i class="ti-shopping-cart"></i> Add to Cart
                                             </button>
                                             <div class="buy-now-cod mt-2">
-                                                <form action="{{ route('checkout') }}" method="post" id="codForm">
+                                                <form action="{{ route('checkout',[$product->slug]) }}" method="post" id="codForm">
                                                     @csrf
                                                     <input type="hidden" name="slug"
                                                         value="{{ $product->slug }}">

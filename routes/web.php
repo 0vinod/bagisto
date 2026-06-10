@@ -90,7 +90,7 @@ Route::get('/cart', function () {
     return view('frontend.pages.cart');
 })->name('cart');
 
-Route::any('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::any('/checkout/{slug}', [CartController::class, 'checkout'])->name('checkout');
 Route::post('/apply-coupon', [FrontendController::class, 'applyCoupon'])
     ->name('apply.coupon');
 Route::post('/checkout/cod', [CartController::class, 'codCheckout'])->name('checkout.cod');

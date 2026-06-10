@@ -61,8 +61,8 @@ class OrderController extends Controller
             'shipping' => 'nullable|exists:shippings,id',
             'payment_method' => 'required|in:cod,paypal'
         ]);
-
         $product = Product::where('slug', $request->slug)->first();
+   
 
         if (auth()->user()?->id) {
             $cartItems = Cart::where('user_id', auth()->user()->id)
