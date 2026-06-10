@@ -226,10 +226,6 @@
                     </div>
                 </div>
 
-                <!-- Mobile Menu Toggle -->
-                <button class="navbar-toggler" id="mobileMenuToggle">
-                    <i class="ti-menu"></i>
-                </button>
             </div>
         </div>
     </div>

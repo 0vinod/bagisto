@@ -3,10 +3,7 @@
 @section('title', 'Moonzio || Return, Refund & Exchange Policy')
 
 @section('main-content')
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
     <style>
         * {
             margin: 0;

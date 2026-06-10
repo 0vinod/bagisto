@@ -1,11 +1,4 @@
-/* =====================================
-Template Name: Eshop
-Author Name: Naimur Rahman
-Author URI: http://www.wpthemesgrid.com/
-Description: Eshop - eCommerce HTML5 Template.
-Version:1.0
-========================================*/
-/* Tablet Screen */
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
 .section{
 	padding:50px 0px;
@@ -342,6 +335,11 @@ Version:1.0
 }
 /* Mobile Screen */
 @media only screen and (max-width: 767px) {
+	.header.shop .navbar {
+ 
+    margin: 0;
+    padding: 0;
+}
 .breadcrumbs {
 	padding: 90px 0 90px;
 }

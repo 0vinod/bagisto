@@ -10,6 +10,7 @@ use App\Models\PostCategory;
 use App\Models\Post;
 use App\Models\Cart;
 use App\Models\Brand;
+use App\Models\Coupon;
 use App\Models\ShippingPolicy;
 use App\Models\User;
 use Auth;
@@ -89,7 +90,7 @@ class FrontendController extends Controller
     public function productDetail($slug)
     {
         $product_detail = Product::getProductBySlug($slug);
- 
+
         return view('frontend.pages.product_detail')->with('product_detail', $product_detail);
     }
 
@@ -475,12 +476,42 @@ class FrontendController extends Controller
     {
         $shippingPolicy = ShippingPolicy::first() ?? new ShippingPolicy();
 
-  
+
         return view('frontend.pages.shipping_policy', compact('shippingPolicy'));
     }
 
     public function privacyPolicy(Request $request)
     {
         return view('frontend.pages.privacy_policy');
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $coupon = Coupon::where('code', $request->coupon_code)
+            ->where('status', 'active')
+            ->first();
+
+        if (!$coupon) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid coupon code'
+            ]);
+        }
+
+        // Product amount after discount
+        $productAmount = $request->amount;
+
+        $couponDiscount = $coupon->type == 'percent'
+            ? ($productAmount * $coupon->value / 100)
+            : $coupon->value;
+
+        $finalAmount = max(0, $productAmount - $couponDiscount);
+
+        return response()->json([
+            'status'          => true,
+            'message'         => 'Coupon applied successfully',
+            'coupon_discount' => round($couponDiscount, 2),
+            'final_amount'    => round($finalAmount, 2)
+        ]);
     }
 }
