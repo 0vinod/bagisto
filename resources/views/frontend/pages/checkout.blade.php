@@ -217,6 +217,7 @@
  @php
                                 $afterDiscount =
                                     $product->price - ($product->price * $product->discount) / 100;
+                                    $savingAmount = ($product->price * $product->discount) / 100;
                             @endphp
                                 <div class="card-body">
                                     <!-- Cart Items Preview -->
@@ -239,12 +240,12 @@
 
                                     <!-- Order Totals -->
                                     <div class="order-totals">
-                                        {{-- <div class="total-row">
-                                            <span>Subtotal</span>
-                                            <span class="order_subtotal" data-price="{{ number_format($afterDiscount) }}">
-                                                Rs. {{ number_format($afterDiscount) }}
+                                        <div class="total-row">
+                                            <span>Saving on Amount</span>
+                                            <span class="order_subtotal" data-price="{{ number_format($savingAmount) }}">
+                                                Rs. {{ number_format($savingAmount) }}
                                             </span>
-                                        </div> --}}
+                                        </div>
 
                                         <div class="total-row shipping-row">
                                             <span>Shipping</span>
@@ -466,8 +467,7 @@
         }
 
         /* Order Totals */
-        .order-totals {
-            border-top: 1px solid #e5e7eb;
+        .order-totals { 
             padding-top: 15px;
         }
 
