@@ -126,9 +126,9 @@
                                                 </h5>
                                                 <div class="recent-product-price">
                                                     <span class="current-price">Rs.
-                                                        {{ number_format($after_discount, 2) }}</span>
+                                                        {{ number_format($after_discount) }}</span>
                                                     <del class="old-price">Rs.
-                                                        {{ number_format($product->price, 2) }}</del>
+                                                        {{ number_format($product->price) }}</del>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,8 +245,8 @@
                                             </h3>
                                             <div class="product-price">
                                                 <span class="current-price">Rs.
-                                                    {{ number_format($after_discount, 2) }}</span>
-                                                <del class="old-price">Rs. {{ number_format($product->price, 2) }}</del>
+                                                    {{ number_format($after_discount) }}</span>
+                                                <del class="old-price">Rs. {{ number_format($product->price) }}</del>
                                             </div>
                                             <a href="{{ route('add-to-cart', $product->slug) }}"
                                                 class="btn-add-to-cart d-none">
@@ -255,9 +255,9 @@
                                             </a>
                                             <div class="buy-now-cod mt-2">
                                                 <a href="{{ route('checkout', ['slug' => $product->slug]) }}"
-   class="btn btn-cod">
-    <i class="ti-shopping-cart"></i> Buy Now (COD)
-</a>
+                                                    class="btn btn-cod">
+                                                    <i class="ti-shopping-cart"></i> Buy Now (COD)
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -353,8 +353,8 @@
                                                 $product->price - ($product->price * $product->discount) / 100;
                                         @endphp
                                         <div class="quickview-price">
-                                            <span class="current-price">Rs. {{ number_format($after_discount, 2) }}</span>
-                                            <del class="old-price">Rs. {{ number_format($product->price, 2) }}</del>
+                                            <span class="current-price">Rs. {{ number_format($after_discount) }}</span>
+                                            <del class="old-price">Rs. {{ number_format($product->price) }}</del>
                                         </div>
 
                                         <div class="quickview-description">

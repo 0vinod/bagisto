@@ -356,7 +356,7 @@ class StateCitySeeder extends Seeder
             ['id' => 348, 'city_name' => 'Ahmednagar', 'state_id' => 15, 'state_name' => 'Maharashtra'],
             ['id' => 349, 'city_name' => 'Akola', 'state_id' => 15, 'state_name' => 'Maharashtra'],
             ['id' => 350, 'city_name' => 'Amravati', 'state_id' => 15, 'state_name' => 'Maharashtra'],
-            ['id' => 351, 'city_name' => 'Aurangabad', 'state_id' => 15, 'state_name' => 'Maharashtra'],
+            ['id' => 351, 'city_name' => 'Chhatrapati Sambhajinagar', 'state_id' => 15, 'state_name' => 'Maharashtra'],
             ['id' => 352, 'city_name' => 'Beed', 'state_id' => 15, 'state_name' => 'Maharashtra'],
             ['id' => 353, 'city_name' => 'Bhandara', 'state_id' => 15, 'state_name' => 'Maharashtra'],
             ['id' => 354, 'city_name' => 'Buldhana', 'state_id' => 15, 'state_name' => 'Maharashtra'],

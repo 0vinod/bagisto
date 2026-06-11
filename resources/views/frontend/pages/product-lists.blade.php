@@ -125,9 +125,9 @@
                                                 </h5>
                                                 <div class="recent-product-price">
                                                     <span class="current-price">Rs.
-                                                        {{ number_format($after_discount, 2) }}</span>
+                                                        {{ number_format($after_discount) }}</span>
                                                     <del class="old-price">Rs.
-                                                        {{ number_format($product->price, 2) }}</del>
+                                                        {{ number_format($product->price) }}</del>
                                                 </div>
                                             </div>
                                         </div>
@@ -243,9 +243,9 @@
                                                 <div class="product-info">
                                                     <div class="product-price">
                                                         <span class="current-price">Rs.
-                                                            {{ number_format($after_discount, 2) }}</span>
+                                                            {{ number_format($after_discount) }}</span>
                                                         <del class="old-price">Rs.
-                                                            {{ number_format($product->price, 2) }}</del>
+                                                            {{ number_format($product->price) }}</del>
                                                     </div>
                                                     <h3 class="product-title">
                                                         <a href="{{ route('product-detail', $product->slug) }}">
@@ -387,8 +387,8 @@
                                                 $product->price - ($product->price * $product->discount) / 100;
                                         @endphp
                                         <div class="quickview-price">
-                                            <span class="current-price">Rs. {{ number_format($after_discount, 2) }}</span>
-                                            <del class="old-price">Rs. {{ number_format($product->price, 2) }}</del>
+                                            <span class="current-price">Rs. {{ number_format($after_discount) }}</span>
+                                            <del class="old-price">Rs. {{ number_format($product->price) }}</del>
                                         </div>
 
                                         <div class="quickview-description">
@@ -637,7 +637,7 @@
 
         .btn-filter:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(247, 148, 29, 0.3);
+            box-shadow: 0 5px 15px rgba(247, 1489, 0.3);
         }
 
         /* Recent Products */
@@ -938,7 +938,7 @@
 
         .btn-add-to-cart:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(247, 148, 29, 0.3);
+            box-shadow: 0 5px 15px rgba(247, 1489, 0.3);
             color: white;
         }
 

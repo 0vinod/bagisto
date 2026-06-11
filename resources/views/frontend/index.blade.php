@@ -76,9 +76,9 @@
                                             $product->price - ($product->price * $product->discount) / 100;
                                     @endphp
                                     <div class="product-price">
-                                        <span>Rs. {{ number_format($after_discount, 2) }}</span>
+                                        <span>Rs. {{ number_format($after_discount) }}</span>
                                         @if ($product->discount > 0)
-                                            <del>Rs. {{ number_format($product->price, 2) }}</del>
+                                            <del>Rs. {{ number_format($product->price) }}</del>
                                         @endif
                                     </div>
                                     <div class="product-actions mt-2">

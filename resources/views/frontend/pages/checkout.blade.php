@@ -19,16 +19,16 @@
             </div>
         </div>
     </div>
- @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
- 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- Main Checkout Section -->
     <section class="modern-checkout section">
         <div class="container">
@@ -49,7 +49,7 @@
                                 <h3><i class="fas fa-file-invoice me-2"></i> Billing Details</h3>
                                 <p>Please fill in your information to complete your order</p>
                             </div>
-                          <input type="hidden" name="slug" value="{{ old('slug', $product?->slug) }}">
+                            <input type="hidden" name="slug" value="{{ old('slug', $product?->slug) }}">
 
                             <div class="card-body">
                                 <div class="row g-3">
@@ -276,7 +276,13 @@
 
 
                                     <div class="total-row coupon-row">
-                                    <input type="text" class="form-control"  name="coupon_code" id="coupon_code" placeholder="coupon">
+                                        <div>
+                                            <input type="text" class="form-control" name="coupon_code"
+                                                id="coupon_code" placeholder="coupon">
+                                            @error('coupon_code')
+                                                <div class="invalid-feedback"> {{ $message }} </div>
+                                            @enderror
+                                        </div>
 
                                         <span class="coupon_price" data-price="0">
                                             - Rs. 0
@@ -297,7 +303,7 @@
                                                 }
                                             @endphp --}}
                                         Rs.<span class="order_total_price" id="order_total_price">
-                                             {{ number_format($afterDiscount) }}
+                                            {{ number_format($afterDiscount) }}
                                         </span>
                                     </div>
                                 </div>
@@ -452,10 +458,8 @@
 
                     } else {
 
-                        $('.coupon_price')
-                            .text('- Rs. 0')
-                            .attr('data-price', 0);
-
+                        $('.coupon_price').text('- Rs. 0').attr('data-price', 0);
+                        $('#coupon_code').val('')
                         toastr.error(response.message);
                     }
                 },

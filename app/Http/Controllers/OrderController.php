@@ -62,7 +62,10 @@ class OrderController extends Controller
             'payment_method' => 'required|in:cod,paypal'
         ]);
         $product = Product::where('slug', $request->slug)->first();
-   
+
+        if (is_null($product)) {
+            return back()->with('error', 'Invalid Product');
+        }
 
         if (auth()->user()?->id) {
             $cartItems = Cart::where('user_id', auth()->user()->id)
@@ -76,10 +79,9 @@ class OrderController extends Controller
 
         $offerPrice = $product->price - ($product->price * $product->discount / 100);
 
-
         try {
             $order = new Order();
-            $order->order_number = 'ORD-' . strtoupper(Str::random(10));
+            $order->order_number = 'MNZ-' . strtoupper(Str::random(7));
             $order->user_id = auth()->user()?->id;
             $order->first_name = $validated['first_name'];
             $order->product_id = $product->id ?? null;
@@ -269,28 +271,28 @@ class OrderController extends Controller
         }
     }
 
-public function orderTrack(Request $request)
-{
-    $order = null;
+    public function orderTrack(Request $request)
+    {
+        $order = null;
 
-    if ($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
 
-        $request->validate([
-            'order_number' => 'required|string|max:255'
-        ]);
+            $request->validate([
+                'order_number' => 'required|string|max:255'
+            ]);
 
-        $order = Order::where('order_number', $request->order_number)
-            ->first();
+            $order = Order::where('order_number', $request->order_number)
+                ->first();
 
-        if (!$order) {
-            return back()
-                ->withInput()
-                ->with('error', 'Invalid order number. Please try again.');
+            if (!$order) {
+                return back()
+                    ->withInput()
+                    ->with('error', 'Invalid order number. Please try again.');
+            }
         }
-    }
 
-    return view('frontend.pages.order-track', compact('order'));
-}
+        return view('frontend.pages.order-track', compact('order'));
+    }
 
     public function productTrackOrder(Request $request)
     {
