@@ -1952,14 +1952,15 @@ a:hover {
     }
 }
 .info-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f7941d 0%, #764ba2 100%);
     color: white;
     border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 15px;
+    margin: 13px;
+    height:144px
 }
 .info-card i {
-    font-size: 28px;
+    font-size: 20px;
     margin-bottom: 10px;
 }
 .product-item {

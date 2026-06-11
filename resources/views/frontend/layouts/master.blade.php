@@ -16,22 +16,30 @@
 
      <!-- Custom CSS -->
      <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <link rel="stylesheet" href="{{ asset('frontend/css/toastr.css') }}"   />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     <link rel="stylesheet" href="{{ asset('frontend/css/toastr.css') }}" />
      @stack('styles')
+
+     <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.min.css') }}">
+     <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.default.min.css') }}">
+
 
  </head>
 
  <body>
-@include('frontend.layouts.notification')
-@include('frontend.layouts.header')
-@yield('main-content')
-@include('frontend.layouts.footer')
-@include('frontend.partials.add-to-cart-modal')
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+     @include('frontend.layouts.notification')
+     @include('frontend.layouts.header')
+     @yield('main-content')
+     @include('frontend.layouts.footer')
+     @include('frontend.partials.add-to-cart-modal')
+
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
      <script>
          $(document).ready(function() {
              // Auto-hide alerts after 5 seconds
@@ -41,53 +49,53 @@
          });
      </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const toggle = document.getElementById("searchToggle");
-    const form = document.getElementById("searchForm");
+     <script>
+         document.addEventListener("DOMContentLoaded", function() {
+             const toggle = document.getElementById("searchToggle");
+             const form = document.getElementById("searchForm");
 
-    toggle.addEventListener("click", function (e) {
-        e.preventDefault();
-        form.classList.toggle("active");
-    });
-});
-</script>
-<script>
-    // Optional: Add AJAX cart removal with animation
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add remove item functionality with animation
-        const removeButtons = document.querySelectorAll('.remove-item');
+             toggle.addEventListener("click", function(e) {
+                 e.preventDefault();
+                 form.classList.toggle("active");
+             });
+         });
+     </script>
+     <script>
+         // Optional: Add AJAX cart removal with animation
+         document.addEventListener('DOMContentLoaded', function() {
+             // Add remove item functionality with animation
+             const removeButtons = document.querySelectorAll('.remove-item');
 
-        removeButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const url = this.getAttribute('href');
-                const cartItem = this.closest('.cart-item');
+             removeButtons.forEach(button => {
+                 button.addEventListener('click', function(e) {
+                     e.preventDefault();
+                     const url = this.getAttribute('href');
+                     const cartItem = this.closest('.cart-item');
 
-                // Add fade out animation
-                cartItem.style.transition = 'all 0.3s ease';
-                cartItem.style.opacity = '0';
-                cartItem.style.transform = 'translateX(20px)';
+                     // Add fade out animation
+                     cartItem.style.transition = 'all 0.3s ease';
+                     cartItem.style.opacity = '0';
+                     cartItem.style.transform = 'translateX(20px)';
 
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 300);
-            });
-        });
+                     setTimeout(() => {
+                         window.location.href = url;
+                     }, 300);
+                 });
+             });
 
-        // Update cart count animation
-        const cartCount = document.querySelector('.total-count');
-        if (cartCount) {
-            const currentCount = parseInt(cartCount.textContent);
-            if (currentCount > 0) {
-                cartCount.style.animation = 'none';
-                setTimeout(() => {
-                    cartCount.style.animation = 'pulse 0.5s ease-in-out';
-                }, 10);
-            }
-        }
-    });
-</script>
+             // Update cart count animation
+             const cartCount = document.querySelector('.total-count');
+             if (cartCount) {
+                 const currentCount = parseInt(cartCount.textContent);
+                 if (currentCount > 0) {
+                     cartCount.style.animation = 'none';
+                     setTimeout(() => {
+                         cartCount.style.animation = 'pulse 0.5s ease-in-out';
+                     }, 10);
+                 }
+             }
+         });
+     </script>
 
      @stack('scripts')
  </body>

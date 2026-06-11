@@ -1,3 +1,4 @@
+@push('scripts')
 <script>
     $(document).ready(function() {
         // Load More Products
@@ -232,7 +233,7 @@
 
                         swal("Removed!", response.message, "success");
 
-                        if(location.pathname == '/cart'){
+                        if (location.pathname == '/cart') {
                             location.reload()
                         }
 
@@ -454,27 +455,29 @@
         initializeRemoveCartItems();
     });
 
- 
-$(document).ready(function() {
-    $('#state-dropdown').on('change', function() {
-        var stateId = this.value;
-        $("#city-dropdown").html('<option value="">Loading...</option>');
-        
-        if(stateId) {
-            $.ajax({
-                url: "{{ route('getCityByStateId','') }}" +'/'+ stateId,
-                type: "GET",
-                success: function(res) {
-                    $('#city-dropdown').html('<option value="">Select City</option>');
-                    $.each(res, function(key, value) {
-                        $("#city-dropdown").append('<option value="' + value.id + '">' + value.city_name + '</option>');
-                    });
-                }
-            });
-        } else {
-            $("#city-dropdown").html('<option value="">Select State First</option>');
-        }
+
+    $(document).ready(function() {
+        $('#state-dropdown').on('change', function() {
+            var stateId = this.value;
+            $("#city-dropdown").html('<option value="">Loading...</option>');
+
+            if (stateId) {
+                $.ajax({
+                    url: "{{ route('getCityByStateId', '') }}" + '/' + stateId,
+                    type: "GET",
+                    success: function(res) {
+                        $('#city-dropdown').html('<option value="">Select City</option>');
+                        $.each(res, function(key, value) {
+                            $("#city-dropdown").append('<option value="' + value
+                                .id + '">' + value.city_name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $("#city-dropdown").html('<option value="">Select State First</option>');
+            }
+        });
     });
-});
- 
 </script>
+
+@endpush
