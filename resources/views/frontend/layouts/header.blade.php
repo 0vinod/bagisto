@@ -25,15 +25,17 @@
                     </a>
                 </div>
 
-                <nav class="navbar navbar-expand-lg">
-  
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <i class="fa-solid fa-bars-staggered"></i>
-    </button>
-    
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                       <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                         
+                            <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('home') }}">Home</a>
                             </li>
 
@@ -56,37 +58,38 @@
                             @endif
 
                             {{-- <li class="nav-item"><a class="nav-link" href="{{ route('blog') }}">Blog</a></li> --}}
-                            <li class="nav-item"><a class="nav-link" href="{{ route('order.track') }}">Track Order</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('order.track') }}">Track Order</a>
+                            </li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
                             <li>
-                                     <div class="header-user">
-                        @auth
-                            @if (Auth::user()->role == 'admin')
-                                <a href="{{ route('admin') }}" class="user-btn">Dashboard</a>
-                            @else
-                                <a href="{{ route('user') }}" class="user-btn">My Account</a>
-                            @endif
-                            <a href="{{ route('user.logout') }}" class="user-btn logout"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                            </form>
-                        @else
-                            <a href="{{ route('login.form') }}" class="user-btn">Login</a>
-                            <a href="{{ route('register.form') }}" class="user-btn register">Register</a>
-                        @endauth
-                    </div>
+                                <div class="header-user">
+                                    @auth
+                                        @if (Auth::user()->role == 'admin')
+                                            <a href="{{ route('admin') }}" class="user-btn">Dashboard</a>
+                                        @else
+                                            <a href="{{ route('user') }}" class="user-btn">My Account</a>
+                                        @endif
+                                        <a href="{{ route('user.logout') }}" class="user-btn logout"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
+                                    @else
+                                        <a href="{{ route('login.form') }}" class="user-btn">Login</a>
+                                        <a href="{{ route('register.form') }}" class="user-btn register">Register</a>
+                                    @endauth
+                                </div>
                             </li>
-      
-      </ul>
-      
-    </div>
-</nav>
 
-            
+                        </ul>
+
+                    </div>
+                </nav>
+
+
                 <!-- Right Icons -->
                 <div class="header-right">
                     <!-- Search -->
@@ -160,12 +163,13 @@
                                                         <span class="qty-label">Qty:</span>
                                                         <span class="qty-value">{{ $item->quantity }}</span>
                                                         <span class="price-separator">x</span>
-                                                        <span class="amount">Rs. {{ number_format($item->price, 2) }}</span>
+                                                        <span class="amount">Rs.
+                                                            {{ number_format($item->price, 2) }}</span>
                                                     </p>
                                                     <p class="item-total">
                                                         <span class="total-label">Total:</span>
-                                                        <span
-                                                            class="total-value">Rs. {{ number_format($item->amount, 2) }}</span>
+                                                        <span class="total-value">Rs.
+                                                            {{ number_format($item->amount, 2) }}</span>
                                                     </p>
                                                 </div>
                                             </li>
@@ -207,13 +211,13 @@
                                         @else
                                             <div class="cart-total">
                                                 <span class="total-label">Total</span>
-                                                <span
-                                                    class="total-amount">Rs. {{ isset($cartTotal) ? number_format($cartTotal, 2) : '0.00' }}</span>
+                                                <span class="total-amount">Rs.
+                                                    {{ isset($cartTotal) ? number_format($cartTotal, 2) : '0.00' }}</span>
                                             </div>
                                         @endif
 
                                         <div class="cart-actions">
-                                            <a href="{{ route('checkout',[$item->slug]) }}" class="btn-checkout">
+                                            <a href="{{ route('checkout', [$item->slug]) }}" class="btn-checkout">
                                                 <i class="fas fa-credit-card"></i> Proceed to Checkout
                                             </a>
                                             <a href="{{ route('cart') }}" class="btn-view-cart">
@@ -227,11 +231,10 @@
                     </div>
 
                     <!-- User Menu -->
-               
+
                 </div>
 
             </div>
         </div>
     </div>
 </header>
- 

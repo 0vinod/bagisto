@@ -1196,7 +1196,7 @@ input.error, textarea.error {
 
 .header.shop .header-inner {
     background: #fff;
-    padding: 15px 0;
+    padding: 3px 0;
     transition: all 0.3s ease;
     border-bottom: 1px solid #f0f0f0;
 }
@@ -2441,9 +2441,11 @@ a:hover {
 }
 .header-right {
    
-    position: absolute;
-    top: 60px;
-    right: 14%;
+position: absolute;
+   
+top: 71px;
+   
+right: 20%;
 }
 .user-btn {
     padding: 6px 7px;
