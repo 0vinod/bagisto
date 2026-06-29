@@ -18,6 +18,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\HomeController;
 use \UniSharp\LaravelFilemanager\Lfm;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CustomerFeedbackController;
 use App\Http\Controllers\ShippingController;
 
 /*
@@ -228,4 +229,14 @@ Route::get('/load-more-products', [FrontendController::class, 'loadMore'])->name
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     Lfm::routes();
+});
+
+Route::get('/customer_feedback', [CustomerFeedbackController::class, 'index'])->name('feedback.form');
+Route::post('/feedback/submit', [CustomerFeedbackController::class, 'submit'])->name('feedback.submit');
+
+// Admin routes (protected with auth middleware)
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/feedbacks', [CustomerFeedbackController::class, 'adminIndex'])->name('admin.feedback.index');
+    Route::get('/feedbacks/{id}', [CustomerFeedbackController::class, 'adminShow'])->name('admin.feedback.show');
+    Route::post('/feedbacks/{id}/respond', [CustomerFeedbackController::class, 'adminRespond'])->name('admin.feedback.respond');
 });

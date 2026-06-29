@@ -71,6 +71,10 @@ return [
     | correspond to a connection in your database configuration options.
     |
     */
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY', 'AlzaSyBSntqPuMnTOThRFwxQnxYSTp4HUCf4aOM'),
+        'model' => env('GEMINI_MODEL', 'gemini-pro'),
+    ],
 
     'connection' => env('SESSION_CONNECTION', null),
 
@@ -128,7 +132,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+        Str::slug(env('APP_NAME', 'laravel'), '_') . '_session'
     ),
 
     /*
