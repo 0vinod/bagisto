@@ -249,7 +249,7 @@
 
 
                         <!-- Product Meta Info -->
-                        <div class="product-meta">
+                        <div class="product-meta d-none" >
                             <div class="meta-item">
                                 <i class="fas fa-tag"></i>
                                 <span>Category:</span>
