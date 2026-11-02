@@ -20,7 +20,10 @@ use \UniSharp\LaravelFilemanager\Lfm;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CustomerFeedbackController;
 use App\Http\Controllers\ShippingController;
-
+use App\Http\Controllers\SyllabusTopicController;
+use App\Http\Controllers\SyllabusItemController;
+use App\Http\Controllers\SyllabusProgressController;
+use App\Http\Controllers\AttemptController;
 /*
     |--------------------------------------------------------------------------
     | Web Routes
