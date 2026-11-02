@@ -239,4 +239,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/feedbacks', [CustomerFeedbackController::class, 'adminIndex'])->name('admin.feedback.index');
     Route::get('/feedbacks/{id}', [CustomerFeedbackController::class, 'adminShow'])->name('admin.feedback.show');
     Route::post('/feedbacks/{id}/respond', [CustomerFeedbackController::class, 'adminRespond'])->name('admin.feedback.respond');
+
+        // Topics
+    Route::resource('topics', SyllabusTopicController::class);
+
+    // Items
+    Route::resource('items', SyllabusItemController::class);
+
+    // Progress (toggle)
+    Route::post('progress/toggle/{itemId}', [SyllabusProgressController::class, 'toggle'])->name('progress.toggle');
+    Route::get('progress', [SyllabusProgressController::class, 'index'])->name('progress.index');
+
+    // Attempts
+    Route::resource('attempts', AttemptController::class)->only(['index', 'show', 'destroy']);
 });
