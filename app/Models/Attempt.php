@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attempt extends Model
 {
+    protected $connection = 'pgsql';
     protected $table = 'attempts';
     public $timestamps = false;
 
