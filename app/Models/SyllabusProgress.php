@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SyllabusProgress extends Model
 {
-    protected $connection = 'pgsql'; 
+
     protected $table = 'syllabus_progress';
     public $timestamps = false;
 
