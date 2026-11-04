@@ -1,5 +1,6 @@
 @extends('backend.layouts.master')
 @section('main-content')
+<div class="container">
     <div class="max-w-6xl mx-auto py-6">
         <h1 class="text-2xl font-bold mb-4">My Attempts</h1>
 
@@ -47,5 +48,6 @@
             </tbody>
         </table>
         <div class="mt-4">{{ $attempts->links() }}</div>
+    </div>
     </div>
 @endsection
