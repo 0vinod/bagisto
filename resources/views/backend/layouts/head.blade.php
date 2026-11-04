@@ -15,5 +15,5 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
     @stack('styles')
-  
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
