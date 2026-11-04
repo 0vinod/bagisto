@@ -1,12 +1,24 @@
 @extends('backend.layouts.master')
-@section('main-content')
-    <div class="max-w-2xl mx-auto py-6">
-        <h1 class="text-2xl font-bold mb-4">New Syllabus Topic</h1>
 
-        <form action="{{ route('topics.store') }}" method="POST" class="bg-white p-6 shadow rounded space-y-4">
-            @csrf
-            @include('topics._form', ['topic' => null])
-            <button class="bg-indigo-600 text-white px-4 py-2 rounded">Save</button>
-        </form>
+@section('main-content')
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+
+                <h1 class="h3 fw-bold mb-4">New Syllabus Topic</h1>
+
+                <form action="{{ route('topics.store') }}" method="POST"
+                    class="bg-white p-4 shadow rounded">
+                    @csrf
+
+                    @include('topics._form', ['topic' => null])
+
+                    <button type="submit" class="btn btn-primary">
+                        Save
+                    </button>
+                </form>
+
+            </div>
+        </div>
     </div>
 @endsection

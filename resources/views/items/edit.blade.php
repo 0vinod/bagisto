@@ -1,12 +1,12 @@
 @extends('backend.layouts.master')
 @section('main-content')
-    <div class="max-w-2xl mx-auto py-6">
-        <h1 class="text-2xl font-bold mb-4">Edit Item</h1>
+    <div class="container py-4">
+        <h1 class="h3 fw-bold mb-4">Edit Item</h1>
 
-        <form action="{{ route('items.update', $item) }}" method="POST" class="bg-white p-6 shadow rounded space-y-4">
+        <form action="{{ route('items.update', $item) }}" method="POST" class="card shadow-sm p-4">
             @csrf @method('PUT')
             @include('items._form', ['item' => $item, 'selectedTopic' => $item->topic_id])
-            <button class="bg-indigo-600 text-white px-4 py-2 rounded">Update</button>
+            <button class="btn btn-primary mt-3">Update</button>
         </form>
     </div>
 @endsection

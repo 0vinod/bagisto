@@ -1,12 +1,12 @@
 @extends('backend.layouts.master')
 @section('main-content')
-    <div class="max-w-2xl mx-auto py-6">
-        <h1 class="text-2xl font-bold mb-4">New Syllabus Item</h1>
+    <div class="container py-4">
+        <h1 class="h3 fw-bold mb-4">New Syllabus Item</h1>
 
-        <form action="{{ route('items.store') }}" method="POST" class="bg-white p-6 shadow rounded space-y-4">
+        <form action="{{ route('items.store') }}" method="POST" class="card shadow-sm p-4">
             @csrf
             @include('items._form', ['item' => null, 'selectedTopic' => $selectedTopic])
-            <button class="bg-indigo-600 text-white px-4 py-2 rounded">Save</button>
+            <button class="btn btn-primary mt-3">Save</button>
         </form>
     </div>
 @endsection

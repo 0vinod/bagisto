@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('main-content')
-    <div class="max-w-4xl mx-auto py-6">
-        <h1 class="text-2xl font-bold mb-4">My Syllabus Progress</h1>
+    <div class="container py-4">
+        <h1 class="h3 fw-bold mb-4">My Syllabus Progress</h1>
 
         @php
             $total = $items->count();
@@ -9,33 +9,37 @@
             $pct   = $total ? round($done / $total * 100) : 0;
         @endphp
 
-        <div class="bg-white p-4 shadow rounded mb-6">
-            <div class="flex justify-between mb-2">
-                <span class="font-semibold">Completed</span>
-                <span>{{ $done }} / {{ $total }} ({{ $pct }}%)</span>
-            </div>
-            <div class="w-full bg-gray-200 rounded h-3">
-                <div class="bg-green-500 h-3 rounded" style="width: {{ $pct }}%"></div>
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="fw-semibold">Completed</span>
+                    <span>{{ $done }} / {{ $total }} ({{ $pct }}%)</span>
+                </div>
+                <div class="progress" role="progressbar" aria-label="Syllabus progress" aria-valuenow="{{ $pct }}" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar bg-success" style="width: {{ $pct }}%"></div>
+                </div>
             </div>
         </div>
 
         @foreach($items->groupBy('topic.id') as $topicId => $topicItems)
             @php $topic = $topicItems->first()->topic; @endphp
-            <div class="bg-white p-4 shadow rounded mb-4">
-                <h2 class="font-semibold mb-2">
-                    {{ $topic->subject->name ?? '' }} → {{ $topic->name }}
-                </h2>
-                <ul class="space-y-1">
-                    @foreach($topicItems as $item)
-                        <li class="flex items-center gap-2">
-                            <input type="checkbox"
-                                   class="progress-toggle"
-                                   data-item="{{ $item->id }}"
-                                   @checked(in_array($item->id, $doneIds))>
-                            <span>{{ $item->heading }}</span>
-                        </li>
-                    @endforeach
-                </ul>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h5 fw-semibold mb-3">
+                        {{ $topic->subject->name ?? '' }} → {{ $topic->name }}
+                    </h2>
+                    <ul class="list-unstyled mb-0">
+                        @foreach($topicItems as $item)
+                            <li class="d-flex align-items-center gap-2 mb-2">
+                                <input type="checkbox"
+                                       class="progress-toggle"
+                                       data-item="{{ $item->id }}"
+                                       @checked(in_array($item->id, $doneIds))>
+                                <span>{{ $item->heading }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         @endforeach
     </div>

@@ -1,14 +1,16 @@
 @extends('backend.layouts.master')
 @section('main-content')
-    <div class="max-w-2xl mx-auto py-6">
-        <a href="{{ route('items.index') }}" class="text-blue-600">&larr; Back</a>
+    <div class="container py-4">
+        <a href="{{ route('items.index') }}" class="text-primary text-decoration-none d-inline-block mb-3">&larr; Back</a>
 
-        <div class="bg-white p-6 shadow rounded mt-4">
-            <h1 class="text-2xl font-bold">{{ $item->heading }}</h1>
-            <p class="text-gray-600 mt-1">
-                {{ $item->topic->subject->name ?? '' }} → {{ $item->topic->name ?? '' }}
-            </p>
-            <p class="text-sm text-gray-500 mt-1">Sort order: {{ $item->sort_order }}</p>
+        <div class="card shadow-sm mt-2">
+            <div class="card-body">
+                <h1 class="h3 fw-bold mb-3">{{ $item->heading }}</h1>
+                <p class="text-muted mb-2">
+                    {{ $item->topic->subject->name ?? '' }} → {{ $item->topic->name ?? '' }}
+                </p>
+                <p class="text-secondary small mb-0">Sort order: {{ $item->sort_order }}</p>
+            </div>
         </div>
     </div>
 @endsection

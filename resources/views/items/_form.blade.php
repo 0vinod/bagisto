@@ -1,8 +1,8 @@
 @php $it = $item ?? null; @endphp
 
-<div>
-    <label class="block text-sm font-medium mb-1">Topic</label>
-    <select name="topic_id" class="w-full border rounded p-2" required>
+<div class="mb-3">
+    <label class="form-label fw-medium">Topic</label>
+    <select name="topic_id" class="form-select" required>
         <option value="">-- Select --</option>
         @foreach($topics as $t)
             <option value="{{ $t->id }}"
@@ -11,18 +11,18 @@
             </option>
         @endforeach
     </select>
-    @error('topic_id') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
+    @error('topic_id') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
 </div>
 
-<div>
-    <label class="block text-sm font-medium mb-1">Heading</label>
+<div class="mb-3">
+    <label class="form-label fw-medium">Heading</label>
     <input type="text" name="heading" value="{{ old('heading', $it->heading ?? '') }}"
-           class="w-full border rounded p-2" required>
-    @error('heading') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
+           class="form-control" required>
+    @error('heading') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
 </div>
 
-<div>
-    <label class="block text-sm font-medium mb-1">Sort Order</label>
+<div class="mb-3">
+    <label class="form-label fw-medium">Sort Order</label>
     <input type="number" name="sort_order" value="{{ old('sort_order', $it->sort_order ?? 0) }}"
-           class="w-full border rounded p-2">
+           class="form-control">
 </div>
