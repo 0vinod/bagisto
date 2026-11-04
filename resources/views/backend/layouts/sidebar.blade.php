@@ -241,23 +241,12 @@
         <div id="productCollapse" class="collapse" aria-labelledby="SuperTETHeader">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Super TET:</h6>
-    <li class="nav-item">
-        <a class="collapse-item" href="{{ route('topics.index') }}">Topics</a>
-    </li>
-
-    <li class="nav-item">
-        <a class="collapse-item" href="{{ route('items.index') }}">Syllabus Items</a>
-    </li>
-
-    <li class="nav-item">
-        <a class="collapse-item" href="{{ route('progress.index') }}">Progress</a>
-    </li>
-
-    <li class="nav-item">
-        <a class="collapse-item" href="{{ route('attempts.index') }}">Attempts</a>
-    </li>
-    </div>
-    </div>
+                <a class="collapse-item" href="{{ route('topics.index') }}">Topics</a>
+                <a class="collapse-item" href="{{ route('items.index') }}">Syllabus Items</a>
+                <a class="collapse-item" href="{{ route('progress.index') }}">Progress</a>
+                <a class="collapse-item" href="{{ route('attempts.index') }}">Attempts</a>
+            </div>
+        </div>
     </li>
 
 
