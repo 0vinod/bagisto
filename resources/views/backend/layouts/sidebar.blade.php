@@ -239,7 +239,7 @@
             <i class="fas fa-cubes"></i>
             <span>SuperTET</span>
         </a>
-        <div id="productCollapse" class="collapse" aria-labelledby="SuperTETHeader">
+        <div id="SuperTET" class="collapse" aria-labelledby="SuperTETHeader">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Super TET:</h6>
                 <a class="collapse-item" href="{{ route('topics.index') }}">Topics</a>
