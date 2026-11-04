@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('backend.layouts.master')
+@section('main-content')
     <div class="max-w-6xl mx-auto py-6">
         <div class="flex justify-between mb-4">
             <h1 class="text-2xl font-bold">Syllabus Topics</h1>

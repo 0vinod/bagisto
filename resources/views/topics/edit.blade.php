@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('backend.layouts.master')
+@section('main-content')
     <div class="max-w-2xl mx-auto py-6">
         <h1 class="text-2xl font-bold mb-4">Edit Topic</h1>
 

@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
-@section('title','Moonzio || Brand Create')
 @section('main-content')
 
+@section('title','Moonzio || Brand Create')
 <div class="card">
     <h5 class="card-header">Add Brand</h5>
     <div class="card-body">

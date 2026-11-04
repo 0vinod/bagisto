@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('backend.layouts.master')
+@section('main-content')
     <div class="max-w-4xl mx-auto py-6">
         <h1 class="text-2xl font-bold mb-4">My Syllabus Progress</h1>
 

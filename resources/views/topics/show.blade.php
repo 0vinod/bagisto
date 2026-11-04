@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('backend.layouts.master')
+@section('main-content')
     <div class="max-w-4xl mx-auto py-6">
         <a href="{{ route('topics.index') }}" class="text-blue-600">&larr; Back</a>
 
