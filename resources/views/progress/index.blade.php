@@ -62,4 +62,4 @@
             });
         });
     </script>
-</x-app-layout>
+@endsection

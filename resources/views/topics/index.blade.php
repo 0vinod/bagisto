@@ -43,4 +43,4 @@
 
         <div class="mt-4">{{ $topics->links() }}</div>
     </div>
-</x-app-layout>
+@endsection

@@ -18,4 +18,4 @@
             <p><strong>When:</strong> {{ $attempt->created_at }}</p>
         </div>
     </div>
-</x-app-layout>
+@endsection

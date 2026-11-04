@@ -11,4 +11,4 @@
             <p class="text-sm text-gray-500 mt-1">Sort order: {{ $item->sort_order }}</p>
         </div>
     </div>
-</x-app-layout>
+@endsection

@@ -48,4 +48,4 @@
         </table>
         <div class="mt-4">{{ $attempts->links() }}</div>
     </div>
-</x-app-layout>
+@endsection
