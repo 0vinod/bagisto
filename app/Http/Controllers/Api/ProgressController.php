@@ -2,45 +2,40 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\SyllabusProgress;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProgressController extends Controller
 {
+    // GET /api/syllabus_progress -> [{item_id: 3}, ...] (logged-in user only)
     public function index(Request $request)
     {
-        // Only return progress for the logged-in user
-        return response()->json(
-            SyllabusProgress::where('user_id', $request->user()->id)->get()
-        );
+        return SyllabusProgress::where('user_id', $request->user()->id)->get(['item_id']);
     }
 
+    // POST /api/syllabus_progress  {item_id}
     public function store(Request $request)
     {
-        $request->validate([
-            'item_id' => 'required|exists:syllabus_items,id'
-        ]);
+        $data = $request->validate(['item_id' => 'required|integer|exists:syllabus_items,id']);
 
-        // Prevent duplicates
-        $progress = SyllabusProgress::firstOrCreate([
+        SyllabusProgress::firstOrCreate([
             'user_id' => $request->user()->id,
-            'item_id' => $request->item_id,
+            'item_id' => $data['item_id'],
         ]);
 
-        return response()->json($progress, 201);
+        return response()->json(['message' => 'Saved'], 201);
     }
 
+    // DELETE /api/syllabus_progress?item_id=3
     public function destroy(Request $request)
     {
-        $request->validate([
-            'item_id' => 'required'
-        ]);
+        $data = $request->validate(['item_id' => 'required|integer']);
 
         SyllabusProgress::where('user_id', $request->user()->id)
-            ->where('item_id', $request->item_id)
+            ->where('item_id', $data['item_id'])
             ->delete();
 
-        return response()->json(null, 204);
+        return response()->noContent();
     }
 }

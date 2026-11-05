@@ -2,38 +2,27 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\SyllabusTopic;
 use App\Models\SyllabusItem;
+use App\Models\SyllabusTopic;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SyllabusController extends Controller
 {
+    // GET /api/syllabus_topics?subject_id=1  -> topics with items[]
     public function topics(Request $request)
     {
-        $query = SyllabusTopic::with(['items' => function($q) {
-            $q->orderBy('sort_order');
-        }])->orderBy('sort_order');
-
-        if ($request->has('subject_id')) {
-            $query->where('subject_id', $request->subject_id);
-        }
-
-        if ($request->has('id')) {
-            return response()->json($query->where('id', $request->id)->get());
-        }
-
-        return response()->json($query->get());
+        return SyllabusTopic::with('items')
+            ->when($request->subject_id, fn ($q, $id) => $q->where('subject_id', $id))
+            ->orderBy('sort_order')
+            ->get();
     }
 
+    // GET /api/syllabus_items?topic_id=1
     public function items(Request $request)
     {
-        $query = SyllabusItem::query();
-
-        if ($request->has('topic_id')) {
-            $query->where('topic_id', $request->topic_id);
-        }
-
-        return response()->json($query->orderBy('sort_order')->get());
+        return SyllabusItem::when($request->topic_id, fn ($q, $id) => $q->where('topic_id', $id))
+            ->orderBy('sort_order')
+            ->get();
     }
 }

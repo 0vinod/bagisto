@@ -6,15 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SyllabusTopic extends Model
 {
-    protected $table = 'syllabus_topics';
-    public $timestamps = false;
-
-    protected $fillable = ['subject_id', 'name', 'detail', 'sort_order'];
-
-    public function subject()
-    {
-        return $this->belongsTo(Subject::class);
-    }
+    protected $guarded = [];
 
     public function items()
     {

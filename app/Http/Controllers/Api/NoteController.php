@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Note;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class NoteController extends Controller
 {
+    // GET /api/notes?subject_id=1  -> notes with points: [{heading, points:[...]}]
     public function index(Request $request)
     {
-        $query = Note::with(['points' => function($q) {
-            $q->orderBy('sort_order');
-        }])->orderBy('sort_order');
-
-        if ($request->has('subject_id')) {
-            $query->where('subject_id', $request->subject_id);
-        }
-
-        return response()->json($query->get());
+        return Note::with('points')
+            ->when($request->subject_id, fn ($q, $id) => $q->where('subject_id', $id))
+            ->orderBy('sort_order')
+            ->get();
     }
 }

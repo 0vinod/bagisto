@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Question;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 class QuestionController extends Controller
 {
+    // GET /api/questions?subject_id=1
     public function index(Request $request)
     {
-        $query = Question::query();
-
-        if ($request->has('subject_id')) {
-            $query->where('subject_id', $request->subject_id);
-        }
-
-        return response()->json($query->get());
+        return Question::when($request->subject_id, fn ($q, $id) => $q->where('subject_id', $id))
+            ->inRandomOrder()
+            ->get();
     }
 }
