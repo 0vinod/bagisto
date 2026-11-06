@@ -13,7 +13,7 @@ class SyllabusTopic extends Model
         return $this->hasMany(SyllabusItem::class, 'topic_id')->orderBy('sort_order');
     }
 
-    public function subjects()
+    public function subject()
     {
         return $this->belongsTo(Subject::class, 'subject_id')->orderByDesc('id');
     }
