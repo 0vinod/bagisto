@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Supa;
 
+use App\Http\Controllers\Controller;
 use App\Models\SyllabusTopic;
 use App\Models\SyllabusItem;
 use Illuminate\Http\Request;
@@ -15,14 +16,14 @@ class SyllabusItemController extends Controller
             ->orderBy('sort_order')
             ->paginate(20);
 
-        return view('items.index', compact('items'));
+        return view('backend.supa.items.index', compact('items'));
     }
 
     public function create(Request $request)
     {
         $topics = SyllabusTopic::with('subject')->orderBy('name')->get();
         $selectedTopic = $request->get('topic_id');
-        return view('items.create', compact('topics', 'selectedTopic'));
+        return view('backend.supa.items.create', compact('topics', 'selectedTopic'));
     }
 
     public function store(Request $request)
@@ -40,13 +41,13 @@ class SyllabusItemController extends Controller
     public function show(SyllabusItem $item)
     {
         $item->load('topic.subject');
-        return view('items.show', compact('item'));
+        return view('backend.supa.items.show', compact('item'));
     }
 
     public function edit(SyllabusItem $item)
     {
         $topics = SyllabusTopic::with('subject')->orderBy('name')->get();
-        return view('items.edit', compact('item', 'topics'));
+        return view('backend.supa.items.edit', compact('item', 'topics'));
     }
 
     public function update(Request $request, SyllabusItem $item)

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Supa;
 
+use App\Http\Controllers\Controller;
 use App\Models\Attempt;
 use Illuminate\Http\Request;
 
@@ -14,13 +15,13 @@ class AttemptController extends Controller
             ->latest('created_at')
             ->paginate(20);
 
-        return view('attempts.index', compact('attempts'));
+        return view('backend.supa.attempts.index', compact('attempts'));
     }
 
     public function show(Attempt $attempt)
     {
         abort_unless($attempt->user_id === auth()->id(), 403);
-        return view('attempts.show', compact('attempt'));
+        return view('backend.supa.attempts.show', compact('attempt'));
     }
 
     public function destroy(Attempt $attempt)

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Api\AttemptController;
+use App\Http\Controllers\Api\SubjectController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\Auth\LoginController;
@@ -20,10 +22,11 @@ use \UniSharp\LaravelFilemanager\Lfm;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CustomerFeedbackController;
 use App\Http\Controllers\ShippingController;
-use App\Http\Controllers\SyllabusTopicController;
-use App\Http\Controllers\SyllabusItemController;
-use App\Http\Controllers\SyllabusProgressController;
-use App\Http\Controllers\AttemptController;
+use App\Http\Controllers\Supa\SyllabusItemController;
+use App\Http\Controllers\Supa\SyllabusProgressController;
+use App\Http\Controllers\Supa\SyllabusTopicController;
+use Illuminate\Support\Facades\Auth;
+
 /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -243,16 +246,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/feedbacks/{id}', [CustomerFeedbackController::class, 'adminShow'])->name('admin.feedback.show');
     Route::post('/feedbacks/{id}/respond', [CustomerFeedbackController::class, 'adminRespond'])->name('admin.feedback.respond');
 
-        // Topics
+    //Supa Route
     Route::resource('topics', SyllabusTopicController::class);
-
-    // Items
     Route::resource('items', SyllabusItemController::class);
-
-    // Progress (toggle)
     Route::post('progress/toggle/{itemId}', [SyllabusProgressController::class, 'toggle'])->name('progress.toggle');
     Route::get('progress', [SyllabusProgressController::class, 'index'])->name('progress.index');
-
-    // Attempts
     Route::resource('attempts', AttemptController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('subjects', SubjectController::class);
 });

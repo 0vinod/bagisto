@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Supa;
 
+use App\Http\Controllers\Controller;
 use App\Models\SyllabusProgress;
 use App\Models\SyllabusItem;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class SyllabusProgressController extends Controller
         $items = SyllabusItem::with('topic.subject')->orderBy('topic_id')->orderBy('sort_order')->get();
         $doneIds = SyllabusProgress::where('user_id', $userId)->pluck('item_id')->toArray();
 
-        return view('progress.index', compact('progress', 'items', 'doneIds'));
+        return view('backend.supa.progress.index', compact('progress', 'items', 'doneIds'));
     }
 
     public function toggle(Request $request, $itemId)
