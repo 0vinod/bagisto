@@ -11,7 +11,7 @@
                     class="bg-white p-4 shadow rounded">
                     @csrf
 
-                    @include('topics._form', ['topic' => null])
+                    @include('backend.supa.topics._form', ['topic' => null])
 
                     <button type="submit" class="btn btn-primary">
                         Save

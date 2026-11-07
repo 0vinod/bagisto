@@ -14,7 +14,7 @@
                     @csrf
                     @method('PUT')
 
-                    @include('topics._form', ['topic' => $topic])
+                    @include('backend.supa.topics._form', ['topic' => $topic])
 
                     <button type="submit" class="btn btn-primary">
                         Update

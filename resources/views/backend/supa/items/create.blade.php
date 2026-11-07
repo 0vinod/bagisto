@@ -5,7 +5,7 @@
 
         <form action="{{ route('items.store') }}" method="POST" class="card shadow-sm p-4">
             @csrf
-            @include('items._form', ['item' => null, 'selectedTopic' => $selectedTopic])
+            @include('backend.supa.items._form', ['item' => null, 'selectedTopic' => $selectedTopic])
             <button class="btn btn-primary mt-3">Save</button>
         </form>
     </div>

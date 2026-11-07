@@ -5,7 +5,7 @@
 
         <form action="{{ route('items.update', $item) }}" method="POST" class="card shadow-sm p-4">
             @csrf @method('PUT')
-            @include('items._form', ['item' => $item, 'selectedTopic' => $item->topic_id])
+            @include('backend.supa.items._form', ['item' => $item, 'selectedTopic' => $item->topic_id])
             <button class="btn btn-primary mt-3">Update</button>
         </form>
     </div>
