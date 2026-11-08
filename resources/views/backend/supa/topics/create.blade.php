@@ -1,24 +1,36 @@
 @extends('backend.layouts.master')
 
 @section('main-content')
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
+<div class="container py-4" style="max-width: 920px;">
 
-                <h1 class="h3 fw-bold mb-4">New Syllabus Topic</h1>
+    <div class="mb-4">
+        <a href="{{ route('topics.index') }}" class="small font-weight-bold text-decoration-none">
+            <i class="fas fa-arrow-left mr-1"></i> Back to Topics
+        </a>
+        <h1 class="h3 font-weight-bold text-gray-800 mt-2 mb-0">
+            <i class="fas fa-plus-circle text-primary mr-2"></i>New Syllabus Topic
+        </h1>
+        <p class="text-muted small mb-0 mt-1">Add a new topic under a subject.</p>
+    </div>
 
-                <form action="{{ route('topics.store') }}" method="POST"
-                    class="bg-white p-4 shadow rounded">
-                    @csrf
+    <div class="card shadow border-0" style="border-radius: 16px; overflow: hidden;">
+        <div class="card-body p-4">
+            <form action="{{ route('topics.store') }}" method="POST">
+                @csrf
+                @include('backend.supa.topics._form', ['topic' => null])
 
-                    @include('backend.supa.topics._form', ['topic' => null])
+                <hr class="my-4">
 
-                    <button type="submit" class="btn btn-primary">
-                        Save
+                <div class="d-flex justify-content-end" style="gap: .5rem;">
+                    <a href="{{ route('topics.index') }}" class="btn btn-light rounded-pill px-4">
+                        <i class="fas fa-times mr-1"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                        <i class="fas fa-save mr-1"></i> Save Topic
                     </button>
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 @endsection

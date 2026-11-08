@@ -11,10 +11,11 @@ class SyllabusTopicController extends Controller
 {
     public function index()
     {
-        $topics = SyllabusTopic::with('subject', 'items')
-            ->orderBy('subject_id')
-            ->orderBy('sort_order')
-            ->paginate(15);
+       $topics = SyllabusTopic::with('subject')
+        ->withCount('items')
+        ->orderBy('subject_id')
+        ->orderBy('name')
+        ->paginate(20);
 
         return view('backend.supa.topics.index', compact('topics'));
     }
