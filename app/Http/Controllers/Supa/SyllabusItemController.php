@@ -12,10 +12,13 @@ class SyllabusItemController extends Controller
     public function index()
     {
         $items = SyllabusItem::with('topic.subject')
-            ->orderBy('topic_id')
-            ->orderBy('sort_order')
+            ->join('syllabus_topics', 'syllabus_items.topic_id', '=', 'syllabus_topics.id')
+            ->orderBy('syllabus_topics.subject_id')
+            ->orderBy('syllabus_topics.name')
+            ->orderBy('syllabus_items.sort_order')
+            ->select('syllabus_items.*')
             ->paginate(20);
-
+            
         return view('backend.supa.items.index', compact('items'));
     }
 

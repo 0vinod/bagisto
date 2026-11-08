@@ -242,6 +242,7 @@
         <div id="SuperTET" class="collapse" aria-labelledby="SuperTETHeader">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Super TET:</h6>
+                <a class="collapse-item" href="{{ route('subjects.index') }}">Subjects</a>
                 <a class="collapse-item" href="{{ route('topics.index') }}">Topics</a>
                 <a class="collapse-item" href="{{ route('items.index') }}">Syllabus Items</a>
                 <a class="collapse-item" href="{{ route('progress.index') }}">Progress</a>

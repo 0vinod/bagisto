@@ -1,22 +1,37 @@
 @extends('backend.layouts.master')
-@section('main-content')
-    <div class="max-w-2xl mx-auto py-6 px-4">
-        <div class="mb-6">
-            <a href="{{ route('subjects.index') }}" class="text-indigo-600 hover:underline text-sm font-medium">← Back to Subjects</a>
-            <h1 class="text-2xl font-bold text-gray-800 mt-2">Edit Subject: {{ $subject->name }}</h1>
-        </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md">
+@section('main-content')
+<div class="container py-4" style="max-width: 920px;">
+
+    {{-- Header --}}
+    <div class="mb-4">
+        <a href="{{ route('subjects.index') }}" class="small font-weight-bold text-decoration-none">
+            <i class="fas fa-arrow-left mr-1"></i> Back to Subjects
+        </a>
+        <h1 class="h3 font-weight-bold text-gray-800 mt-2 mb-0">
+            <i class="fas fa-pen text-primary mr-2"></i>Edit Subject
+            <span class="text-muted font-weight-normal">· {{ $subject->emoji }} {{ $subject->name }}</span>
+        </h1>
+    </div>
+
+    <div class="card shadow border-0" style="border-radius: 16px; overflow: hidden;">
+        <div class="card-body p-4">
             <form action="{{ route('subjects.update', $subject) }}" method="POST">
                 @method('PUT')
                 @include('backend.supa.subjects._form')
-                
-                <div class="mt-6 flex justify-end">
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg shadow">
-                        Update Subject
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-end" style="gap: .5rem;">
+                    <a href="{{ route('subjects.index') }}" class="btn btn-light rounded-pill px-4">
+                        <i class="fas fa-times mr-1"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                        <i class="fas fa-save mr-1"></i> Update Subject
                     </button>
                 </div>
             </form>
         </div>
     </div>
+</div>
 @endsection
