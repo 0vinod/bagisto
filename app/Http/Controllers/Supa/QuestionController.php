@@ -30,7 +30,7 @@ class QuestionController extends Controller
 
     public function create()
     {
-        return view('questions.form', [
+        return view('backend.supa.questions.form', [
             'question' => new Question(['options' => ['', '', '', ''], 'answer' => 0]),
             'subjects' => Subject::orderBy('name')->get(),
         ]);
@@ -45,7 +45,7 @@ class QuestionController extends Controller
 
     public function edit(Question $question)
     {
-        return view('questions.form', [
+        return view('backend.supa.questions.form', [
             'question' => $question,
             'subjects' => Subject::orderBy('name')->get(),
         ]);
@@ -76,7 +76,7 @@ class QuestionController extends Controller
 
     public function importForm()
     {
-        return view('questions.import', ['subjects' => Subject::orderBy('name')->get()]);
+        return view('backend.supa.questions.import', ['subjects' => Subject::orderBy('name')->get()]);
     }
 
     public function import(Request $request)
