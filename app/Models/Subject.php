@@ -13,4 +13,10 @@ class Subject extends Model
     
     public function notes() { return $this->hasMany(Note::class)->orderBy('sort_order'); }
 
+    
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
 }

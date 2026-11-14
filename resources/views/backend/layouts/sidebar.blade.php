@@ -247,6 +247,8 @@
                 <a class="collapse-item" href="{{ route('items.index') }}">Syllabus Items</a>
                 <a class="collapse-item" href="{{ route('progress.index') }}">Progress</a>
                 <a class="collapse-item" href="{{ route('attempts.index') }}">Attempts</a>
+
+                <a class="collapse-item" href="{{ route('questions.index') }}">Mcq Questions</a>
             </div>
         </div>
     </li>

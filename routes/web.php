@@ -28,7 +28,7 @@ use App\Http\Controllers\Supa\SyllabusTopicController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Supa\NoteController;
 use App\Http\Controllers\Supa\NotePointController;
-
+use App\Http\Controllers\Supa\QuestionController;
 
 /*
     |--------------------------------------------------------------------------
@@ -259,5 +259,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::resource('subjects.notes', NoteController::class)->shallow();
     Route::resource('notes.points', NotePointController::class)->shallow();
     
+    Route::prefix('questions')->name('questions.')->group(function () {
+    Route::get('import',          [QuestionController::class, 'importForm'])->name('import.form');
+    Route::post('import',         [QuestionController::class, 'import'])->name('import');
+    Route::get('template',        [QuestionController::class, 'template'])->name('template');
+    Route::delete('bulk-delete',  [QuestionController::class, 'bulkDestroy'])->name('bulk-destroy');
+});
+
+// index, create, store, edit, update, destroy (no 'show' page needed)
+Route::resource('questions', QuestionController::class)->except(['show']);
     
 });
