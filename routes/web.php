@@ -26,6 +26,9 @@ use App\Http\Controllers\Supa\SyllabusItemController;
 use App\Http\Controllers\Supa\SyllabusProgressController;
 use App\Http\Controllers\Supa\SyllabusTopicController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Supa\NoteController;
+use App\Http\Controllers\Supa\NotePointController;
+
 
 /*
     |--------------------------------------------------------------------------
@@ -253,4 +256,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('progress', [SyllabusProgressController::class, 'index'])->name('progress.index');
     Route::resource('attempts', AttemptController::class)->only(['index', 'show', 'destroy']);
     Route::resource('subjects', SubjectController::class);
+    Route::resource('subjects.notes', NoteController::class)->shallow();
+    Route::resource('notes.points', NotePointController::class)->shallow();
+    
+    
 });

@@ -70,8 +70,8 @@
             <table class="table subject-table align-middle mb-0">
                 <thead style="background:#f8f9fc;">
                     <tr class="text-uppercase small text-muted">
-                        <th class="p-3 border-0"><i class="fas fa-sort-numeric-down mr-1"></i> Sort</th>
-                        <th class="p-3 border-0"><i class="far fa-smile mr-1"></i> Emoji</th>
+                       
+                     
                         <th class="p-3 border-0"><i class="fas fa-tag mr-1"></i> Name</th>
                         <th class="p-3 border-0"><i class="fas fa-sticky-note mr-1"></i> Short Note</th>
                         <th class="p-3 border-0"><i class="fas fa-palette mr-1"></i> Color</th>
@@ -83,18 +83,20 @@
                     @forelse($subjects as $subject)
                         @php $color = $subject->color ?? '#6366f1'; @endphp
                         <tr>
-                            <td class="p-3 align-middle" style="border-left: 4px solid {{ $color }};">
-                                <span class="sort-badge">{{ $subject->sort_order }}</span>
-                            </td>
-
-                            <td class="p-3 align-middle">
-                                <span class="emoji-tile" style="background: {{ $color }}22;">
-                                    {{ $subject->emoji ?: '📘' }}
-                                </span>
-                            </td>
+                         
 
                             <td class="p-3 align-middle font-weight-bold text-gray-800">
-                                {{ $subject->name }}
+                                {{ $subject->name }} <br>
+                                
+                                <div class="d-flex"></div>
+                                 <span class="emoji-tile" style="background: {{ $color }}22;">
+                                    {{ $subject->emoji ?: '📘' }}
+                                </span>
+                                       <span class="color-chip" style="margin-left:2px">
+                                           {{ $subject->weightage }}
+                                           </span>
+                                
+                                </div>
                             </td>
 
                             <td class="p-3 align-middle text-muted small" style="max-width: 280px;">
@@ -113,6 +115,9 @@
                                     <a href="{{ route('subjects.edit', $subject) }}"
                                        class="icon-btn edit" title="Edit subject">
                                         <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a href="{{ route('subjects.notes.index', $subject) }}" class="icon-btn view" title="Notes">
+                                        <i class="fas fa-sticky-note"></i>
                                     </a>
 
                                     <form action="{{ route('subjects.destroy', $subject) }}" method="POST"

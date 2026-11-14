@@ -12,4 +12,8 @@ class Note extends Model
     {
         return $this->hasMany(NotePoint::class)->orderBy('sort_order');
     }
+    
+    public function subject(){
+        return $this->belongsTo(Subject::class);
+    }
 }

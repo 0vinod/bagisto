@@ -42,6 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/attempts/stats', [AttemptController::class, 'stats']);
     Route::get('/attempts', [AttemptController::class, 'index']);
     Route::post('/attempts', [AttemptController::class, 'store']);
+    
+    Route::get('notes', [\App\Http\Controllers\Api\NoteController::class, 'index']);
 });
 /*
 |--------------------------------------------------------------------------

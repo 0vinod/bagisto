@@ -26,6 +26,7 @@ class SubjectController extends Controller
             'emoji' => 'nullable|string|max:10',
             'color' => 'nullable|string|max:20',
             'short_note' => 'nullable|string',
+            'weightage'  => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);
 

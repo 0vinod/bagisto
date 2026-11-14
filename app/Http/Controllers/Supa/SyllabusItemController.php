@@ -17,7 +17,7 @@ class SyllabusItemController extends Controller
             ->orderBy('syllabus_topics.name')
             ->orderBy('syllabus_items.sort_order')
             ->select('syllabus_items.*')
-            ->paginate(20);
+            ->paginate(200);
             
         return view('backend.supa.items.index', compact('items'));
     }

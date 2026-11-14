@@ -87,6 +87,21 @@
             </div>
             <small class="text-muted">Smaller numbers appear first.</small>
         </div>
+                {{-- weightage --}}
+        <div class="form-group mb-0">
+            <label class="font-weight-bold small text-uppercase text-muted">
+                <i class="fas fa-sort-numeric-down mr-1"></i>Weightage
+            </label>
+            <div class="input-group" style="max-width: 200px;">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                </div>
+                <input type="text" name="weightage"
+                       value="{{ old('weightage', $subject->weightage ?? 0) }}"
+                       class="form-control">
+            </div>
+            
+        </div>
     </div>
 
     {{-- RIGHT: live preview --}}
