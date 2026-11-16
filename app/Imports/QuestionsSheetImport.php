@@ -16,7 +16,7 @@ class QuestionsSheetImport implements ToCollection, WithHeadingRow
 
     public function __construct(private int $subjectId) {}
 
-    public function collection_dsdsdsd(Collection $rows)
+    public function collection(Collection $rows)
     {
         foreach ($rows as $i => $row) {
             $line = $i + 2; // heading is row 1
@@ -34,10 +34,19 @@ class QuestionsSheetImport implements ToCollection, WithHeadingRow
                 $this->pick($row, ['option_d']),
             ];
 
-            if (in_array(null, $options, true) || in_array('', $options, true)) {
-                $this->errors[] = "Row $line: all 4 options are required.";
-                continue;
-            }
+            $hasOptions = count(array_filter(
+                $options,
+                fn($option) => $option !== null && $option !== ''
+            )) > 0;
+
+        if (!$hasOptions) {
+            $options = [];
+        }
+
+            // if (in_array(null, $options, true) || in_array('', $options, true)) {
+            //     $this->errors[] = "Row $line: all 4 options are required.";
+            //     continue;
+            // }
 
             $answer = $this->parseAnswer($this->pick($row, ['correct_answer', 'answer']));
             if ($answer === null) {
@@ -77,7 +86,7 @@ class QuestionsSheetImport implements ToCollection, WithHeadingRow
     }
 
 
-public function collection(Collection $rows)
+public function collectionsdsdsds(Collection $rows)
 {
     foreach ($rows as $i => $row) {
         $line = $i + 2;
