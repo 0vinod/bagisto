@@ -16,7 +16,7 @@ class QuestionsSheetImport implements ToCollection, WithHeadingRow
 
     public function __construct(private int $subjectId) {}
 
-    public function collection(Collection $rows)
+    public function collection_dsdsdsd(Collection $rows)
     {
         foreach ($rows as $i => $row) {
             $line = $i + 2; // heading is row 1
@@ -75,6 +75,75 @@ class QuestionsSheetImport implements ToCollection, WithHeadingRow
         }
         return null;
     }
+
+
+public function collection(Collection $rows)
+{
+    foreach ($rows as $i => $row) {
+        $line = $i + 2;
+        $row = $row->toArray();
+
+        $question = $this->pick($row, ['question']);
+
+        if ($question === null || $question === '') {
+            continue;
+        }
+
+        // Options are optional
+        $options = [
+            $this->pick($row, ['option_a']),
+            $this->pick($row, ['option_b']),
+            $this->pick($row, ['option_c']),
+            $this->pick($row, ['option_d']),
+        ];
+
+        // If all options are empty, save NULL.
+        // Otherwise retain the four positions.
+        $hasOptions = count(array_filter(
+            $options,
+            fn($option) => $option !== null && $option !== ''
+        )) > 0;
+
+        if (!$hasOptions) {
+            $options = null;
+        }
+
+        // Answer is optional when options are missing
+        $answer = null;
+
+        if ($hasOptions) {
+            $answer = $this->parseAnswer(
+                $this->pick($row, ['correct_answer', 'answer'])
+            );
+
+            if ($answer === null) {
+                $this->errors[] = "Row $line: correct answer must be A, B, C, D (or 1-4).";
+                continue;
+            }
+        }
+
+        if (
+            Question::where('subject_id', $this->subjectId)
+                ->where('question', $question)
+                ->exists()
+        ) {
+            $this->skipped++;
+            continue;
+        }
+
+        Question::create([
+            'subject_id'  => $this->subjectId,
+            'topic'       => $this->pick($row, ['theorist_topic', 'topic']),
+            'question'    => $question,
+            'options'     => $options,
+            'answer'      => $answer,
+            'explanation' => $this->pick($row, ['key_concept', 'explanation']),
+        ]);
+
+        $this->imported++;
+    }
+}
+
 
     /** "B", "b", "B) Lev Vygotsky" => 1 ; "3" => 2 (1-based in files) ; returns 0-based index. */
     private function parseAnswer(?string $raw): ?int
