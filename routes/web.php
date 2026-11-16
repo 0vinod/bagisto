@@ -272,7 +272,7 @@ Route::resource('questions', QuestionController::class)->except(['show']);
 });
 
 Route::get('super-tet-app', function () {
-    $apk    = '/public/backend/apk/supertet.apk';
+    $apk    = '/backend/apk/supertet.apk';
     $apkUrl = file_exists(public_path($apk)) ? asset($apk) : '#';
 
     return view('backend.supa.promote', compact('apkUrl'));
