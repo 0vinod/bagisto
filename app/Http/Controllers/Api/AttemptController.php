@@ -30,26 +30,35 @@ class AttemptController extends Controller
             ->latest()->limit(100)->get();
     }
 
-    // POST /api/attempts {subject_id, question_id, selected}
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'subject_id'  => 'required|integer|exists:subjects,id',
-            'question_id' => 'required|integer|exists:questions,id',
-            'selected'    => 'nullable|integer|min:0|max:9',
-        ]);
+ 
+public function store(Request $request)
+{
+    $data = $request->validate([
+        'subject_id'  => 'required|integer|exists:subjects,id',
+        'question_id' => 'required|integer|exists:questions,id',
+        'selected'    => 'nullable|integer|min:0|max:9',
+    ]);
 
-        // correctness is decided on the server, so users cannot fake their score
-        $question = Question::findOrFail($data['question_id']);
+    $question = Question::findOrFail($data['question_id']);
 
-        Attempt::create([
+    $attempt = Attempt::firstOrCreate(
+        [
             'user_id'     => $request->user()->id,
             'subject_id'  => $data['subject_id'],
             'question_id' => $question->id,
-            'selected'    => $data['selected'] ?? null,
-            'is_correct'  => isset($data['selected']) && (int) $data['selected'] === (int) $question->answer,
-        ]);
+        ],
+        [
+            'selected'   => $data['selected'] ?? null,
+            'is_correct' => isset($data['selected'])
+                && (int) $data['selected'] === (int) $question->answer,
+        ]
+    );
 
-        return response()->json(['message' => 'Saved'], 201);
-    }
+    return response()->json([
+        'message' => $attempt->wasRecentlyCreated
+            ? 'Saved'
+            : 'Already attempted',
+        'data' => $attempt,
+    ], $attempt->wasRecentlyCreated ? 201 : 200);
+}
 }

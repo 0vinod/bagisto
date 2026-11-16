@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-    
+
         Schema::create('tet_users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('id')->primary()->constrained('tet_users')->onDelete('cascade');
             $table->text('full_name')->nullable();
             $table->text('role')->default('student'); // 'admin' or 'student'
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
 
         // 3. Levels
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('sort_order')->default(0);
             $table->boolean('is_published')->default(false);
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
         });
 
         // 4. Subjects
@@ -45,6 +45,7 @@ return new class extends Migration
             $table->text('color')->nullable();
             $table->text('short_note')->nullable();
             $table->integer('sort_order')->default(0);
+            $table->timestamps();
         });
 
         // 5. Notes
@@ -54,6 +55,7 @@ return new class extends Migration
             $table->text('title');
             $table->text('image_url')->nullable();
             $table->integer('sort_order')->default(0);
+            $table->timestamps();
         });
 
         // 6. Note Points
@@ -63,6 +65,7 @@ return new class extends Migration
             $table->text('heading');
             $table->json('points'); // MySQL JSON
             $table->integer('sort_order')->default(0);
+            $table->timestamps();
         });
 
         // 7. Questions
@@ -73,6 +76,7 @@ return new class extends Migration
             $table->json('options');
             $table->integer('answer');
             $table->text('explanation')->nullable();
+            $table->timestamps();
         });
 
         // 8. Options
@@ -86,6 +90,7 @@ return new class extends Migration
             $table->integer('sort_order')->default(0);
             $table->text('option_text_hi')->nullable();
             $table->text('description_hi')->nullable();
+            $table->timestamps();
         });
 
         // 9. Syllabus Topics
@@ -95,6 +100,7 @@ return new class extends Migration
             $table->text('name');
             $table->text('detail')->nullable();
             $table->integer('sort_order')->default(0);
+            $table->timestamps();
         });
 
         // 10. Syllabus Items
@@ -103,14 +109,15 @@ return new class extends Migration
             $table->foreignId('topic_id')->nullable()->constrained('syllabus_topics')->onDelete('cascade');
             $table->text('heading');
             $table->integer('sort_order')->default(0);
+            $table->timestamps();
         });
 
         // 11. Syllabus Progress (Linked to tet_users)
         Schema::create('syllabus_progress', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained('tet_users')->onDelete('cascade');
             $table->foreignId('item_id')->constrained('syllabus_items')->onDelete('cascade');
-            $table->timestamp('created_at')->nullable()->useCurrent();
-            
+            $table->timestamps();
+
             // Composite Primary Key
             $table->primary(['user_id', 'item_id']);
         });
@@ -123,7 +130,7 @@ return new class extends Migration
             $table->foreignId('question_id')->nullable()->constrained('questions')->onDelete('cascade');
             $table->integer('selected')->nullable();
             $table->boolean('is_correct');
-            $table->timestamp('created_at')->nullable()->useCurrent();
+            $table->timestamps();
         });
 
         // 13. Attempt Answers
@@ -133,6 +140,7 @@ return new class extends Migration
             $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
             $table->foreignId('option_id')->nullable()->constrained('options')->onDelete('set null');
             $table->boolean('is_correct');
+            $table->timestamps();
         });
     }
 
