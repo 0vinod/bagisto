@@ -105,7 +105,7 @@ public function collection(Collection $rows)
         )) > 0;
 
         if (!$hasOptions) {
-            $options = null;
+            $options = [];
         }
 
         // Answer is optional when options are missing
