@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
- 
+
 class QuestionsSheetImport implements ToCollection, WithHeadingRow
 {
     public int $imported = 0;
@@ -39,23 +39,26 @@ class QuestionsSheetImport implements ToCollection, WithHeadingRow
                 fn($option) => $option !== null && $option !== ''
             )) > 0;
 
-        if (!$hasOptions) {
-            $options = [];
-        }
+            if (!$hasOptions) {
+                $options = [];
+            }
 
             // if (in_array(null, $options, true) || in_array('', $options, true)) {
             //     $this->errors[] = "Row $line: all 4 options are required.";
             //     continue;
             // }
-
-            $answer = $this->parseAnswer($this->pick($row, ['correct_answer', 'answer']));
+            if (!$hasOptions) {
+                $answer = $this->parseAnswer($this->pick($row, ['correct_answer', 'answer']));
+            } else {
+                $answer = $this->pick($row, ['correct_answer', 'answer']);
+            }
             if ($answer === null) {
                 $this->errors[] = "Row $line: correct answer must be A, B, C, D (or 1-4).";
-                
+
                 logger("Import row $line: Invalid answer", [
-                'raw_answer' => $answer,
-                'row' => $row,
-            ]);
+                    'raw_answer' => $answer,
+                    'row' => $row,
+                ]);
 
                 continue;
             }
@@ -92,7 +95,7 @@ class QuestionsSheetImport implements ToCollection, WithHeadingRow
     }
 
 
- 
+
 
     /** "B", "b", "B) Lev Vygotsky" => 1 ; "3" => 2 (1-based in files) ; returns 0-based index. */
     private function parseAnswer(?string $raw): ?int
