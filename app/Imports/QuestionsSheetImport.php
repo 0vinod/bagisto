@@ -47,11 +47,13 @@ class QuestionsSheetImport implements ToCollection, WithHeadingRow
             //     $this->errors[] = "Row $line: all 4 options are required.";
             //     continue;
             // }
-            
+
+            $rawAnswer = $this->pick($row, ['correct_answer', 'answer']);
+
             if (!$hasOptions) {
-                $answer = $this->parseAnswer($this->pick($row, ['correct_answer', 'answer']));
+                $answer = $rawAnswer;
             } else {
-                $answer = $this->pick($row, ['correct_answer', 'answer']);
+                $answer = $this->parseAnswer($rawAnswer);
             }
 
             if ($answer === null) {
