@@ -111,7 +111,7 @@ public function collection(Collection $rows)
         // Answer is optional when options are missing
         $answer = null;
 
-        if ($hasOptions) {
+       
             $answer = $this->parseAnswer(
                 $this->pick($row, ['correct_answer', 'answer'])
             );
@@ -120,7 +120,7 @@ public function collection(Collection $rows)
                 $this->errors[] = "Row $line: correct answer must be A, B, C, D (or 1-4).";
                 continue;
             }
-        }
+ 
 
         if (
             Question::where('subject_id', $this->subjectId)
