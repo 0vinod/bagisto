@@ -26,4 +26,9 @@ class Question extends Model
         return $this->hasOne(Attempt::class, 'question_id')
             ->where('user_id', auth()->id());
     }
+
+    public function getSelectedAttribute()
+    {
+        return $this->attempt?->selected;
+    }
 }
