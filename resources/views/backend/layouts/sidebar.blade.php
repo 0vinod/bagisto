@@ -249,6 +249,7 @@
                 <a class="collapse-item" href="{{ route('attempts.index') }}">Attempts</a>
 
                 <a class="collapse-item" href="{{ route('questions.index') }}">Mcq Questions</a>
+                <a class="collapse-item" href="{{ route('super-tet-app') }}">Apps</a>
             </div>
         </div>
     </li>
