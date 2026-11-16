@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Question extends Model
 {
@@ -18,5 +19,11 @@ class Question extends Model
     public function getCorrectOptionAttribute(): ?string
     {
         return $this->options[$this->answer] ?? null;
+    }
+
+    public function attempt()
+    {
+        return $this->hasOne(Attempt::class, 'question_id')
+            ->where('user_id', auth()->id());
     }
 }
