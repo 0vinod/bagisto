@@ -161,7 +161,7 @@
 
             <td class="p-3 align-middle">
                 @if ($subject?->image_url ?? null)
-                    <img src="{{ $subject?->image_url }}" class="note-thumb" alt=""
+                    <img src="{{ $subject?->image_url }}" class="note-thumb" style="max-width: 101px;" alt=""
                         onerror="this.outerHTML='<span class=&quot;dot&quot; style=&quot;background:{{ $color }}22&quot;>{{ $color }}</span>'">
                 @else
                     <span class="color-chip">
