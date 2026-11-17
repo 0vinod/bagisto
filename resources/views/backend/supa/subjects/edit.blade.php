@@ -16,7 +16,7 @@
 
     <div class="card shadow border-0" style="border-radius: 16px; overflow: hidden;">
         <div class="card-body p-4">
-            <form action="{{ route('subjects.update', $subject) }}" method="POST">
+            <form action="{{ route('subjects.update', $subject) }}" method="POST"  enctype="multipart/form-data">
                 @method('PUT')
                 @include('backend.supa.subjects._form')
 

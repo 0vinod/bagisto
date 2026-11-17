@@ -31,7 +31,20 @@
                    placeholder="e.g. Mathematics">
             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
-
+        <div class="form-group">
+            <label class="font-weight-bold small text-uppercase text-muted">
+                <i class="fas fa-image mr-1"></i> Cover Image
+            </label>
+            <input type="file" name="image_url" id="f-image" accept="image/*"
+                class="form-control @error('image_url') is-invalid @enderror">
+            @error('image_url')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            @if (!empty($n->image_url))
+                <small class="text-muted d-block mt-1">Leave empty to keep the current image.</small>
+            @endif
+        </div>
+        
         {{-- Emoji --}}
         <div class="form-group">
             <label class="font-weight-bold small text-uppercase text-muted">

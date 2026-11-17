@@ -13,8 +13,8 @@ class NoteController extends Controller
     {
         return [
             'title'       => 'required|string|max:255',
-            'image_url'   => 'nullable|image|max:4096',   // file upload
-            'icon_url'    => 'nullable|image|max:2048',   // file upload
+            'image_url'   => 'nullable|image|max:10096',   // file upload
+            'icon_url'    => 'nullable|image|max:10048',   // file upload
             'short_notes' => 'nullable|string',
             'weightage'   => 'nullable|string',
             'sort_order'  => 'nullable|integer',
