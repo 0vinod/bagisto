@@ -20,7 +20,7 @@ class QuestionController extends Controller
             }))
             ->when($request->filled('subject_id'), fn ($q) => $q->where('subject_id', $request->subject_id))
             ->latest('id')
-            ->paginate(15);
+            ->paginate(200);
 
         return view('backend.supa.questions.index', [
             'questions' => $questions,

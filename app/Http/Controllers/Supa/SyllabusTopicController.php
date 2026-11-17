@@ -15,7 +15,7 @@ class SyllabusTopicController extends Controller
         ->withCount('items')
         ->orderBy('subject_id')
         ->orderBy('name')
-        ->paginate(20);
+        ->paginate(200);
 
         return view('backend.supa.topics.index', compact('topics'));
     }

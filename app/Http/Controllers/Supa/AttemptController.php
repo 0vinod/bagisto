@@ -13,7 +13,7 @@ class AttemptController extends Controller
         $attempts = Attempt::where('user_id', auth()->id())
             ->with('subject')
             ->latest('created_at')
-            ->paginate(20);
+            ->paginate(200);
 
         return view('backend.supa.attempts.index', compact('attempts'));
     }

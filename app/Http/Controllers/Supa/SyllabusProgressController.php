@@ -16,7 +16,7 @@ class SyllabusProgressController extends Controller
         $progress = SyllabusProgress::where('user_id', $userId)
             ->with('item.topic.subject')
             ->latest('created_at')
-            ->paginate(20);
+            ->paginate(200);
 
         $items = SyllabusItem::with('topic.subject')->orderBy('topic_id')->orderBy('sort_order')->get();
         $doneIds = SyllabusProgress::where('user_id', $userId)->pluck('item_id')->toArray();
