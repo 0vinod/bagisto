@@ -96,7 +96,11 @@
                 <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
             </div>
         @endif
-
+        @if ($subject->image_url)
+            <div class="card shadow-sm border-0 text-center py-5" style="border-radius:16px;">
+                <img src="{{ $subject->image_url }}" class="note-thumb" alt="" style="max-width:300px">
+            </div>
+        @endif
         @forelse($notes as $note)
             <div class="card note-card shadow-sm border-0 mb-3">
                 <div class="card-body p-3 d-flex align-items-center" style="gap: 1rem;">
@@ -137,11 +141,8 @@
             </div>
         @empty
             <div class="card shadow-sm border-0 text-center py-5" style="border-radius:16px;">
-                @if ($subject->image_url)
-                    <img src="{{ $subject->image_url }}" class="note-thumb" alt="" style="max-width:300px">
-                @else
-                    <div style="font-size:3rem;">📒</div>
-                @endif
+
+                <div style="font-size:3rem;">📒</div>
                 <p class="text-muted mt-2 mb-3">No notes for {{ $subject->name }} yet.</p>
                 <div><a href="{{ route('subjects.notes.create', $subject) }}" class="btn btn-primary rounded-pill px-4">
                         <i class="fas fa-plus mr-1"></i> New Note</a></div>
