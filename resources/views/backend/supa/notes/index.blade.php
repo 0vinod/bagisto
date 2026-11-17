@@ -98,7 +98,7 @@
         @endif
         @if ($subject->image_url)
             <div class="card shadow-sm border-0 text-center py-5" style="border-radius:16px;">
-                <img src="{{ $subject->image_url }}" class="note-thumb" alt="" style="max-width:300px">
+                <img src="{{ $subject->image_url }}"  >
             </div>
         @endif
         @forelse($notes as $note)
