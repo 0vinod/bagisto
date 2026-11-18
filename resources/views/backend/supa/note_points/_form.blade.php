@@ -16,6 +16,27 @@
            class="form-control @error('heading') is-invalid @enderror" placeholder="e.g. Piaget's Stages">
     @error('heading') <div class="invalid-feedback">{{ $message }}</div> @enderror
 </div>
+ 
+
+
+
+<style>
+    .form-control:focus { box-shadow: 0 0 0 .2rem rgba(78,115,223,.15); }
+    .bullet-row { display: flex; gap: .5rem; margin-bottom: .5rem; }
+    .bullet-row .btn { flex-shrink: 0; }
+    #img-preview { max-width: 100%; max-height: 220px; border-radius: 12px; margin-top: .5rem; display: none; }
+</style>
+
+ 
+
+<div class="form-group">
+    <label class="font-weight-bold small text-uppercase text-muted">
+        <i class="fas fa-heading mr-1"></i> Heading <span class="text-danger">*</span>
+    </label>
+    <input type="text" name="heading" required value="{{ old('heading', $p->heading ?? '') }}"
+           class="form-control @error('heading') is-invalid @enderror" placeholder="e.g. Piaget's Stages">
+    @error('heading') <div class="invalid-feedback">{{ $message }}</div> @enderror
+</div>
 <style>
     .bullet-row { display: flex; gap: .5rem; margin-bottom: .5rem; }
     .bullet-row .btn { flex-shrink: 0; }
@@ -42,7 +63,6 @@
     @error('points') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
     @error('points.*') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
 </div>
-
 {{-- One repeating block --}}
 <template id="block-tpl">
     <div class="card mb-3 point-block">
@@ -78,7 +98,19 @@
         </div>
     </div>
 </template>
+ 
 
+ 
+<div class="form-group mb-0">
+    <label class="font-weight-bold small text-uppercase text-muted">
+        <i class="fas fa-sort-numeric-down mr-1"></i> Sort Order
+    </label>
+    <div class="input-group" style="max-width: 200px;">
+        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-hashtag"></i></span></div>
+        <input type="number" name="sort_order" value="{{ old('sort_order', $p->sort_order ?? ($nextOrder ?? 0)) }}" class="form-control">
+    </div>
+    <small class="text-muted">Smaller numbers appear first.</small>
+</div>
  
 <div class="form-group mb-0">
     <label class="font-weight-bold small text-uppercase text-muted">
@@ -170,8 +202,15 @@
     });
 
     // Boot: existing data, or one empty block
-    if (Array.isArray(initial) && initial.length) initial.forEach(addBlock);
-    else addBlock();
+    if (Array.isArray(initial) && initial.length) {
+        if (initial.every(function (x) { return typeof x === 'string'; })) {
+            // old format: plain list of strings -> one block with all texts
+            addBlock({ texts: initial });
+        } else {
+            initial.forEach(function (d) { addBlock(d); });
+        }
+    } else {
+        addBlock();
+    }
 })();
 </script>
- 
