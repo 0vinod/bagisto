@@ -16,6 +16,9 @@
         justify-content: center; font-weight: 700; font-size: .8rem;
         background: #eaecf4; color: #4e73df;
     }
+    .block-item { display: flex; gap: .75rem; padding: .6rem 0; border-bottom: 1px dashed #e3e6f0; }
+    .block-item:last-child { border-bottom: 0; }
+    .block-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
 </style>
 
 <div class="container py-4">
@@ -43,36 +46,48 @@
                     <tr class="text-uppercase small text-muted">
                         <th class="p-3 border-0">Order</th>
                         <th class="p-3 border-0">Heading</th>
-                        <th class="p-3 border-0">Sub Heading</th>
-                        <th class="p-3 border-0">Points</th>
-                        <th class="p-3 border-0">Image</th>
+                        <th class="p-3 border-0">Content Blocks</th>
                         <th class="p-3 border-0 text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($points as $p)
+                        @php
+                            // $p->points is cast to array; fall back to decoding if the cast is missing
+                            $blocks = is_array($p->points) ? $p->points : (json_decode($p->points ?? '[]', true) ?: []);
+                        @endphp
                         <tr>
                             <td class="p-3"><span class="sort-badge">{{ $p->sort_order }}</span></td>
-                            <td class="p-3 font-weight-bold text-gray-800">{{ $p->heading }}   <span class="color-chip" style="margin-left:2px">
-                                           {{ $p->weightage }}
-                                           </span></td>
-                            <td class="p-3 text-muted small">{{ $p->sub_headings ?: '—' }}</td>
+
+                            <td class="p-3 font-weight-bold text-gray-800">{{ $p->heading }}</td>
+
                             <td class="p-3 small">
-                                @if(!empty($p->points))
-                                    <ul class="pl-3 mb-0">
-                                        @foreach($p->points as $pt)<li>{{ $pt }}</li>@endforeach
-                                    </ul>
-                                @else
+                                @forelse($blocks as $b)
+                                    @if(is_array($b))
+                                        <div class="block-item">
+                                            @if(!empty($b['image_url']))
+                                                <img src="{{ $b['image_url'] }}" alt="" onerror="this.remove()">
+                                            @endif
+                                            <div>
+                                                @if(!empty($b['sub_heading']))
+                                                    <div class="font-weight-bold text-gray-800">{{ $b['sub_heading'] }}</div>
+                                                @endif
+                                                @if(!empty($b['texts']))
+                                                    <ul class="pl-3 mb-0">
+                                                        @foreach($b['texts'] as $t)<li>{{ $t }}</li>@endforeach
+                                                    </ul>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @else
+                                        {{-- old format: plain string --}}
+                                        <div class="block-item"><div>• {{ $b }}</div></div>
+                                    @endif
+                                @empty
                                     <span class="text-muted">—</span>
-                                @endif
+                                @endforelse
                             </td>
-                            <td class="p-3">
-                                @if($p->image_url)
-                                    <img src="{{ $p->image_url }}" alt="" style="width:60px; height:auto; border-radius:8px;" onerror="this.remove()">
-                                @else
-                                    <span class="text-muted">—</span>
-                                @endif
-                            </td>
+
                             <td class="p-3 text-right">
                                 <div class="d-inline-flex" style="gap: .4rem;">
                                     <a href="{{ route('points.edit', $p) }}" class="icon-btn edit" title="Edit"><i class="fas fa-pen"></i></a>
@@ -85,7 +100,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="4" class="text-center py-5">
                                 <div style="font-size: 3rem;">🗒️</div>
                                 <p class="text-muted mt-2 mb-3">No sections yet.</p>
                                 <a href="{{ route('notes.points.create', $noteId) }}" class="btn btn-primary rounded-pill px-4">
