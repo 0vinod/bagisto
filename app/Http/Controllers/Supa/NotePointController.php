@@ -12,7 +12,7 @@ class NotePointController extends Controller
     private function validated(Request $request): array
     {
         $data = $request->validate([
-            'heading'                 => 'required|string|max:255',
+            'heading'                 => 'nullable|string|max:255',
             'sort_order'              => 'nullable|integer',
             'points'                  => 'nullable|array',
             'points.*.sub_heading'    => 'nullable|string|max:255',
@@ -20,7 +20,18 @@ class NotePointController extends Controller
             'points.*.existing_image' => 'nullable|string',
             'points.*.texts'          => 'nullable|array',
             'points.*.texts.*'        => 'nullable|string',
+            'image_url'               => 'nullable|image|max:20096',
         ]);
+
+        if ($request->hasFile('image_url')) {
+            $file = $request->file('image_url');
+            $name = uniqid('np_') . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/note-points'), $name);
+            $data['image_url'] = url('public/uploads/note-points/' . $name);
+        } else {
+            // no new file: keep the old image on edit, null on create
+            unset($data['image_url']);
+        }
 
         $data['points']     = $this->buildPoints($request);
         $data['sort_order'] = $data['sort_order'] ?? 0;
