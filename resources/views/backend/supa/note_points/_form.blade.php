@@ -1,3 +1,4 @@
+{{-- D:\quic\test\bagisto\test\bagisto\resources\views\backend\supa\note_points\_form.blade.php --}}
 <style>
     .form-control:focus {
         box-shadow: 0 0 0 .2rem rgba(78, 115, 223, .15);
@@ -107,23 +108,177 @@
 </div>
 
 <script>
-    let nextIndex = {{ $next }};
+ 
 
-    // "Add More": copy the empty block and put a new number in its field names
-    function addBlock() {
-        let html = document.getElementById('block-template').innerHTML;
-        html = html.replace(/__I__/g, nextIndex++);
-        document.getElementById('blocks').insertAdjacentHTML('beforeend', html);
+
+
+let nextIndex = {{ $next }};
+
+// Toolbar configuration
+const quillToolbar = [
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ color: [] }, { background: [] }],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ align: [] }],
+    ['link'],
+    ['clean']
+];
+
+// Initialize a single editor row
+function initRichTextRow(row) {
+    if (row.dataset.quillInitialized === '1') return;
+
+    const editorElement = row.querySelector('.quill-editor');
+    const hiddenInput = row.querySelector('.rich-text-value');
+    const toolbar = row.querySelector('.rich-toolbar');
+
+    if (!editorElement || !hiddenInput || !toolbar) return;
+
+    const quill = new Quill(editorElement, {
+        theme: 'snow',
+        modules: {
+            toolbar: toolbar
+        },
+        placeholder: 'Paste or type formatted content here...'
+    });
+
+    // Load existing saved HTML safely through Quill clipboard conversion
+    if (hiddenInput.value.trim()) {
+        const delta = quill.clipboard.convert({
+            html: hiddenInput.value,
+            text: ''
+        });
+
+        quill.setContents(delta, 'silent');
     }
 
-    // "Add more text": add one more text input inside this block
-    function addText(button) {
-        const block = button.closest('.point-block');
-        const i = block.dataset.i;
-        block.querySelector('.texts').insertAdjacentHTML('beforeend',
-            '<div class="bullet-row">' +
-            '<input type="text" name="points[' + i + '][texts][]" class="form-control">' +
-            '<button type="button" class="btn btn-outline-danger" onclick="this.closest(\'.bullet-row\').remove()">&times;</button>' +
-            '</div>');
+    // Save HTML into hidden input whenever content changes
+    quill.on('text-change', function () {
+        hiddenInput.value = quill.root.innerHTML;
+    });
+
+    // Sync immediately after initialization
+    hiddenInput.value = quill.root.innerHTML;
+
+    row.dataset.quillInitialized = '1';
+    row._quill = quill;
+}
+
+document.getElementById('blocks').closest('form').addEventListener('submit', function () {
+
+    document.querySelectorAll('.rich-text-row').forEach(function (row) {
+
+        if (row._quill) {
+            const html = row._quill.root.innerHTML;
+            const hidden = row.querySelector('.rich-text-value');
+
+            hidden.value = html === '<p><br></p>' ? '' : html;
+        }
+
+    });
+
+});
+// Initialize all existing editors
+function initAllRichText() {
+    document.querySelectorAll('.rich-text-row').forEach(function (row) {
+        initRichTextRow(row);
+    });
+}
+
+// Add a new rich text row
+function addText(button) {
+    const block = button.closest('.point-block');
+    const i = block.dataset.i;
+    const container = block.querySelector('.rich-text-list');
+
+    const row = document.createElement('div');
+
+    row.className = 'rich-text-row mb-3';
+
+    row.innerHTML = `
+        <div class="ql-toolbar rich-toolbar">
+            <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+            </span>
+
+            <span class="ql-formats">
+                <select class="ql-color"></select>
+                <select class="ql-background"></select>
+            </span>
+
+            <span class="ql-formats">
+                <button class="ql-list" value="ordered"></button>
+                <button class="ql-list" value="bullet"></button>
+            </span>
+
+            <span class="ql-formats">
+                <select class="ql-align"></select>
+            </span>
+
+            <span class="ql-formats">
+                <button class="ql-link"></button>
+                <button class="ql-clean"></button>
+            </span>
+
+            <button type="button"
+                    class="btn btn-sm btn-outline-danger remove-rich-text ml-2"
+                    onclick="removeRichText(this)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+
+        <div class="quill-editor"></div>
+
+        <input type="hidden"
+               name="points[${i}][texts][]"
+               class="rich-text-value"
+               value="">
+    `;
+
+    container.appendChild(row);
+
+    initRichTextRow(row);
+}
+
+// Remove a text row
+function removeRichText(button) {
+    const row = button.closest('.rich-text-row');
+
+    if (row && row._quill) {
+        row._quill = null;
     }
+
+    if (row) {
+        row.remove();
+    }
+}
+
+// Add a new block
+function addBlock() {
+    let html = document.getElementById('block-template').innerHTML;
+
+    html = html.replace(/__I__/g, nextIndex++);
+
+    const container = document.getElementById('blocks');
+
+    container.insertAdjacentHTML('beforeend', html);
+
+    // Initialize editors inside the new block
+    const newBlock = container.lastElementChild;
+
+    if (newBlock) {
+        newBlock.querySelectorAll('.rich-text-row').forEach(function (row) {
+            initRichTextRow(row);
+        });
+    }
+}
+
+// Initialize editors on page load
+document.addEventListener('DOMContentLoaded', function () {
+    initAllRichText();
+});
+
 </script>

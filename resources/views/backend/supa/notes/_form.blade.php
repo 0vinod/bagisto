@@ -90,7 +90,9 @@
             <label class="font-weight-bold small text-uppercase text-muted">
                 <i class="fas fa-align-left mr-1"></i> Short Notes
             </label>
-            <textarea name="short_notes" id="f-short" rows="3" class="form-control" placeholder="One or two lines summary">{{ old('short_notes', $n->short_notes ?? '') }}</textarea>
+           <textarea name="short_notes" id="f-short" rows="3"
+    class="form-control"
+    placeholder="One or two lines summary">{{ old('short_notes', $n->short_notes ?? '') }}</textarea>
         </div>
 
         {{-- weightage --}}
@@ -191,4 +193,33 @@
         });
         render();
     })();
+
+  short.addEventListener('paste', function(e) {
+    e.preventDefault();
+
+    let text = (e.clipboardData || window.clipboardData)
+        .getData('text/plain');
+
+    // Remove markdown heading markers
+    text = text.replace(/^#{1,6}\s*/gm, '');
+
+    // Remove markdown bold/italic markers
+    text = text.replace(/\*\*/g, '');
+    text = text.replace(/\*/g, '');
+
+    // Remove excess blank lines
+    text = text.replace(/\n{3,}/g, '\n\n');
+
+    const start = this.selectionStart;
+    const end = this.selectionEnd;
+
+    this.value = this.value.substring(0, start) +
+        text +
+        this.value.substring(end);
+
+    const cursor = start + text.length;
+    this.selectionStart = this.selectionEnd = cursor;
+
+    this.dispatchEvent(new Event('input', { bubbles: true }));
+});
 </script>
